@@ -1,0 +1,20 @@
+   167	17:26	cd libs/
+   169	17:26	cd bench_lib/
+   171	17:26	../../sw_utils/comp_lib_with_src_dir.sh bench
+   175	17:27	cd ../bm_printf_lib/
+   178	17:27	../../sw_utils/comp_lib.sh bm_printf
+   181	17:28	cd ../iosim_lib/
+   183	17:28	../../sw_utils/comp_lib_with_src_dir.sh iosim
+   186	17:28	cd string_lib/
+   188	17:28	../../sw_utils/comp_lib_with_src_dir.sh qprintf
+   189	17:28	cd ../sys_lib/
+   193	17:29	../../sw_utils/comp_lib.sh exceptions.c.s
+   197	17:29	../../sw_utils/comp_lib.sh exceptions
+   199	17:30	../../sw_utils/comp_lib_with_src_dir.sh exceptions
+   201	17:30	../../sw_utils/comp_lib_with_src_dir.sh gpio
+   202	17:30	../../sw_utils/comp_lib_with_src_dir.sh int
+   203	17:30	../../sw_utils/comp_lib_with_src_dir.sh spi
+   204	17:31	../../sw_utils/comp_lib_with_src_dir.sh timer
+   205	17:31	../../sw_utils/comp_lib_with_src_dir.sh uart
+   206	17:31	../../sw_utils/comp_lib_with_src_dir.sh utils
+cd ../..

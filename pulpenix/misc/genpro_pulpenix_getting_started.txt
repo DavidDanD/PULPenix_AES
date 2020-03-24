@@ -1,0 +1,94 @@
+
+
+Pulpenix (nickname for PULP-Enics) is a Enics SOC research platform primarly based on the 
+open-source PULP platform provided by  https://www.pulp-platform.org/ 
+More specifically the initial Pulpenix version is based on the PULP Pulpino SOC flavor,
+A minimal single-core SoC integrating the RI5CY RISC-V implementation.
+
+Additionally, Pulpenix also support a HW/SW (Hardware/Software) co-design environment,
+which is developed and maintained by Enics, this currently include support of an Eclips based  SW debug environment 
+currently running with the platform HW simulation. 
+
+Our intent is to further evolve Pulpenix, to be enhanced by processing and SOC architectural and implementation innovation.
+
+
+Getting Started: 
+
+1. Open a terminal the same file system you are capable running cadence irun command :
+
+2. go to your preferred work-space within this file system  and perform following steps
+
+3. mkdir pulp # root workspace folder for all your pulp/pulpenix activity
+              # It is important to use exactly this folder name and structure
+              # some scripts may depend on it
+              
+4. cd pulp 
+
+5. mkdir toolchain
+
+   cd toolchain
+   Download and un-tar this file, which is RISCV toolchain already built for a Centos platform, hopefully it should work well also for RedHat
+   https://github.com/gnu-mcu-eclipse/riscv-none-gcc/releases/download/v7.2.0-2-20180110/gnu-mcu-eclipse-riscv-none-gcc-7.2.0-2-20180111-2230-centos64.tgz
+   
+   Only if you want/need to install the toolchain on Debian/Ubuntu system try downloading this:
+   https://github.com/gnu-mcu-eclipse/riscv-none-gcc/releases/download/v7.2.0-1-20171109/gnu-mcu-eclipse-riscv-none-gcc-7.2.0-1-20171109-1926-debian64.tgz
+   
+   [There is also a way to build the toolchain from its sources, but this is challenging and may takes hours to days to acomplish]
+   
+   # Removing un-needed level of hierarchy for Enics reference environment compatibility
+   
+   toolchain> mv gnu-mcu-eclipse/riscv-none-gcc/7.2.0-2-20180111-2230  gnu-mcu-eclipse/
+   toolchain> rm -r gnu-mcu-eclipse/riscv-none-gcc     
+   
+6. cd .. # go back the pulp directory
+   tar -xzvf genpro_pulpenix_XXX_XXXXXXXXXXXX.tgz   # un-tar the released tar-ball
+
+
+7. cd pulpenix 
+
+8. ls
+
+   # you should have following folders    
+
+   src  - Pulpenix design and test-bench sources (mostly system verilog)
+   sim  - Where Simulation takes place   
+   apps - Where SW applications are coded and maintained 
+   misc - Some documents and setup files  
+  
+9. setup your environment:
+
+   edit just once this file: misc/genpro_pulpenix_setup.sh
+ 
+   correct ONLY these lines to your specfic  path
+   
+   setenv MY_PULP_ENV  <MY_WORK_SPACE_PATH>/pulp/pulpenix
+   setenv RISCV_PULP_TOOLCHAIN_ROOT <MY_WORK_SPACE_PATH>/pulp/toolchain
+
+   Now execute following command, consider adding it to your ~/.bashrc
+   
+   source misc/genpro_pulpenix_setup.sh  
+   
+10. Lets compile "Hello World"
+
+   cd  $MY_PULP_APPS/helloworld    # go to the hellowotld application folder
+
+   cat helloworld.c                # take a quick look at code and comments
+   
+   pulp_comp_app_noopt helloworld  # Actually compiling the program
+   
+11. Now lets Simulate the program   
+   
+   cd $MY_PULP_IRUN                # move to the simulation directory
+   
+   pulp_get_app helloworld         #  configure simulation to run the hello-world application
+   
+   pulp_irun                       
+   
+   Will compile the Pulpenix and Testbench Verilog model
+   Lots of compilation messages will show up (mostly only first time you run the command)
+   eventually  "Hello World" will be printed.
+
+* For advanced usage of the environment stay tuned for following documents to be soon provided
+ 
+ pulpenix_prog_io_guide            # Simple file and terminal C program interface   
+ pulpenix_hw_sw_debug_env_guide    # HW/SW dEclipse based ebug environment.

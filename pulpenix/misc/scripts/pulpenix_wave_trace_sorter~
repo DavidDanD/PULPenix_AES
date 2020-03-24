@@ -1,0 +1,12 @@
+#!/bin/csh
+if	($#argv != 1 ) then
+echo "usage: pulpenix_wave_trace_sorter <wave/trace file name>"
+else
+cd $MY_PULP_IRUN
+pulp_irun +define+DO_TRACE=1 -input probe_all.tcl
+mv waves.shm ../../apps/waves/$1.shm
+    if( -d ../../apps/waves/$1.shm) then
+	rm -r ../../apps/waves/$1.shm
+    endif
+mv trace_core_00_0.log ../../apps/traces/$1.log
+endif

@@ -1,0 +1,115 @@
+*** Message Type: info ***
+When: Fri Aug 16 12:58:55 PM IDT 2019
+SimVision started.
+Version: TOOL:  simvision(64)   15.20-s038
+User: epakmp
+Host: venus61.technion.ac.il
+Platform: Linux/x86_64/2.6.32-754.el6.x86_64
+Started: Fri Aug 16 12:58:55 PM IDT 2019
+Command: /tools/cadence78/IC/INCISIVE152/tools.lnx86/simvision/bin/64bit/simvision.exe
+Work Directory: /users/epakmp/Workarea/pulp/pulpenix/src/ips/riscv
+ 
+*** Message Type: info ***
+When: Fri Aug 16 12:58:56 PM IDT 2019
+Create waveform window: "Waveform 1"
+ 
+*** Message Type: info ***
+When: Fri Aug 16 12:58:57 PM IDT 2019
+Create console window: "Console"
+ 
+*** Message Type: info ***
+When: Fri Aug 16 12:58:59 PM IDT 2019
+Create utility window: "Properties"
+ 
+*** Message Type: info ***
+When: Fri Aug 16 01:00:09 PM IDT 2019
+Create source window: "Source Browser 1"
+ 
+*** Message Type: info ***
+When: Fri Aug 16 01:00:13 PM IDT 2019
+Connect to Simulator
+      Design: worklib.spi_bus_master:sv
+   Languages: verilog assertion
+   Simulator: Incisive ppe
+     Version: TOOL:  ippe(64)        15.20-s038
+        User: epakmp
+        Host: venus61.technion.ac.il
+Time Started: Fri Aug 16 01:00:12 PM IDT 2019
+  Process ID: 25122
+   Directory: /users/epakmp/Workarea/pulp/pulpenix/src/ips/riscv
+     Command: /tools/cadence78/IC/INCISIVE152/tools.lnx86/simvision/bin/64bit/ippe.exe -nocopyright -nowarn DLNOCL -cdslib /users/epakmp/Workarea/pulp/pulpenix/sim/irun/./INCA_libs/irun.lnx8664.15.20.nc/cds.lib -snapshot worklib.spi_bus_master:sv -64
+
+ 
+*** Message Type: info ***
+When: Fri Aug 16 01:00:14 PM IDT 2019
+Exit Simulator: user
+ 
+*** Message Type: info ***
+When: Fri Aug 16 01:00:17 PM IDT 2019
+Delete source window: "Source Browser 1"
+ 
+*** Message Type: info ***
+When: Fri Aug 16 01:08:27 PM IDT 2019
+Create memviewer window: "Memory Viewer 1"
+ 
+*** Message Type: info ***
+When: Fri Aug 16 01:08:44 PM IDT 2019
+Delete memviewer window: "Memory Viewer 1"
+ 
+*** Message Type: info ***
+When: Fri Aug 16 01:08:56 PM IDT 2019
+Create watchwindow window: "Watch Window 1"
+ 
+*** Message Type: info ***
+When: Fri Aug 16 01:08:58 PM IDT 2019
+Delete watchwindow window: "Watch Window 1"
+ 
+*** Message Type: info ***
+When: Fri Aug 16 01:09:43 PM IDT 2019
+Create expression window: "Expression Calculator 1"
+ 
+*** Message Type: info ***
+When: Fri Aug 16 01:11:05 PM IDT 2019
+Delete expression window: "Expression Calculator 1"
+ 
+*** Message Type: info ***
+When: Fri Aug 16 01:14:24 PM IDT 2019
+Create simcompare window: "SimCompare Manager"
+ 
+*** Message Type: info ***
+When: Fri Aug 16 01:14:47 PM IDT 2019
+Create expression window: "Expression Calculator 2"
+ 
+*** Message Type: info ***
+When: Fri Aug 16 02:55:46 PM IDT 2019
+Recall Simulator
+ 
+*** Message Type: info ***
+When: Fri Aug 16 03:07:03 PM IDT 2019
+Delete expression window: "Expression Calculator 2"
+ 
+*** Message Type: error ***
+When: Fri Aug 16 03:07:03 PM IDT 2019
+invalid command name ".expression1.bottom.statusbar.indicator-autosave.autosave"
+    while executing
+".expression1.bottom.statusbar.indicator-autosave.autosave configure -image image267"
+    ("after" script)
+ 
+*** Message Type: error ***
+When: Fri Aug 16 03:07:03 PM IDT 2019
+invalid command name ".expression1.bottom.statusbar.indicator-autosave.autosave"
+    while executing
+".expression1.bottom.statusbar.indicator-autosave.autosave configure -image image267"
+    ("after" script)
+ 
+*** Message Type: error ***
+When: Fri Aug 16 03:07:03 PM IDT 2019
+invalid command name ".expression1.bottom.statusbar.indicator-autosave.autosave"
+    while executing
+".expression1.bottom.statusbar.indicator-autosave.autosave configure -image image267"
+    ("after" script)
+ 
+*** Message Type: info ***
+When: Fri Aug 16 03:25:47 PM IDT 2019
+SimVision Exit.
+ 

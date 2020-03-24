@@ -1,0 +1,62 @@
+07/08 
+github:
+We have a repository on my computer (probably won't be used), on the web (origin) and on
+the vlsi server.
+Currenty on the vlsi repository everything under pulpenix (and only there) is tracked by git.
+To run a git command you must be under Workarea/pulp/pulpenix.
+The original version of pulpenix is now called pulpenix_no_git.
+Sandbox is now integrated into the directory pulpenix and is updated on the origin too.
+
+important commands:
+ADD NEW FILE:
+To add a new file first make it in the workarea, then type 
+	git add <filename>
+to add it to the index (local "changelist") then, note that after you do that a "snapshot" of the file is not yet tracked to the local git repository until you commit.
+
+COMMIT:
+to commit a file type: 
+	git commit [<filename or directory name> |-a] [ -m "commit message"]
+This commits all changes done to the file or to the directory (recursively to all the 
+directories under it) or all recent changes if you use -a.
+You should either add the -m "commit message" and type a descriptive message, or if you don't,
+it will open an editor by default and make you add a comment.
+
+AMEND:
+If you want to make changes to the description of a commit you just made do:
+	git commit --amend
+it will prompt the vim editor, add your comment there.
+to push the comment fix do
+	git push --force
+
+LOG:
+if you want to watch a file's history type
+	git log <example.txt>
+for example, if you type git log riscv_id_stage.sv you'll get:
+
+commit 95fb5e2b6774b7dfbe3192d8c80c819e6dadee60 (HEAD -> master)
+Author: avi <avikoriat@gmail.com>
+Date:   Wed Aug 7 21:59:49 2019 +0300
+
+    commit to sync with origin
+
+(the last line was my commit message)
+
+do 
+	git log
+to get all recent commits. --oneline shows a concise view of all of them.
+
+PUSH:
+After you commit, to push the commits you made onto the origin type:
+	git push
+that's it.
+
+PULL:
+to pull a branch to the vlsi server type:
+	git pull origin <branch name>
+this could make a problem if you have files in your working directory which have identical names to files
+on the origin, but aren't on your local repository to solve it first type:
+	git add --all
+or
+	git add -A
+and then rerun the pull command.
+

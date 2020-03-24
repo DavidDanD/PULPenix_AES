@@ -1,0 +1,204 @@
+*** Message Type: info ***
+When: Thu Aug 22 11:55:05 AM IDT 2019
+SimVision started.
+Version: TOOL:  simvision(64)   15.20-s038
+User: epakmp
+Host: omega81.efit.technion.ac.il
+Platform: Linux/x86_64/2.6.32-754.el6.x86_64
+Started: Thu Aug 22 11:55:05 AM IDT 2019
+Command: /tools/cadence78/IC/INCISIVE152/tools.lnx86/simvision/bin/64bit/simvision.exe
+Work Directory: /users/epakmp/Workarea/pulp/pulpenix/apps/asm_mem_access
+ 
+*** Message Type: info ***
+When: Thu Aug 22 11:55:10 AM IDT 2019
+Create waveform window: "Waveform 1"
+ 
+*** Message Type: info ***
+When: Thu Aug 22 11:55:40 AM IDT 2019
+Create console window: "Console"
+ 
+*** Message Type: info ***
+When: Thu Aug 22 11:55:45 AM IDT 2019
+Create utility window: "Properties"
+ 
+*** Message Type: info ***
+When: Thu Aug 22 11:59:54 AM IDT 2019
+Create expression window: "Expression Calculator 1"
+ 
+*** Message Type: info ***
+When: Thu Aug 22 12:00:33 PM IDT 2019
+Delete expression window: "Expression Calculator 1"
+ 
+*** Message Type: info ***
+When: Thu Aug 22 12:12:03 PM IDT 2019
+Create register window: "Register 1"
+ 
+*** Message Type: info ***
+When: Thu Aug 22 12:15:47 PM IDT 2019
+Create schematic window: "Schematic Tracer 1"
+ 
+*** Message Type: info ***
+When: Thu Aug 22 12:16:16 PM IDT 2019
+Connect to Simulator
+      Design: worklib.spi_bus_master:sv
+   Languages: verilog assertion
+   Simulator: Incisive ppe
+     Version: TOOL:  ippe(64)        15.20-s038
+        User: epakmp
+        Host: omega81.efit.technion.ac.il
+Time Started: Thu Aug 22 12:16:16 PM IDT 2019
+  Process ID: 5786
+   Directory: /users/epakmp/Workarea/pulp/pulpenix/apps/asm_mem_access
+     Command: /tools/cadence78/IC/INCISIVE152/tools.lnx86/simvision/bin/64bit/ippe.exe -nocopyright -nowarn DLNOCL -cdslib /users/epakmp/Workarea/pulp/pulpenix/sim/irun/./INCA_libs/irun.lnx8664.15.20.nc/cds.lib -snapshot worklib.spi_bus_master:sv -64
+
+ 
+*** Message Type: info ***
+When: Thu Aug 22 12:16:17 PM IDT 2019
+Exit Simulator: user
+ 
+*** Message Type: info ***
+When: Thu Aug 22 12:16:56 PM IDT 2019
+Create source window: "Source Browser 1"
+ 
+*** Message Type: error ***
+When: Thu Aug 22 12:51:15 PM IDT 2019
+recursive call not supported
+    while executing
+"[$itk_component(schematic) component nlview] bind shift-stroke-1 -action instdrag -echo_type instdrag -autoscroll"
+    (object "::.schematicWindow0" method "::SchematicWindow::_bindZoom" body line 11)
+    invoked from within
+"_bindZoom"
+    ("eval" body line 1)
+    invoked from within
+"eval $args"
+    (object "::.schematicWindow0" method "::SchematicWindow::_mutexEx" body line 5)
+    invoked from within
+"_mutexEx _bindZoom"
+    (object "::.schematicWindow0" method "::SchematicWindow::_displaystatusobject" body line 11)
+    invoked from within
+"::.schematicWindow0 _displaystatusobject .schematicWindow0.work.user.scrollframe.schematic.nlview 653 215"
+    (in namespace inscope "::SchematicWindow" script line 1)
+    invoked from within
+"namespace inscope ::SchematicWindow {::.schematicWindow0 _displaystatusobject .schematicWindow0.work.user.scrollframe.schematic.nlview 653 215}"
+    (command bound to event)
+ 
+*** Message Type: error ***
+When: Thu Aug 22 12:59:53 PM IDT 2019
+recursive call not supported
+    while executing
+"$nl save -string"
+    (object "::.schematicWindow0" method "::SchematicWindow::saveToCommandScript" body line 49)
+    invoked from within
+"$window saveToCommandScript $fid"
+    ("foreach" body line 13)
+    invoked from within
+"foreach window [::windows getWindows $type -objects] {
+             if {! [enabled windows $window] && !$autosaveFlag} {
+                       continue
+                   }
+              if {$first..."
+    ("foreach" body line 10)
+    invoked from within
+"foreach type [::windows getTypes -multi] {
+            # Skip any Expression Calc windows, since we do not have
+               # command language support for it.
+             if {$type..."
+    ("windows" arm line 2)
+    invoked from within
+"# Compiled -- no source code available
+error "called a copy of a compiled script""
+    (procedure "savescript::_save" line 1)
+    invoked from within
+"# Compiled -- no source code available
+error "called a copy of a compiled script""
+    (procedure "::savescript::autosave" line 1)
+    invoked from within
+"::savescript::autosave $filename"
+    (object "::application" method "::Application::auto-save" body line 18)
+    invoked from within
+"::application auto-save"
+    (in namespace inscope "::Application" script line 1)
+    invoked from within
+"namespace inscope ::Application {::application auto-save}"
+    ("after" script)
+ 
+*** Message Type: error ***
+When: Thu Aug 22 12:59:54 PM IDT 2019
+recursive call not supported
+    while executing
+"$nl save -string"
+    (object "::.schematicWindow0" method "::SchematicWindow::saveToCommandScript" body line 49)
+    invoked from within
+"$window saveToCommandScript $fid"
+    ("foreach" body line 13)
+    invoked from within
+"foreach window [::windows getWindows $type -objects] {
+             if {! [enabled windows $window] && !$autosaveFlag} {
+                       continue
+                   }
+              if {$first..."
+    ("foreach" body line 10)
+    invoked from within
+"foreach type [::windows getTypes -multi] {
+            # Skip any Expression Calc windows, since we do not have
+               # command language support for it.
+             if {$type..."
+    ("windows" arm line 2)
+    invoked from within
+"# Compiled -- no source code available
+error "called a copy of a compiled script""
+    (procedure "savescript::_save" line 1)
+    invoked from within
+"# Compiled -- no source code available
+error "called a copy of a compiled script""
+    (procedure "::savescript::autosave" line 1)
+    invoked from within
+"::savescript::autosave $filename"
+    (object "::application" method "::Application::auto-save" body line 18)
+    invoked from within
+"::application auto-save"
+    (in namespace inscope "::Application" script line 1)
+    invoked from within
+"namespace inscope ::Application {::application auto-save}"
+    ("after" script)
+ 
+*** Message Type: error ***
+When: Thu Aug 22 12:59:54 PM IDT 2019
+recursive call not supported
+    while executing
+"$nl save -string"
+    (object "::.schematicWindow0" method "::SchematicWindow::saveToCommandScript" body line 49)
+    invoked from within
+"$window saveToCommandScript $fid"
+    ("foreach" body line 13)
+    invoked from within
+"foreach window [::windows getWindows $type -objects] {
+             if {! [enabled windows $window] && !$autosaveFlag} {
+                       continue
+                   }
+              if {$first..."
+    ("foreach" body line 10)
+    invoked from within
+"foreach type [::windows getTypes -multi] {
+            # Skip any Expression Calc windows, since we do not have
+               # command language support for it.
+             if {$type..."
+    ("windows" arm line 2)
+    invoked from within
+"# Compiled -- no source code available
+error "called a copy of a compiled script""
+    (procedure "savescript::_save" line 1)
+    invoked from within
+"# Compiled -- no source code available
+error "called a copy of a compiled script""
+    (procedure "::savescript::autosave" line 1)
+    invoked from within
+"::savescript::autosave $filename"
+    (object "::application" method "::Application::auto-save" body line 18)
+    invoked from within
+"::application auto-save"
+    (in namespace inscope "::Application" script line 1)
+    invoked from within
+"namespace inscope ::Application {::application auto-save}"
+    ("after" script)
+ 

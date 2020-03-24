@@ -1,0 +1,6 @@
+source Workarea/pulp/pulpenix/misc/genpro_pulpenix_setup.sh
+cd $MY_PULP_APPS/asm_test
+pulp_comp_app_noopt asm_test 
+cd $MY_PULP_IRUN
+pulp_get_app asm_test
+pulp_irun_probe	 

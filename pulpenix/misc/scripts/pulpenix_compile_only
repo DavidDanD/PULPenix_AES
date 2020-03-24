@@ -1,0 +1,4 @@
+#!/bin/csh
+cd $MY_PULP_APPS/$1
+pulp_comp_app_noopt $1
+

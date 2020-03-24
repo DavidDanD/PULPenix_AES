@@ -1,0 +1,14 @@
+
+
+ Now bubble-sorting strings from input file:
+
+
+
+Input strings to sort:
+
+ Odem Ori Michael SocLab Udi WD Adam Mellanox Enics Alex Babu Mattan
+
+
+Sorted:
+
+ Adam Alex Babu Enics Mattan Mellanox Michael Odem Ori SocLab Udi WD

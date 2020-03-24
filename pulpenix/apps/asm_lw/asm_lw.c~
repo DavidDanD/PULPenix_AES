@@ -1,0 +1,12 @@
+
+
+#include <gpio.h>        // simple SOC gpio interface
+
+int main() {
+    int a = 5;
+    int b = 2;
+    int c = a + b;
+    sim_finish () ;  // flag to trigger simulation termination
+  
+  return 0;
+}

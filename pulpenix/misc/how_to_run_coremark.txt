@@ -1,0 +1,4 @@
+cd $MY_PULP_IRUN
+ 	pulp_get_app coremark
+ 	pulp_irun -defparam tb.top_i.core_region_i.INSTR_RAM_SIZE=524288
+
