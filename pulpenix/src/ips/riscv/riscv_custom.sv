@@ -1,5 +1,5 @@
 ////////////////////////////////////////////////////////////////////////////////
-// Engineer:       Michael Perl, Avi Koriat                                   //
+// Engineer:       Dolev Vaknin, David Dan                                   //
 //                                                                            //             
 //                                                                            //                                                   
 // Language:       SystemVerilog                                              //
