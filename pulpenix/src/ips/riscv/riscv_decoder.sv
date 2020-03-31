@@ -745,7 +745,7 @@ module riscv_decoder
         end
       end
 
-//*********************************akmp**************************************
+//*********************************dvdd**************************************
 /* Added custom opcode to execute our custom instruction.Here we decode this 
    opcode and send the appropriate signals in order to enable our ALU-like 
    command to execute                                                       */
