@@ -25,7 +25,7 @@
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
 
-`include "apu_macros.sv"
+`include "include/apu_macros.sv"
 
 import riscv_defines::*;
 
@@ -134,12 +134,12 @@ module riscv_decoder
   output logic [1:0]  jump_in_dec_o,           // jump_in_id without deassert
   output logic [1:0]  jump_in_id_o,            // jump is being calculated in ALU
   output logic [1:0]  jump_target_mux_sel_o,   // jump target selection
-//********************* akmp *************************
+//********************* dvdd *************************
 
-  output logic        custom_instruction_sel_o, //select for mux that will perform custom instruction
+  output logic [1:0]  aes_instruction_sel_o, //select for mux that will perform AES instructions
   output logic        mem_addr_op_c_sel_o,      /*select for mux that controls the data memory write address - 
                                                 when on the mux chooses the alu_op_c as the write address */
-  output logic        cust_ex_unit_en_o // enable the custom execution unit
+  output logic        aes_ex_unit_en_o // enable the custom execution unit
 
 //*************************************************
 );
@@ -251,9 +251,9 @@ module riscv_decoder
     reg_fp_c_o                  = 1'b0;
     reg_fp_d_o                  = 1'b0;
 
-//***************** akmp ********************
-    cust_ex_unit_en_o           = 1'b0;
-    custom_instruction_sel_o    = 1'b0;
+//***************** dvdd ********************
+    aes_ex_unit_en_o            = 1'b0;
+    aes_instruction_sel_o       = 1'b0;
     mem_addr_op_c_sel_o         = 1'b0;
 //*******************************************
 
@@ -746,27 +746,30 @@ module riscv_decoder
       end
 
 //*********************************dvdd**************************************
-/* Added custom opcode to execute our custom instruction.Here we decode this 
-   opcode and send the appropriate signals in order to enable our ALU-like 
+/* Added custom opcode to execute our AES application. Here we decode this 
+   opcode and send the appropriate signals in order to enable our AES 
    command to execute                                                       */
-      OPCODE_CUST0: begin         
-        alu_en_o                 = 1'b0; //ALU is enabled by default 
-        regfile_alu_we           = instr_rdata_i[25] ? 1'b0: 1'b1; //enable writing to register b the result
+      OPCODE_CUST0: begin
         /*The following 2 signals are  needed for
          correct forwarding. The forwarding mux
          decides if to forward register a and b 
          contents from the ex and wb stages based
          on these signals.*/
-        rega_used_o              = 1'b1; 
-        regb_used_o              = 1'b1; 
-        custom_instruction_sel_o = 1'b1;
-        cust_ex_unit_en_o        = 1'b1; 	
+        //rega_used_o              = 1'b1; 
+        //regb_used_o              = 1'b1; 
+        aes_ex_unit_en_o         = 1'b1; 	
         unique case (instr_rdata_i[14:12])
-          3'b000: alu_operator_o = ALU_ADD;  // used for FFS
-          3'b010: alu_operator_o = ALU_SLTS; // used for alt
-          3'b100: alu_operator_o = ALU_XOR;  // used for xor condition
-          3'b001: alu_operator_o = ALU_CLB;  // used for GCD
-        endcase
+          3'b000: begin
+        	aes_instruction_sel_o    = 2'h0;	// AES_REG - used to store register in the AES register-file
+	  end
+          3'b010: begin
+        	aes_instruction_sel_o    = 2'h1;	// AES_RUN - used to run the AES engine
+          end
+	  3'b100: begin
+        	aes_instruction_sel_o    = 2'h2;	// AES_MEM - used to write the encrypted data in the memory
+		alu_operator_o = ALU_ADD;
+          end
+	endcase
         if (instr_rdata_i[25] == 1'b1) begin
 
             regc_used_o          = 1'b1;     //added for correct forwarding 31/08
