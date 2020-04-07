@@ -9,6 +9,7 @@
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
 
+`include "include/riscv_defines.sv"
 import riscv_defines::*;
 
 module riscv_custom //custom execution unit

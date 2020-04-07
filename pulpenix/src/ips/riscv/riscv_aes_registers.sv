@@ -34,7 +34,7 @@ module riscv_register_file
     // Write port
     input logic [ADDR_WIDTH-1:0]   waddr_i,
     input logic [DATA_WIDTH-1:0]   wdata_i,
-    input logic                    wen_i,
+    input logic                    wen_i
 );
 
   // number of integer registers
@@ -44,7 +44,7 @@ module riscv_register_file
   logic [NUM_WORDS-1:0][DATA_WIDTH-1:0]     mem;
 
   // write enable signals for all registers
-  logic [NUM_TOT_WORDS-1:0]                 wen_dec;
+  logic [NUM_WORDS-1:0]                 wen_dec;
 
    //-----------------------------------------------------------------------------
    //-- READ : Read all 4 registers
