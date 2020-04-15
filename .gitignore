@@ -1,7 +1,6 @@
 *.bak
 *.qpg
 *.qdb
-*.mpf
 *.mti
 *.qtl
 pulpenix/src/ips/riscv/work/
