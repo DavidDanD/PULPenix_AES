@@ -912,10 +912,10 @@ module riscv_core
     .rdata_d_o    ( regfile_data_rd_id ),
 
     // Write port a
-    .waddr_i    ( regfile_waddr_wb_i   ),
-    .wdata_i    ( alu_operand_a_ex     ),
-    .wen_i      ( aes_we_ex_unit_en_i  ),
-    .aesen_i    ( aes_start_i          )
+    .waddr_i    ( alu_operand_a_ex        ),
+    .wdata_i    ( alu_operand_a_ex        ),
+    .wen_i      ( aes_we_ex_unit_en_i     ),
+    .aesen_i    ( aes_start_i             )
   );
 //**************************************************************
    ////////////////////////////////////////////////////////////////////////////////////////

@@ -197,7 +197,7 @@ module riscv_id_stage
     output logic        prepost_useincr_ex_o,
     input  logic        data_misaligned_i,
 	//*************** dvdd ***************
-    output logic        mem_addr_op_c_sel_id_o,
+    output logic [1:0]  aes_regfile_waddr_ex_o,
     output logic        aes_we_ex_unit_en_o,  // enable writing to aes registers
     output logic        aes_start_ex_unit_o, // starts the encryption process
 	//************************************
@@ -341,7 +341,7 @@ module riscv_id_stage
 
 //********************** dvdd ****************************
   logic [1:0]  aes_instruction_sel_id;
-  logic        mem_addr_op_c_sel;
+  //logic [1:0]  mem_addr_op_c_sel;
   logic        aes_we_ex_unit_en; 
 //********************************************************
   
@@ -1088,7 +1088,7 @@ module riscv_id_stage
 
 //********************** dvdd ****************************
     .aes_instruction_sel_o           (aes_instruction_sel_id     ), // aes instructions 
-    .mem_addr_op_c_sel_o             (mem_addr_op_c_sel          ),
+    //.mem_addr_op_c_sel_o             (mem_addr_op_c_sel          ),
     .aes_ex_unit_en_o                (aes_we_ex_unit_en          )
 //********************************************************
 
@@ -1395,7 +1395,7 @@ module riscv_id_stage
       branch_in_ex_o              <= 1'b0;
      ///////// dvdd /////////////////////
       aes_instruction_sel_ex_o    <= 2'b0;
-      mem_addr_op_c_sel_id_o      <= 1'b0;
+      aes_regfile_waddr_ex_o      <= 2'b0;
      ////////////////////////////////////
     end
     else if (data_misaligned_i) begin
@@ -1492,8 +1492,8 @@ module riscv_id_stage
              the pipe, even though it is not a GCD command*/
           aes_we_ex_unit_en_o         <= aes_we_ex_unit_en;
         end
-        mem_addr_op_c_sel_id_o        <= mem_addr_op_c_sel;
-       aes_instruction_sel_ex_o       <= aes_instruction_sel_id; 
+        aes_regfile_waddr_ex_o        <= regfile_addr_rb_id[1:0];
+        aes_instruction_sel_ex_o      <= aes_instruction_sel_id; 
 //********************************************************
         regfile_alu_we_ex_o         <= regfile_alu_we_id;
         if (regfile_alu_we_id) begin

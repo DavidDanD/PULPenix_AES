@@ -137,7 +137,7 @@ module riscv_decoder
 //********************* dvdd *************************
 
   output logic [1:0]  aes_instruction_sel_o, //select for mux that will perform AES instructions
-  output logic        mem_addr_op_c_sel_o,      /*select for mux that controls the data memory write address - 
+  /*output logic [1:0]  mem_addr_op_c_sel_o,      /*select for mux that controls the data memory write address - 
                                                 when on the mux chooses the alu_op_c as the write address */
   output logic        aes_ex_unit_en_o // enable the custom execution unit
 
@@ -254,7 +254,7 @@ module riscv_decoder
 //***************** dvdd ********************
     aes_ex_unit_en_o            = 1'b0;
     aes_instruction_sel_o       = 2'b0;
-    mem_addr_op_c_sel_o         = 1'b0;
+    //mem_addr_op_c_sel_o         = 1'b0;
 //*******************************************
 
     bmask_a_mux_o               = BMASK_A_ZERO;
@@ -760,14 +760,14 @@ module riscv_decoder
         aes_ex_unit_en_o         = 1'b1; 	
         unique case (instr_rdata_i[14:12])
           3'b000: begin
-        	aes_instruction_sel_o    = 2'h0             ; // AES_REG - used to store register in the AES register-file
+        	aes_instruction_sel_o    = 2'h1             ; // AES_REG - used to store register in the AES register-file
                 alu_op_a_mux_sel_o       = OP_A_REGA_OR_FWD ; 
 	  end
           3'b010: begin
-        	aes_instruction_sel_o    = 2'h1             ; // AES_RUN - used to run the AES engine
+        	aes_instruction_sel_o    = 2'h2             ; // AES_RUN - used to run the AES engine
           end
 	  3'b100: begin
-        	aes_instruction_sel_o    = 2'h2             ; // AES_MEM - used to write the encrypted data in the memory
+        	aes_instruction_sel_o    = 2'h3             ; // AES_MEM - used to write the encrypted data in the memory
 		alu_operator_o = ALU_ADD;
           end
 	endcase
@@ -775,7 +775,7 @@ module riscv_decoder
 
             regc_used_o          = 1'b1;     //added for correct forwarding 31/08
             regc_mux_o           = REGC_RD;  //choose alu_op_c resiter to be intsr[11:7]
-            mem_addr_op_c_sel_o  = 1'b1;     //select the alu_op_c as address for writing the
+            //mem_addr_op_c_sel_o  = 1'b1;     //select the alu_op_c as address for writing the
             //the following are copied
             //from the sw opcode to enable
       	    //instant memory write:
