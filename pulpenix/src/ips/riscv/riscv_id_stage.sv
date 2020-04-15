@@ -114,8 +114,8 @@ module riscv_id_stage
 
     output logic [5:0]  regfile_waddr_ex_o,
     output logic        regfile_we_ex_o,
-//*********************** akmp *********************
-    output logic        custom_instruction_sel_ex_o, 
+//*********************** dvdd *********************
+    output logic [1:0]  aes_instruction_sel_ex_o, 
 //**************************************************
     output logic [5:0]  regfile_alu_waddr_ex_o,
     output logic        regfile_alu_we_ex_o,
@@ -196,9 +196,10 @@ module riscv_id_stage
 
     output logic        prepost_useincr_ex_o,
     input  logic        data_misaligned_i,
-	//*************** akmp ***************
+	//*************** dvdd ***************
     output logic        mem_addr_op_c_sel_id_o,
-    output logic        cust_ex_unit_en_o,
+    output logic        aes_we_ex_unit_en_o,  // enable writing to aes registers
+    output logic        aes_start_ex_unit_o, // starts the encryption process
 	//************************************
 
     // Interrupt signals
@@ -338,11 +339,11 @@ module riscv_id_stage
   logic [3:0]  imm_b_mux_sel;
   logic [1:0]  jump_target_mux_sel;
 
-//********************** akmp ****************************
-  logic        custom_instruction_sel_id;
+//********************** dvdd ****************************
+  logic [1:0]  aes_instruction_sel_id;
   logic        mem_addr_op_c_sel;
-  logic        cust_ex_unit_en; 
-//********************** akmp ****************************
+  logic        aes_we_ex_unit_en; 
+//********************** dvdd ****************************
   
 // Multiplier Control
   logic [2:0]  mult_operator;    // multiplication operation selection
@@ -972,7 +973,6 @@ module riscv_id_stage
 
   assign dbg_reg_rdata_o = regfile_data_rc_id;
 
-
   ///////////////////////////////////////////////
   //  ____  _____ ____ ___  ____  _____ ____   //
   // |  _ \| ____/ ___/ _ \|  _ \| ____|  _ \  //
@@ -1086,10 +1086,10 @@ module riscv_id_stage
     .jump_in_id_o                    ( jump_in_id                ),
     .jump_target_mux_sel_o           ( jump_target_mux_sel       ),
 
-//********************** akmp ****************************
-    .cust_ex_unit_en_o               (cust_ex_unit_en          ),
-    .custom_instruction_sel_o        (custom_instruction_sel_id),
-    .mem_addr_op_c_sel_o             (mem_addr_op_c_sel        )
+//********************** dvdd ****************************
+    .aes_ex_unit_en_o                (aes_we_ex_unit_en          ),
+    .aes_instruction_sel_o           (aes_instruction_sel_id     ), // aes instructions 
+    .mem_addr_op_c_sel_o             (mem_addr_op_c_sel          )
 //********************************************************
 
   );
@@ -1393,8 +1393,8 @@ module riscv_id_stage
       pc_ex_o                     <= '0;
 
       branch_in_ex_o              <= 1'b0;
-     ///////// akmp /////////////////////
-      custom_instruction_sel_ex_o <= 1'b0;
+     ///////// dvdd /////////////////////
+      aes_instruction_sel_ex_o    <= 2'b0;
       mem_addr_op_c_sel_id_o      <= 1'b0;
      ////////////////////////////////////
     end
@@ -1473,9 +1473,9 @@ module riscv_id_stage
         if (regfile_we_id) begin
           regfile_waddr_ex_o        <= regfile_waddr_id;
         end
-//************************* akmp *************************
+//************************* dvdd *************************
 // custom execution unit signals
-        if (custom_instruction_sel_id)
+        if (aes_instruction_sel_id)
         begin 
           alu_operator_ex_o         <= alu_operator;
           alu_operand_a_ex_o        <= alu_operand_a;
@@ -1490,10 +1490,10 @@ module riscv_id_stage
              coincidence instr[14:12] is GCD code, we have
              a problem because the CEU will launch and stall 
              the pipe, even though it is not a GCD command*/
-          cust_ex_unit_en_o         <= cust_ex_unit_en;
+          aes_we_ex_unit_en_o         <= aes_we_ex_unit_en;
         end
         mem_addr_op_c_sel_id_o        <= mem_addr_op_c_sel;
-        custom_instruction_sel_ex_o   <= custom_instruction_sel_id; 
+       aes_instruction_sel_ex_o       <= aes_instruction_sel_id; 
 //********************************************************
         regfile_alu_we_ex_o         <= regfile_alu_we_id;
         if (regfile_alu_we_id) begin

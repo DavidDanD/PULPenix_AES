@@ -253,7 +253,7 @@ module riscv_decoder
 
 //***************** dvdd ********************
     aes_ex_unit_en_o            = 1'b0;
-    aes_instruction_sel_o       = 1'b0;
+    aes_instruction_sel_o       = 2'b0;
     mem_addr_op_c_sel_o         = 1'b0;
 //*******************************************
 
@@ -749,7 +749,7 @@ module riscv_decoder
 /* Added custom opcode to execute our AES application. Here we decode this 
    opcode and send the appropriate signals in order to enable our AES 
    command to execute                                                       */
-      OPCODE_CUST0: begin
+      OPCODE_AES: begin
         /*The following 2 signals are  needed for
          correct forwarding. The forwarding mux
          decides if to forward register a and b 

@@ -13,7 +13,7 @@
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
 
-module riscv_register_file
+module riscv_aes_register_file
 #(
     parameter ADDR_WIDTH    = 3,
     parameter DATA_WIDTH    = 32
@@ -34,7 +34,10 @@ module riscv_register_file
     // Write port
     input logic [ADDR_WIDTH-1:0]   waddr_i,
     input logic [DATA_WIDTH-1:0]   wdata_i,
-    input logic                    wen_i
+    input logic                    wen_i,
+
+    // Start port
+    input logic                    aes_start_i
 );
 
   // number of integer registers
