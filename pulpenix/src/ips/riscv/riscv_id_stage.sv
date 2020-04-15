@@ -343,7 +343,7 @@ module riscv_id_stage
   logic [1:0]  aes_instruction_sel_id;
   logic        mem_addr_op_c_sel;
   logic        aes_we_ex_unit_en; 
-//********************** dvdd ****************************
+//********************************************************
   
 // Multiplier Control
   logic [2:0]  mult_operator;    // multiplication operation selection
@@ -1087,9 +1087,9 @@ module riscv_id_stage
     .jump_target_mux_sel_o           ( jump_target_mux_sel       ),
 
 //********************** dvdd ****************************
-    .aes_ex_unit_en_o                (aes_we_ex_unit_en          ),
     .aes_instruction_sel_o           (aes_instruction_sel_id     ), // aes instructions 
-    .mem_addr_op_c_sel_o             (mem_addr_op_c_sel          )
+    .mem_addr_op_c_sel_o             (mem_addr_op_c_sel          ),
+    .aes_ex_unit_en_o                (aes_we_ex_unit_en          )
 //********************************************************
 
   );

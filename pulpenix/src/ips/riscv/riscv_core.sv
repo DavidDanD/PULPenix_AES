@@ -623,7 +623,7 @@ module riscv_core
     .regfile_alu_we_ex_o          ( regfile_alu_we_ex    ),
     .regfile_alu_waddr_ex_o       ( regfile_alu_waddr_ex ),
 
-//************************* akmp *************************
+//************************* dvdd *************************
 	
     .aes_instruction_sel_ex_o     ( aes_instruction_sel_ex     ),
     .mem_addr_op_c_sel_id_o       ( mem_addr_op_c_sel_id       ),
@@ -913,7 +913,7 @@ module riscv_core
 
     // Write port a
     .waddr_i    ( regfile_waddr_wb_i   ),
-    .wdata_i    ( regfile_wdata_wb_i   ),
+    .wdata_i    ( alu_operand_a_ex     ),
     .wen_i      ( aes_we_ex_unit_en_i  ),
     .aesen_i    ( aes_start_i          )
   );

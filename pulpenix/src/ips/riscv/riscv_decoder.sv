@@ -760,13 +760,14 @@ module riscv_decoder
         aes_ex_unit_en_o         = 1'b1; 	
         unique case (instr_rdata_i[14:12])
           3'b000: begin
-        	aes_instruction_sel_o    = 2'h0;	// AES_REG - used to store register in the AES register-file
+        	aes_instruction_sel_o    = 2'h0             ; // AES_REG - used to store register in the AES register-file
+                alu_op_a_mux_sel_o       = OP_A_REGA_OR_FWD ; 
 	  end
           3'b010: begin
-        	aes_instruction_sel_o    = 2'h1;	// AES_RUN - used to run the AES engine
+        	aes_instruction_sel_o    = 2'h1             ; // AES_RUN - used to run the AES engine
           end
 	  3'b100: begin
-        	aes_instruction_sel_o    = 2'h2;	// AES_MEM - used to write the encrypted data in the memory
+        	aes_instruction_sel_o    = 2'h2             ; // AES_MEM - used to write the encrypted data in the memory
 		alu_operator_o = ALU_ADD;
           end
 	endcase
