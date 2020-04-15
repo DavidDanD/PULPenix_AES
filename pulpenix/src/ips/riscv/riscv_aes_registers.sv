@@ -15,7 +15,7 @@
 
 module riscv_aes_register_file
 #(
-    parameter ADDR_WIDTH    = 3,
+    parameter ADDR_WIDTH    = 2,
     parameter DATA_WIDTH    = 32
 )
 (
