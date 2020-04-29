@@ -769,7 +769,7 @@ module riscv_decoder
 	      end
           3'b001: begin
 			aes_we_ex_unit_en_o      = 1'b1             ; 	
-        	aes_instruction_sel_o    = 2'h1             ; // AES_KEY - used to store register in the AES register-file
+        	aes_instruction_sel_o    = 2'h1             ; // AES_KEY - used to store key register in the AES register-file
             alu_op_a_mux_sel_o       = OP_A_REGA_OR_FWD ; 
           end
           3'b010: begin
@@ -777,7 +777,6 @@ module riscv_decoder
         	aes_instruction_sel_o    = 2'h2             ; // AES_RUN - used to run the AES engine
           end
 	      3'b100: begin
-		    aes_we_ex_unit_en_o      = 1'b1             ; 	
         	aes_instruction_sel_o    = 2'h3             ; // AES_MEM - used to write the encrypted data in the memory
 		    alu_operator_o = ALU_ADD;
           end

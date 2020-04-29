@@ -71,18 +71,21 @@ module aes_regs_tb;
 		 instruction_sel  <= 2'h0;
 		 aes_start_i      <= 1'b0; #10
 		 
+		 // Writing deadbeef to data register 0
          address          <= 2'h0;
          data             <= 32'hdeadbeef;
          wr_enb           <= 1'b1;
-		 instruction_sel  <= 2'h1;
+		 instruction_sel  <= 2'h0;
 		 aes_start_i      <= 1'b0; #10
 		 
+		 // Writing deafbabe to data register 1
          address          <= 2'h1;
          data             <= 32'hdeafbabe;
          wr_enb           <= 1'b1;
-		 instruction_sel  <= 2'h1;
+		 instruction_sel  <= 2'h0;
 		 aes_start_i      <= 1'b0; #10
 		 
+		 // Writing cafecafe to key register 2
          address          <= 2'h2;
          data             <= 32'hcafeface;
          wr_enb           <= 1'b1;
@@ -92,7 +95,7 @@ module aes_regs_tb;
 
     always
       begin
-        clk <= 1; #5;
         clk <= 0; #5;
+        clk <= 1; #5;
       end
 endmodule

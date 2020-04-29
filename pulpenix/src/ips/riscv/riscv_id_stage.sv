@@ -1091,7 +1091,7 @@ module riscv_id_stage
     //.mem_addr_op_c_sel_o             (mem_addr_op_c_sel          ),
     .aes_we_ex_unit_en_o             ( aes_we_ex_unit_en          ),
 	.aes_start_ex_unit_en_o          ( aes_start_ex_unit_en       ),
-	.aes_command_en_o                ( aes_command_en             ),
+	.aes_command_en_o                ( aes_command_en             )
 //********************************************************
 
   );

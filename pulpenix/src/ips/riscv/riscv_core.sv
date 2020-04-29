@@ -911,6 +911,29 @@ module riscv_core
     .aes_start_i         ( aes_start_ex_unit_i     ),
 	.aes_start_o         ( aes_start_unit_o        )
   );
+  
+  riscv_aescipher
+  aescipher_i
+  (
+    .clk                 ( clk                ),
+    .rst_n               ( rst_n              ),
+
+    .start_aes_cipher    ( aes_start_unit_o   ),
+
+    // Read ports
+    .rdata_a_o    ( regfile_data_ra_id ),
+    .rdata_b_o    ( regfile_data_rb_id ),
+    .rdata_c_o    ( regfile_data_rc_id ),
+    .rdata_d_o    ( regfile_data_rd_id ),
+
+    // Write port a
+    .waddr_i             ( aes_regfile_waddr_ex_i  ),
+    .wdata_i             ( alu_operand_a_ex        ),
+    .wen_i               ( aes_we_ex_unit_en_i     ),
+	.instruction_sel_i   ( aes_instruction_sel_ex  ),
+    .aes_start_i         ( aes_start_ex_unit_i     ),
+	.aes_start_o         ( aes_start_unit_o        )
+  );
 //**************************************************************
    ////////////////////////////////////////////////////////////////////////////////////////
   //    _     ___    _    ____    ____ _____ ___  ____  _____   _   _ _   _ ___ _____   //
