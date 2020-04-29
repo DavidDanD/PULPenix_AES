@@ -114,9 +114,6 @@ module riscv_id_stage
 
     output logic [5:0]  regfile_waddr_ex_o,
     output logic        regfile_we_ex_o,
-//*********************** dvdd *********************
-    output logic [1:0]  aes_instruction_sel_ex_o, 
-//**************************************************
     output logic [5:0]  regfile_alu_waddr_ex_o,
     output logic        regfile_alu_we_ex_o,
 
@@ -197,6 +194,7 @@ module riscv_id_stage
     output logic        prepost_useincr_ex_o,
     input  logic        data_misaligned_i,
 	//*************** dvdd ***************
+	output logic [1:0]  aes_instruction_sel_ex_o,
     output logic [1:0]  aes_regfile_waddr_ex_o,
     output logic        aes_we_ex_unit_en_o,  // enable writing to aes registers
     output logic        aes_start_ex_unit_o, // starts the encryption process
@@ -342,7 +340,9 @@ module riscv_id_stage
 //********************** dvdd ****************************
   logic [1:0]  aes_instruction_sel_id;
   //logic [1:0]  mem_addr_op_c_sel;
-  logic        aes_we_ex_unit_en; 
+  logic        aes_we_ex_unit_en;
+  logic        aes_start_ex_unit_en;
+  logic        aes_command_en;
 //********************************************************
   
 // Multiplier Control
@@ -1087,9 +1087,11 @@ module riscv_id_stage
     .jump_target_mux_sel_o           ( jump_target_mux_sel       ),
 
 //********************** dvdd ****************************
-    .aes_instruction_sel_o           (aes_instruction_sel_id     ), // aes instructions 
+    .aes_instruction_sel_o           ( aes_instruction_sel_id     ), // aes instructions 
     //.mem_addr_op_c_sel_o             (mem_addr_op_c_sel          ),
-    .aes_ex_unit_en_o                (aes_we_ex_unit_en          )
+    .aes_we_ex_unit_en_o             ( aes_we_ex_unit_en          ),
+	.aes_start_ex_unit_en_o          ( aes_start_ex_unit_en       ),
+	.aes_command_en_o                ( aes_command_en             ),
 //********************************************************
 
   );
@@ -1396,6 +1398,8 @@ module riscv_id_stage
      ///////// dvdd /////////////////////
       aes_instruction_sel_ex_o    <= 2'b0;
       aes_regfile_waddr_ex_o      <= 2'b0;
+	  aes_we_ex_unit_en_o         <= 1'b0;
+	  aes_start_ex_unit_o         <= 1'b0;
      ////////////////////////////////////
     end
     else if (data_misaligned_i) begin
@@ -1474,13 +1478,13 @@ module riscv_id_stage
           regfile_waddr_ex_o        <= regfile_waddr_id;
         end
 //************************* dvdd *************************
-// custom execution unit signals
-        if (aes_instruction_sel_id)
+// aes execution unit signals
+        if (aes_command_en)
         begin 
           alu_operator_ex_o         <= alu_operator;
           alu_operand_a_ex_o        <= alu_operand_a;
           alu_operand_b_ex_o        <= alu_operand_b;
-	  alu_operand_c_ex_o        <= alu_operand_c;
+	      alu_operand_c_ex_o        <= alu_operand_c;
           regfile_alu_waddr_ex_o    <= regfile_alu_waddr_id;
           /* Avi added the following signal for correct 
              operation of the custom execution unit. This
@@ -1491,8 +1495,9 @@ module riscv_id_stage
              a problem because the CEU will launch and stall 
              the pipe, even though it is not a GCD command*/
           aes_we_ex_unit_en_o         <= aes_we_ex_unit_en;
+		  aes_start_ex_unit_o         <= aes_start_ex_unit_en;
         end
-        aes_regfile_waddr_ex_o        <= regfile_addr_rb_id[1:0];
+        aes_regfile_waddr_ex_o        <= regfile_addr_rc_id[1:0];
         aes_instruction_sel_ex_o      <= aes_instruction_sel_id; 
 //********************************************************
         regfile_alu_we_ex_o         <= regfile_alu_we_id;

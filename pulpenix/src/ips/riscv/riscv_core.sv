@@ -146,8 +146,12 @@ module riscv_core
   logic              trap_addr_mux;
   logic              lsu_load_err;
   logic              lsu_store_err;
-  //************* akmp ***************
-  logic              mem_addr_op_c_sel_id;
+  //************* dvdd ***************
+  logic [1:0]        aes_instruction_sel_ex;
+  logic              aes_regfile_waddr_ex_i;
+  logic              aes_we_ex_unit_en_i;
+  logic              aes_start_ex_unit_i;
+  logic              aes_start_unit_o;
   //**********************************
 
   // ID performance counter signals
@@ -345,11 +349,6 @@ module riscv_core
 
   //core busy signals
   logic        core_ctrl_firstfetch, core_busy_int, core_busy_q;
-
-//************************* dvdd *************************
-	
-  logic [1:0]  aes_instruction_sel_ex; 
-//********************************************************
 
   //Simchecker signal
   logic is_interrupt;
@@ -626,8 +625,9 @@ module riscv_core
 //************************* dvdd *************************
 	
     .aes_instruction_sel_ex_o     ( aes_instruction_sel_ex     ),
-    .mem_addr_op_c_sel_id_o       ( mem_addr_op_c_sel_id       ),
+    .aes_regfile_waddr_ex_o       ( aes_regfile_waddr_ex_i     ),
     .aes_we_ex_unit_en_o          ( aes_we_ex_unit_en_i        ),
+    .aes_start_ex_unit_o          ( aes_start_ex_unit_i        ),
 //********************************************************
                                    
 
@@ -885,14 +885,6 @@ module riscv_core
   );
 
 //************************* dvdd *******************************
-  ///////////////////////////////////////////////////////////////////////////////////
-  //            ______ ____     ____  _____ ____ ___ ____ _____ _____ ____  ____   //
-  //     / \   | ____// ___|   |  _ \| ____/ ___|_ _/ ___|_   _| ____|  _ \/ ___|  //
-  //    / _ \  |  _|  \___ \   | |_) |  _|| |  _ | |\___ \ | | |  _| | |_) \___ \  //
-  //   / ___ \ | |___  ___) |  |  _ <| |__| |_| || | ___) || | | |___|  _ < ___) | //
-  //  /_/   \_\\_____|\____/   |_| \_\_____\____|___|____/ |_| |_____|_| \_\____/  //
-  //                                                                               //
-  ///////////////////////////////////////////////////////////////////////////////////
   riscv_aes_register_file
     #(
       .ADDR_WIDTH(6),
@@ -912,10 +904,12 @@ module riscv_core
     .rdata_d_o    ( regfile_data_rd_id ),
 
     // Write port a
-    .waddr_i    ( alu_operand_a_ex        ),
-    .wdata_i    ( alu_operand_a_ex        ),
-    .wen_i      ( aes_we_ex_unit_en_i     ),
-    .aesen_i    ( aes_start_i             )
+    .waddr_i             ( aes_regfile_waddr_ex_i  ),
+    .wdata_i             ( alu_operand_a_ex        ),
+    .wen_i               ( aes_we_ex_unit_en_i     ),
+	.instruction_sel_i   ( aes_instruction_sel_ex  ),
+    .aes_start_i         ( aes_start_ex_unit_i     ),
+	.aes_start_o         ( aes_start_unit_o        )
   );
 //**************************************************************
    ////////////////////////////////////////////////////////////////////////////////////////
@@ -957,9 +951,9 @@ module riscv_core
     .operand_b_ex_i        ( alu_operand_b_ex   ),
     //************************* akmp **********************
     //added to add support of mem access to the custom command using opperand c
-    .operand_c_ex_i        ( alu_operand_c_ex   ),
-    .mem_addr_op_c_sel_i   ( mem_addr_op_c_sel_id  ),
-    .regfile_alu_wdata_fw_i( regfile_alu_wdata_fw  ),
+    .operand_c_ex_i        ( alu_operand_c_ex       ),
+    .mem_addr_op_c_sel_i   ( aes_regfile_waddr_ex_i ),
+    .regfile_alu_wdata_fw_i( regfile_alu_wdata_fw   ),
     //*****************************************************
     .addr_useincr_ex_i     ( useincr_addr_ex    ),
 

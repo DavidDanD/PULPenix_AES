@@ -1,6 +1,6 @@
 `timescale 1ns/1ns
 
-module aes_regs;
+module aes_regs_tb;
     parameter ADDR_WIDTH    = 2   ;
     parameter DATA_WIDTH    = 32  ;
 
