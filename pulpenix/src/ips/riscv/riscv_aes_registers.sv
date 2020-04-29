@@ -109,6 +109,7 @@ module riscv_aes_register_file
       begin : register_write_behavioral
         if (rst_n==1'b0) begin
           mem[i] <= 32'b0;
+		  key[i] <= 32'b0;
 	    end else if (test_en_i==1'b1) begin
 	      mem[i] <= 32'hffffffff;
         end else begin
