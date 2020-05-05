@@ -1,0 +1,6 @@
+key:
+128'h0000000000000000cafeface00000000
+dataIn:
+128'hdeadbeefdeafbabe0000000000000000
+dataOut:
+128'h2da8a1cf3772e5a2a49c22d1fd03b8a8
