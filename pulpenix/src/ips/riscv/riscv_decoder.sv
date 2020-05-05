@@ -763,24 +763,24 @@ module riscv_decoder
 		aes_command_en_o = 1'b1;
         unique case (instr_rdata_i[14:12])
           3'b000: begin
-			aes_we_ex_unit_en_o      = 1'b1             ; 	
-        	aes_instruction_sel_o    = 2'h0             ; // AES_REG - used to store register in the AES register-file
+            aes_we_ex_unit_en_o      = 1'b1             ; 	
+            aes_instruction_sel_o    = 2'h0             ; // AES_REG - used to store register in the AES register-file
             alu_op_a_mux_sel_o       = OP_A_REGA_OR_FWD ; 
-	      end
+          end
           3'b001: begin
-			aes_we_ex_unit_en_o      = 1'b1             ; 	
-        	aes_instruction_sel_o    = 2'h1             ; // AES_KEY - used to store key register in the AES register-file
+            aes_we_ex_unit_en_o      = 1'b1             ; 	
+            aes_instruction_sel_o    = 2'h1             ; // AES_KEY - used to store key register in the AES register-file
             alu_op_a_mux_sel_o       = OP_A_REGA_OR_FWD ; 
           end
           3'b010: begin
-			aes_start_ex_unit_en_o   = 1'b1				;
-        	aes_instruction_sel_o    = 2'h2             ; // AES_RUN - used to run the AES engine
+            aes_start_ex_unit_en_o   = 1'b1				;
+            aes_instruction_sel_o    = 2'h2             ; // AES_RUN - used to run the AES engine
           end
-	      3'b100: begin
-        	aes_instruction_sel_o    = 2'h3             ; // AES_MEM - used to write the encrypted data in the memory
-		    alu_operator_o = ALU_ADD;
+          3'b100: begin
+            aes_instruction_sel_o    = 2'h3             ; // AES_MEM - used to write the encrypted data in the memory
+            alu_operator_o = ALU_ADD;
           end
-	    endcase
+        endcase
         if (instr_rdata_i[25] == 1'b1) begin
 
             regc_used_o          = 1'b1;     //added for correct forwarding 31/08

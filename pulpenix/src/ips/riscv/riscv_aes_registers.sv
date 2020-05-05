@@ -38,7 +38,7 @@ module riscv_aes_register_file
     output logic [DATA_WIDTH-1:0]  rkey_d_o,
 	
 	//
-	output logic [DATA_WIDTH-1:0]  aes_mem,
+    output logic [DATA_WIDTH-1:0]  aes_mem,
 
     // Write port
     input logic [ADDR_WIDTH-1:0]   waddr_i,
@@ -46,10 +46,10 @@ module riscv_aes_register_file
     input logic                    wen_i,
 
     // Select port
-	input logic                    instruction_sel_i,           
+    input logic                    instruction_sel_i,           
     input logic                    aes_start_i,
-	
-	output logic                   aes_start_o
+
+    output logic                   aes_start_o
 );
 
   // number of integer registers
@@ -76,7 +76,7 @@ module riscv_aes_register_file
         assign rkey_b_o    = key[1];
         assign rkey_c_o    = key[2];
         assign rkey_d_o    = key[3];
-		assign aes_start_o = aes_start_i;
+        assign aes_start_o = aes_start_i;
      end
   endgenerate 
   
@@ -109,16 +109,15 @@ module riscv_aes_register_file
       begin : register_write_behavioral
         if (rst_n==1'b0) begin
           mem[i] <= 32'b0;
-		  key[i] <= 32'b0;
-	    end else if (test_en_i==1'b1) begin
-	      mem[i] <= 32'hffffffff;
+          key[i] <= 32'b0;
+        end else if (test_en_i==1'b1) begin
+          mem[i] <= 32'hffffffff;
         end else begin
           if(wen_dec[i] == 1'b1 && instruction_sel_i == 2'b0) begin
             mem[i] <= wdata_i;
           end else if(wen_dec[i] == 1'b1 && instruction_sel_i == 2'b1) begin
             key[i] <= wdata_i;
-		  end
-			
+          end	
         end
       end
 

@@ -101,7 +101,7 @@ module aes_engine_tb;
          address          <= 2'h2;
          data             <= 32'hcafeface;
          wr_enb           <= 1'b1;
-		 instruction_sel  <= 2'h3;
+         instruction_sel  <= 2'h3;
 		 aes_start_i      <= 1'b0;
       end
 
