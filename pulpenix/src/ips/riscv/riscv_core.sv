@@ -912,7 +912,7 @@ module riscv_core
 	.aes_start_o         ( aes_start_unit_o        )
   );
   
-  riscv_aescipher
+  riscv_aes_cipher
   aescipher_i
   (
     .clk                 ( clk                ),
@@ -930,9 +930,9 @@ module riscv_core
     .waddr_i             ( aes_regfile_waddr_ex_i  ),
     .wdata_i             ( alu_operand_a_ex        ),
     .wen_i               ( aes_we_ex_unit_en_i     ),
-	.instruction_sel_i   ( aes_instruction_sel_ex  ),
+    .instruction_sel_i   ( aes_instruction_sel_ex  ),
     .aes_start_i         ( aes_start_ex_unit_i     ),
-	.aes_start_o         ( aes_start_unit_o        )
+    .aes_start_o         ( aes_start_unit_o        )
   );
 //**************************************************************
    ////////////////////////////////////////////////////////////////////////////////////////

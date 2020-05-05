@@ -194,7 +194,7 @@ module riscv_id_stage
     output logic        prepost_useincr_ex_o,
     input  logic        data_misaligned_i,
 	//*************** dvdd ***************
-	output logic [1:0]  aes_instruction_sel_ex_o,
+    output logic [1:0]  aes_instruction_sel_ex_o,
     output logic [1:0]  aes_regfile_waddr_ex_o,
     output logic        aes_we_ex_unit_en_o,  // enable writing to aes registers
     output logic        aes_start_ex_unit_o, // starts the encryption process
@@ -1090,8 +1090,8 @@ module riscv_id_stage
     .aes_instruction_sel_o           ( aes_instruction_sel_id     ), // aes instructions 
     //.mem_addr_op_c_sel_o             (mem_addr_op_c_sel          ),
     .aes_we_ex_unit_en_o             ( aes_we_ex_unit_en          ),
-	.aes_start_ex_unit_en_o          ( aes_start_ex_unit_en       ),
-	.aes_command_en_o                ( aes_command_en             )
+    .aes_start_ex_unit_en_o          ( aes_start_ex_unit_en       ),
+    .aes_command_en_o                ( aes_command_en             )
 //********************************************************
 
   );
@@ -1398,8 +1398,8 @@ module riscv_id_stage
      ///////// dvdd /////////////////////
       aes_instruction_sel_ex_o    <= 2'b0;
       aes_regfile_waddr_ex_o      <= 2'b0;
-	  aes_we_ex_unit_en_o         <= 1'b0;
-	  aes_start_ex_unit_o         <= 1'b0;
+      aes_we_ex_unit_en_o         <= 1'b0;
+      aes_start_ex_unit_o         <= 1'b0;
      ////////////////////////////////////
     end
     else if (data_misaligned_i) begin
@@ -1484,7 +1484,7 @@ module riscv_id_stage
           alu_operator_ex_o         <= alu_operator;
           alu_operand_a_ex_o        <= alu_operand_a;
           alu_operand_b_ex_o        <= alu_operand_b;
-	      alu_operand_c_ex_o        <= alu_operand_c;
+          alu_operand_c_ex_o        <= alu_operand_c;
           regfile_alu_waddr_ex_o    <= regfile_alu_waddr_id;
           /* Avi added the following signal for correct 
              operation of the custom execution unit. This
@@ -1495,7 +1495,7 @@ module riscv_id_stage
              a problem because the CEU will launch and stall 
              the pipe, even though it is not a GCD command*/
           aes_we_ex_unit_en_o         <= aes_we_ex_unit_en;
-		  aes_start_ex_unit_o         <= aes_start_ex_unit_en;
+          aes_start_ex_unit_o         <= aes_start_ex_unit_en;
         end
         aes_regfile_waddr_ex_o        <= regfile_addr_rc_id[1:0];
         aes_instruction_sel_ex_o      <= aes_instruction_sel_id; 

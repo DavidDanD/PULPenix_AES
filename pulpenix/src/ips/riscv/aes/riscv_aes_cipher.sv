@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 
-module aescipher(clk,start_aes_cipher,datain,key,dataout);
+module riscv_aes_cipher(clk,start_aes_cipher,datain,key,dataout);
 
     input clk;
     input start_aes_cipher;

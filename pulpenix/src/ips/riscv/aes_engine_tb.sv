@@ -60,7 +60,7 @@ module aes_engine_tb;
        .aes_start_o(aes_start_o)
     );
 	
-	aescipher
+	riscv_aes_cipher
 	aes_simul
 	(
 	    .clk(clk),
