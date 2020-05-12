@@ -15,6 +15,7 @@ module aes_engine_tb;
     logic        instruction_sel;
     logic        aes_start_i;
     logic        aes_start_o;
+	logic        aes_start_wb;
 
     logic [DATA_WIDTH-1:0]  rdata_a_o;
     logic [DATA_WIDTH-1:0]  rdata_b_o;
@@ -64,9 +65,10 @@ module aes_engine_tb;
 	aes_simul
 	(
 	    .clk(clk),
-		.start_aes_cipher(aes_start_o),
+		.start_aes_in(aes_start_o),
 		.datain({rdata_a_o,rdata_b_o,rdata_c_o,rdata_d_o}),
 		.key({rkey_a_o,rkey_b_o,rkey_c_o,rkey_d_o}),
+		.start_aes_out(aes_start_wb),
 		.dataout(ciphered_data)
 	);
 
@@ -101,8 +103,8 @@ module aes_engine_tb;
          address          <= 2'h2;
          data             <= 32'hcafeface;
          wr_enb           <= 1'b1;
-		 instruction_sel  <= 2'h3;
-		 aes_start_i      <= 1'b0;
+         instruction_sel  <= 2'h3;
+		 aes_start_i      <= 1'b1;
       end
 
     always

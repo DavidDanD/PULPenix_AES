@@ -887,8 +887,8 @@ module riscv_core
 //************************* dvdd *******************************
   riscv_aes_register_file
     #(
-      .ADDR_WIDTH(6),
-      .FPU(FPU)
+      .ADDR_WIDTH(2),
+      .DATA_WIDTH(INSTR_RDATA_WIDTH)
      )
   aes_registers_i
   (
