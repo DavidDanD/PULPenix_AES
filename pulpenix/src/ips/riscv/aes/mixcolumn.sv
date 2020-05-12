@@ -7,7 +7,7 @@ output finish;
 output [127:0] mcl;
 
 logic b1_finish,b2_finish,b3_finish,b4_finish;
-logic [8:0][15:0] lmcl;
+logic [8:0] lmcl[15:0];
 
 assign lmcl[0] = mixcolumn32 (start,a[127:120],a[119:112],a[111:104],a[103:96]);
 assign lmcl[1] = mixcolumn32 (start,a[119:112],a[111:104],a[103:96],a[127:120]);
@@ -30,18 +30,18 @@ assign lmcl[14]= mixcolumn32 (start,a[15:8],a[7:0],a[31:24],a[23:16]);
 assign lmcl[15]= mixcolumn32 (start,a[7:0],a[31:24],a[23:16],a[15:8]);
 
 
-assign mcl[127:120]= lmcl[0][7:0];
-assign mcl[119:112]= lmcl[1][7:0];
-assign mcl[111:104]= lmcl[2][7:0];
-assign mcl[103:96] = lmcl[3][7:0];
+assign mcl[127:120]= lmcl[0] [7:0];
+assign mcl[119:112]= lmcl[1] [7:0];
+assign mcl[111:104]= lmcl[2] [7:0];
+assign mcl[103:96] = lmcl[3] [7:0];
                     
-assign mcl[95:88]  = lmcl[4][7:0];
-assign mcl[87:80]  = lmcl[5][7:0];
-assign mcl[79:72]  = lmcl[6][7:0];
-assign mcl[71:64]  = lmcl[7][7:0];
+assign mcl[95:88]  = lmcl[4] [7:0];
+assign mcl[87:80]  = lmcl[5] [7:0];
+assign mcl[79:72]  = lmcl[6] [7:0];
+assign mcl[71:64]  = lmcl[7] [7:0];
                     
-assign mcl[63:56]  = lmcl[8][7:0];
-assign mcl[55:48]  = lmcl[9][7:0];
+assign mcl[63:56]  = lmcl[8] [7:0];
+assign mcl[55:48]  = lmcl[9] [7:0];
 assign mcl[47:40]  = lmcl[10][7:0];
 assign mcl[39:32]  = lmcl[11][7:0];
                     
@@ -50,10 +50,10 @@ assign mcl[23:16]  = lmcl[13][7:0];
 assign mcl[15:8]   = lmcl[14][7:0];
 assign mcl[7:0]    = lmcl[15][7:0];
 
-assign b1_finish = lmcl[0][8]  && lmcl[1][8]  && lmcl[2][8]  && lmcl[3][8];
-assign b2_finish = lmcl[4][8]  && lmcl[5][8]  && lmcl[6][8]  && lmcl[7][8];
-assign b3_finish = lmcl[8][8]  && lmcl[9][8]  && lmcl[10][8] && lmcl[11][8];
-assign b4_finish = lmcl[0][12] && lmcl[13][8] && lmcl[14][8] && lmcl[15][8];
+assign b1_finish = lmcl[0] [8] && lmcl[1] [8] && lmcl[2] [8] && lmcl[3] [8];
+assign b2_finish = lmcl[4] [8] && lmcl[5] [8] && lmcl[6] [8] && lmcl[7] [8];
+assign b3_finish = lmcl[8] [8] && lmcl[9] [8] && lmcl[10][8] && lmcl[11][8];
+assign b4_finish = lmcl[12][8] && lmcl[13][8] && lmcl[14][8] && lmcl[15][8];
 assign finish = b1_finish && b2_finish && b3_finish && b4_finish;
 
 function [8:0] mixcolumn32;

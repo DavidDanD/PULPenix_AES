@@ -10,7 +10,7 @@ output [7:0] c;
 reg finish;
 reg [7:0] c;
     
-   always @(a) begin
+   always @(a, start) begin
     case (a)
       8'h00: c=8'h63;
       8'h01: c=8'h7c;

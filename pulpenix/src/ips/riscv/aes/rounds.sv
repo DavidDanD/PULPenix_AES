@@ -18,6 +18,6 @@ module rounds(clk,startin,rc,data,keyin,next_round,keyout,rndout);
   shiftrow t2(sr_start,sb,mc_start,sr);
   mixcolumn t3(mc_start,sr,nr_start,mcl);
   assign rndout= keyout^mcl;
-  assign start_next = nr_start;
+  assign next_round = nr_start;
 
 endmodule
