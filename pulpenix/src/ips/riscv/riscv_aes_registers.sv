@@ -115,11 +115,13 @@ module riscv_aes_register_file
         end else if (test_en_i==1'b1) begin
           mem[i] <= 32'hffffffff;
         end else begin
-          if(wen_dec[i] == 1'b1 && instruction_sel_i == 2'b0) begin
+          if(wen_dec[i] == 1'b1 && instruction_sel_i == 2'h0) begin
             mem[i] <= wdata_i;
-          end else if(wen_dec[i] == 1'b1 && instruction_sel_i == 2'b1) begin
+          end else if(wen_dec[i] == 1'b1 && instruction_sel_i == 2'h1) begin
             key[i] <= wdata_i;
-          end	
+          end else if(wen_dec[i] == 1'b1 && instruction_sel_i == 2'h3) begin
+			aes_mem <= wdata_i;
+		  end
         end
 		aes_start <= aes_start_i;
       end
