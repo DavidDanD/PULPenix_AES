@@ -18,14 +18,14 @@ module KeyGeneration(start,rc,key,finished,keyout);
        assign w2 = key[63:32];
        assign w3 = key[31:0];
        
-	   assign rrcon = rcon(start, rc);
+	   assign rrcon = rcon(sb_finish, rc);
        
        assign keyout[127:96]= w0 ^ tem ^ rrcon[31:0];
        assign keyout[95:64] = w0 ^ tem ^ rrcon[31:0] ^ w1;
        assign keyout[63:32] = w0 ^ tem ^ rrcon[31:0] ^ w1 ^ w2;
        assign keyout[31:0]  = w0 ^ tem ^ rrcon[31:0] ^ w1 ^ w2 ^ w3;
        assign sb_finish = sb_finished==((2**4)-1) ? 1 : 0;
-	   assign finished = sb_finish && rrcon[32];
+	   assign finished = rrcon[32];
        
        
        sbox a1(.start(start),.a(w3[23:16]),.finish(sb_finished[0]),.c(tem[31:24]));

@@ -61,6 +61,8 @@ module riscv_aes_register_file
 
   // write enable signals for all registers
   logic [NUM_WORDS-1:0]                 wen_dec;
+  
+  logic aes_start;
 
    //-----------------------------------------------------------------------------
    //-- READ : Read all 4 registers
@@ -76,7 +78,7 @@ module riscv_aes_register_file
         assign rkey_b_o    = key[1];
         assign rkey_c_o    = key[2];
         assign rkey_d_o    = key[3];
-        assign aes_start_o = aes_start_i;
+        assign aes_start_o = aes_start;
      end
   endgenerate 
   
@@ -119,6 +121,7 @@ module riscv_aes_register_file
             key[i] <= wdata_i;
           end	
         end
+		aes_start <= aes_start_i;
       end
 
     end
