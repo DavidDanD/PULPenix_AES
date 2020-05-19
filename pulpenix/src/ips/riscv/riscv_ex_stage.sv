@@ -131,6 +131,9 @@ module riscv_ex_stage
   input  logic        cust_ex_unit_en_i,//from id stage
   input  logic        custom_instruction_sel_ex_i,
 //**************************************************************
+//************************* dvdd *******************************
+  input  logic        aes_wb_i,
+//**************************************************************
 
   // directly passed through to WB stage, not used in EX
   input  logic        regfile_we_i,
@@ -518,9 +521,9 @@ module riscv_ex_stage
   // to finish branches without going to the WB stage, ex_valid does not
   // depend on ex_ready.
   assign ex_ready_o =  (~apu_stall & alu_ready & mult_ready & lsu_ready_ex_i & custom_ready //akmp added custom_ready to stall the pipe for multicycle 
-                       & wb_ready_i & ~wb_contention) | (branch_in_ex_i);
+                       & wb_ready_i & ~wb_contention & ~aes_wb_i) | (branch_in_ex_i);	    //dvdd added aes_wb_i to stall the pipe aes wirte back is done
   assign ex_valid_o = (apu_valid | alu_en_i | mult_en_i | csr_access_i | lsu_en_i |custom_instruction_sel_ex_i) //akmp added custom instruction signals
-                       & (alu_ready & mult_ready & lsu_ready_ex_i & wb_ready_i & custom_ready) ;
+                       & (alu_ready & mult_ready & lsu_ready_ex_i & wb_ready_i & custom_ready & ~aes_wb_i) ;//dvdd added aes_wb_i to stall the pipe aes wirte back is done
 
 endmodule
 
