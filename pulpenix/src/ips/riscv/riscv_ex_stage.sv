@@ -523,7 +523,7 @@ module riscv_ex_stage
   assign ex_ready_o =  (~apu_stall & alu_ready & mult_ready & lsu_ready_ex_i & custom_ready //akmp added custom_ready to stall the pipe for multicycle 
                        & wb_ready_i & ~wb_contention & ~aes_wb_i) | (branch_in_ex_i);	    //dvdd added aes_wb_i to stall the pipe aes wirte back is done
   assign ex_valid_o = (apu_valid | alu_en_i | mult_en_i | csr_access_i | lsu_en_i |custom_instruction_sel_ex_i) //akmp added custom instruction signals
-                       & (alu_ready & mult_ready & lsu_ready_ex_i & wb_ready_i & custom_ready & ~aes_wb_i) ;//dvdd added aes_wb_i to stall the pipe aes wirte back is done
+                       & (alu_ready & mult_ready & lsu_ready_ex_i & wb_ready_i & custom_ready & ~aes_wb_i) ;//dvdd added aes_wb_i to stall the pipe till aes write back is done
 
 endmodule
 

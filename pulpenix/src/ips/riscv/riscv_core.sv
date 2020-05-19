@@ -152,6 +152,18 @@ module riscv_core
   logic              aes_we_ex_unit_en_i;
   logic              aes_start_ex_unit_i;
   logic              aes_start_unit_o;
+  logic              aes_start_wb_o;
+  logic              aes_wb_busy;
+  logic [31:0]	     aes_rkey_a;
+  logic [31:0]	     aes_rkey_b;
+  logic [31:0]	     aes_rkey_c;
+  logic [31:0]	     aes_rkey_d;
+  logic [31:0]	     aes_cipher_addrin;
+  logic [31:0]	     aes_wb_addrin;
+  logic [31:0]	     aes_LSU_addrin;
+  logic [31:0]	     aes_LSU_datain;
+  logic 	     aes_LSU_we;
+  logic [127:0]      aes_ciphered_data;
   //**********************************
 
   // ID performance counter signals
@@ -857,6 +869,7 @@ module riscv_core
 //************************* dvdd *******************************
     .cust_ex_unit_en_i            (cust_ex_unit_en             ),	
     .custom_instruction_sel_ex_i  (aes_instruction_sel_ex      ),
+    .aes_wb_i                     (aes_wb_busy                 ),
 //**************************************************************
 
     .regfile_waddr_i            ( regfile_waddr_ex             ),
@@ -887,8 +900,8 @@ module riscv_core
 //************************* dvdd *******************************
   riscv_aes_register_file
     #(
-      .ADDR_WIDTH(2),
-      .DATA_WIDTH(INSTR_RDATA_WIDTH)
+      .ADDR_WIDTH(6),
+      .FPU(FPU)
      )
   aes_registers_i
   (
@@ -903,28 +916,12 @@ module riscv_core
     .rdata_c_o    ( regfile_data_rc_id ),
     .rdata_d_o    ( regfile_data_rd_id ),
 
-    // Write port a
-    .waddr_i             ( aes_regfile_waddr_ex_i  ),
-    .wdata_i             ( alu_operand_a_ex        ),
-    .wen_i               ( aes_we_ex_unit_en_i     ),
-	.instruction_sel_i   ( aes_instruction_sel_ex  ),
-    .aes_start_i         ( aes_start_ex_unit_i     ),
-	.aes_start_o         ( aes_start_unit_o        )
-  );
-  
-  riscv_aes_cipher
-  aescipher_i
-  (
-    .clk                 ( clk                ),
-    .rst_n               ( rst_n              ),
+    .rkey_a_o    ( aes_rkey_a ),
+    .rkey_b_o    ( aes_rkey_b ),
+    .rkey_c_o    ( aes_rkey_c ),
+    .rkey_d_o    ( aes_rkey_d ),
 
-    .start_aes_cipher    ( aes_start_unit_o   ),
-
-    // Read ports
-    .rdata_a_o    ( regfile_data_ra_id ),
-    .rdata_b_o    ( regfile_data_rb_id ),
-    .rdata_c_o    ( regfile_data_rc_id ),
-    .rdata_d_o    ( regfile_data_rd_id ),
+    .wb_addr_o     ( aes_cipher_addrin ),
 
     // Write port a
     .waddr_i             ( aes_regfile_waddr_ex_i  ),
@@ -933,6 +930,38 @@ module riscv_core
     .instruction_sel_i   ( aes_instruction_sel_ex  ),
     .aes_start_i         ( aes_start_ex_unit_i     ),
     .aes_start_o         ( aes_start_unit_o        )
+  );
+  
+  riscv_aes_cipher
+  aescipher_i
+  (
+    .clk                 ( clk                ),
+    .start_aes_cipher    ( aes_start_unit_o   ),
+    .datain              ( {regfile_data_ra_id, regfile_data_rb_id, regfile_data_rc_id, regfile_data_rd_id} ),
+    .key                 ( {aes_rkey_a, aes_rkey_b, aes_rkey_c, aes_rkey_d} ),
+    .addrin              ( aes_cipher_addrin ),
+
+    .start_aes_out       ( aes_start_wb_o ),
+    .dataout             ( aes_ciphered_data ),
+    .addrout             ( aes_wb_addrin )
+  );
+
+  riscv_aes_wb
+  aes_wb_i
+  (
+    .clk                 ( clk               ),
+    .rst_n               ( rst_n             ),
+
+    .start_aes_wb        ( aes_start_wb_o    ),
+
+    .address_in          ( aes_wb_addrin     ),
+    .data_in             ( aes_ciphered_data ),
+
+    .address_out         ( aes_LSU_addrin    ),
+    .data_out            ( aes_LSU_datain    ),
+
+    .write_en_out        ( aes_LSU_we        ),
+    .halt_en_out         ( aes_wb_busy       )
   );
 //**************************************************************
    ////////////////////////////////////////////////////////////////////////////////////////
@@ -974,9 +1003,9 @@ module riscv_core
     .operand_b_ex_i        ( alu_operand_b_ex   ),
     //************************* akmp **********************
     //added to add support of mem access to the custom command using opperand c
-    .operand_c_ex_i        ( alu_operand_c_ex       ),
-    .mem_addr_op_c_sel_i   ( aes_regfile_waddr_ex_i ),
-    .regfile_alu_wdata_fw_i( regfile_alu_wdata_fw   ),
+    .operand_c_ex_i        ( aes_LSU_addrin     ),
+    .mem_addr_op_c_sel_i   ( aes_LSU_we         ),
+    .regfile_alu_wdata_fw_i( aes_LSU_datain     ),
     //*****************************************************
     .addr_useincr_ex_i     ( useincr_addr_ex    ),
 

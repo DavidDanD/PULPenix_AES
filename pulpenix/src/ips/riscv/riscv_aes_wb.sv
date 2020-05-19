@@ -58,6 +58,7 @@ module riscv_aes_wb(clk,rst_n,start_aes_wb,address_in,data_in,write_en_out,halt_
                  WAIT_MOD:
                   begin
                     halt_en <= 1;
+		    NS <= FINISH;
                   end
                 FINISH:
                    begin
@@ -72,9 +73,12 @@ module riscv_aes_wb(clk,rst_n,start_aes_wb,address_in,data_in,write_en_out,halt_
               endcase
             end // else
      end //always_ff
+     
+     assign CS = NS;
 
      assign write_en_out = write_en;
      assign halt_en_out = halt_en;
      assign data_out = data;
+     assign address_out = cur_addr;
     
 endmodule
