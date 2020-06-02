@@ -4,3 +4,5 @@ dataIn:
 128'hdeadbeefdeafbabe0000000000000000
 dataOut:
 128'h2da8a1cf3772e5a2a49c22d1fd03b8a8
+aes_dvddeOut:
+128'h2da8a1cf3772e5a2a49c22d1fd03b8a8

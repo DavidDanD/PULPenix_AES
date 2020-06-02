@@ -1430,6 +1430,7 @@ module riscv_id_stage
       if (id_valid_o)
       begin // unstall the whole pipeline
 
+        aes_start_ex_unit_o         <= '0;
         alu_en_ex_o                 <= alu_en;
         if (alu_en)
         begin // only change those registers when we actually need to

@@ -1,6 +1,6 @@
 `timescale 1ns/1ns
 
-module aes_engine_tb;
+module aes_flow_tb;
     parameter ADDR_WIDTH    = 2   ;
     parameter DATA_WIDTH    = 32  ;
 
@@ -16,8 +16,8 @@ module aes_engine_tb;
     logic        aes_start_i;
     logic        aes_start_o;
 	logic        aes_start_wb;
-	logic        aes_cipher_addrin;
-    logic        aes_wr_addrin;
+	logic [31:0] aes_cipher_addrin;
+    logic [31:0] aes_wr_addrin;
 	
     logic [DATA_WIDTH-1:0]  rdata_a_o;
     logic [DATA_WIDTH-1:0]  rdata_b_o;
@@ -30,13 +30,18 @@ module aes_engine_tb;
     logic [DATA_WIDTH-1:0]  rkey_d_o;
 	
 	logic [DATA_WIDTH*4-1:0]   ciphered_data;
+	
+    logic         wb_write_en_o;
+    logic         wb_halt_en_o;
+    logic [31:0]  wb_address_out_o;
+    logic [31:0]  wb_data_out_o;
 
     riscv_aes_register_file
        #(
          .ADDR_WIDTH(ADDR_WIDTH),
          .DATA_WIDTH(DATA_WIDTH)
         )
-    simul
+    simul_regs
     (
        .clk(clk),
        .rst_n(resetN),
@@ -66,7 +71,7 @@ module aes_engine_tb;
     );
 	
 	riscv_aes_cipher
-	aes_simul
+	simul_aes
 	(
 	    .clk(clk),
 		.start_aes_in(aes_start_o),
@@ -76,6 +81,20 @@ module aes_engine_tb;
 		.start_aes_out(aes_start_wb),
 		.dataout(ciphered_data),
 		.addrout(aes_wr_addrin)
+	);
+	
+	riscv_aes_wb
+	simul_wb
+	(
+	    .clk(clk),
+        .rst_n(resetN),
+		.start_aes_wb(aes_start_wb),
+		.address_in(aes_wr_addrin),
+		.data_in(ciphered_data),
+		.write_en_out(wb_write_en_o),
+		.halt_en_out(wb_halt_en_o),
+		.address_out(wb_address_out_o),
+		.data_out(wb_data_out_o)
 	);
 
     initial
@@ -117,7 +136,9 @@ module aes_engine_tb;
          data             <= 32'hcafeface;
          wr_enb           <= 1'b1;
          instruction_sel  <= 2'h1;
-		 aes_start_i      <= 1'b1;
+		 aes_start_i      <= 1'b1; #10
+		 
+		 aes_start_i      <= 1'b0;
       end
 
     always
@@ -126,3 +147,4 @@ module aes_engine_tb;
         clk <= 1; #5;
       end
 endmodule
+

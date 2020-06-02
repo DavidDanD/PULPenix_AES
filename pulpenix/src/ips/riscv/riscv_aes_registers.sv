@@ -24,6 +24,15 @@ module riscv_aes_register_file
     input  logic         rst_n,
 
     input  logic                   test_en_i,
+	
+    // Select port
+    input logic [1:0]              instruction_sel_i,           
+    input logic                    aes_start_i,
+	
+    // Write port
+    input logic [ADDR_WIDTH-1:0]   waddr_i,
+    input logic [DATA_WIDTH-1:0]   wdata_i,
+    input logic                    wen_i,
 
     //Read ports
     output logic [DATA_WIDTH-1:0]  rdata_a_o,
@@ -38,16 +47,7 @@ module riscv_aes_register_file
     output logic [DATA_WIDTH-1:0]  rkey_d_o,
 	
 	//
-    output logic [DATA_WIDTH-1:0]  aes_mem,
-
-    // Write port
-    input logic [ADDR_WIDTH-1:0]   waddr_i,
-    input logic [DATA_WIDTH-1:0]   wdata_i,
-    input logic                    wen_i,
-
-    // Select port
-    input logic                    instruction_sel_i,           
-    input logic                    aes_start_i,
+    output logic [DATA_WIDTH-1:0]  wb_addr_o,
 
     output logic                   aes_start_o
 );
@@ -62,7 +62,8 @@ module riscv_aes_register_file
   // write enable signals for all registers
   logic [NUM_WORDS-1:0]                 wen_dec;
   
-  logic aes_start;
+  logic                  aes_start;
+  logic [DATA_WIDTH-1:0] wb_addr;
 
    //-----------------------------------------------------------------------------
    //-- READ : Read all 4 registers
@@ -78,7 +79,9 @@ module riscv_aes_register_file
         assign rkey_b_o    = key[1];
         assign rkey_c_o    = key[2];
         assign rkey_d_o    = key[3];
+		
         assign aes_start_o = aes_start;
+		assign wb_addr_o   = wb_addr;
      end
   endgenerate 
   
@@ -120,7 +123,7 @@ module riscv_aes_register_file
           end else if(wen_dec[i] == 1'b1 && instruction_sel_i == 2'h1) begin
             key[i] <= wdata_i;
           end else if(wen_dec[i] == 1'b1 && instruction_sel_i == 2'h3) begin
-			aes_mem <= wdata_i;
+			wb_addr <= wdata_i;
 		  end
         end
 		aes_start <= aes_start_i;
