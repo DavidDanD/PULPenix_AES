@@ -12,7 +12,6 @@ riscv:
     riscv_alu_div.sv,
     riscv_compressed_decoder.sv,
     riscv_controller.sv,
-    riscv_custom.sv, #akmp added file
     riscv_cs_registers.sv,
     riscv_debug_unit.sv,
     riscv_decoder.sv,

@@ -228,7 +228,6 @@ timescale.v
 ../../src/ips/riscv/riscv_alu.sv
 ../../src/ips/riscv/riscv_compressed_decoder.sv
 ../../src/ips/riscv/riscv_controller.sv
-../../src/ips/riscv/riscv_custom.sv        //akmp adding custom component 
 ../../src/ips/riscv/riscv_cs_registers.sv
 ../../src/ips/riscv/riscv_debug_unit.sv
 ../../src/ips/riscv/riscv_decoder.sv
