@@ -236,9 +236,19 @@ timescale.v
 ../../src/ips/riscv/riscv_ex_stage.sv
 ../../src/ips/riscv/riscv_hwloop_controller.sv
 ../../src/ips/riscv/riscv_hwloop_regs.sv
+../../src/ips/riscv/riscv_load_store_unit.sv
+../../src/ips/riscv/aes/sbox.sv                           //dado aes
+../../src/ips/riscv/aes/keygeneration.sv                  //dado aes
+../../src/ips/riscv/aes/subbytes.sv                       //dado aes
+../../src/ips/riscv/aes/shiftrow.sv                       //dado aes
+../../src/ips/riscv/aes/mixcolumn.sv                      //dado aes
+../../src/ips/riscv/aes/rounds.sv                         //dado aes
+../../src/ips/riscv/aes/rounndlast.sv                     //dado aes
+../../src/ips/riscv/aes/riscv_aes_cipher.sv               //dado aes
+../../src/ips/riscv/riscv_aes_wb.sv                       //dado aes
+../../src/ips/riscv/riscv_aes_registers.sv                //dado aes
 ../../src/ips/riscv/riscv_id_stage.sv
 ../../src/ips/riscv/riscv_if_stage.sv
-../../src/ips/riscv/riscv_load_store_unit.sv
 ../../src/ips/riscv/riscv_mult.sv
 ../../src/ips/riscv/riscv_prefetch_buffer.sv
 ../../src/ips/riscv/riscv_prefetch_L0_buffer.sv

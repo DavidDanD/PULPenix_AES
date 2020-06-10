@@ -4,12 +4,12 @@
 # if you personalize this file make your own personal copy with different file name and DONT push back to repository
 
 # Modify only this if working a a different space
-# setenv MY_PULP_ENV  /users/epakmp/Workarea/pulp/pulpenix
-setenv MY_PULP_ENV  /users/epakmp/Workarea/pulp/pulpenix
+# setenv MY_PULP_ENV  /users/$USER/Workarea/pulp/pulpenix
+setenv MY_PULP_ENV  /users/$USER/Workarea/pulp/pulpenix
 
 # Modify this only if GCC toolchain is located elsewhere
 # setenv RISCV_PULP_TOOLCHAIN_ROOT <MY_WORK_SPACE_PATH>/pulp/toolchain
-setenv RISCV_PULP_TOOLCHAIN_ROOT /users/epakmp/Workarea/pulp/toolchain
+setenv RISCV_PULP_TOOLCHAIN_ROOT /users/$USER/Workarea/pulp/toolchain
 
 # Modify this only if ECLIPSE toolchain is located elsewhere
 setenv ECLIPSE_ROOT $RISCV_PULP_TOOLCHAIN_ROOT/eclipse

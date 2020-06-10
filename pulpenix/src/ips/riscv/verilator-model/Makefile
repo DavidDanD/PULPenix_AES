@@ -50,7 +50,6 @@ VSRC = cluster_clock_gating.sv            \
        ../riscv_alu_div.sv                \
        ../riscv_compressed_decoder.sv     \
        ../riscv_controller.sv             \
-       ../riscv_custom.sv,                \ #akmp added file
        ../riscv_cs_registers.sv           \
        ../riscv_debug_unit.sv             \
        ../riscv_decoder.sv                \
@@ -58,9 +57,19 @@ VSRC = cluster_clock_gating.sv            \
        ../riscv_ex_stage.sv               \
        ../riscv_hwloop_controller.sv      \
        ../riscv_hwloop_regs.sv            \
+       ../riscv_load_store_unit.sv        \
+       ../riscv/aes/sbox.sv               \#dado aes
+       ../aes/keygeneration.sv            \#dado aes
+       ../riscv/aes/subbytes.sv           \#dado aes
+       ../riscv/aes/shiftrow.sv           \#dado aes
+       ../riscv/aes/mixcolumn.sv          \#dado aes
+       ../riscv/aes/rounds.sv             \#dado aes
+       ../riscv/aes/rounndlast.sv         \#dado aes
+       ../riscv/aes/riscv_aes_cipher.sv   \#dado aes
+       ../riscv/riscv_aes_wb.sv           \#dado aes
+       ../riscv/riscv_aes_registers.sv    \#dado aes
        ../riscv_id_stage.sv               \
        ../riscv_if_stage.sv               \
-       ../riscv_load_store_unit.sv        \
        ../riscv_mult.sv                   \
        ../riscv_prefetch_buffer.sv        \
        ../riscv_prefetch_L0_buffer.sv     \
