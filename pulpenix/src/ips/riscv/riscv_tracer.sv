@@ -24,8 +24,6 @@
 
 `ifndef VERILATOR
 
-`include "include/riscv_tracer_defines.sv"
-`include "include/riscv_defines.sv"
 import riscv_defines::*;
 import riscv_tracer_defines::*;
 

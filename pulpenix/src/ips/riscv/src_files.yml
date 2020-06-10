@@ -4,9 +4,9 @@ riscv:
     ../../rtl/includes
   ]
   files: [
-    include/apu_core_package.sv,
-    include/riscv_defines.sv,
-    include/riscv_tracer_defines.sv,
+    apu_core_package.sv,
+    riscv_defines.sv,
+    riscv_tracer_defines.sv,
     riscv_alu.sv,
     riscv_alu_basic.sv,
     riscv_alu_div.sv,

@@ -22,7 +22,7 @@
 //                 interconnect.                                              //
 ////////////////////////////////////////////////////////////////////////////////
 
-`include "include/apu_macros.sv"
+`include "apu_macros.sv"
 
 module riscv_apu_disp (
   input logic                           clk_i,

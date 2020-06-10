@@ -219,10 +219,10 @@ timescale.v
 
 // riscv core
 
-../../src/ips/riscv/include/riscv_defines.sv
-../../src/ips/riscv/include/riscv_tracer_defines.sv
-../../src/ips/riscv/include/apu_core_package.sv
-../../src/ips/riscv/include/apu_macros.sv
+../../src/ips/riscv/riscv_defines.sv
+../../src/ips/riscv/riscv_tracer_defines.sv
+../../src/ips/riscv/apu_core_package.sv
+../../src/ips/riscv/apu_macros.sv
 
 ../../src/ips/riscv/riscv_alu_div.sv
 ../../src/ips/riscv/riscv_alu.sv

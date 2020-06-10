@@ -25,7 +25,7 @@
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
 
-`include "include/apu_macros.sv"
+`include "apu_macros.sv"
 
 import riscv_defines::*;
 
@@ -256,8 +256,8 @@ module riscv_decoder
     aes_we_ex_unit_en_o         = 1'b0;
     aes_start_ex_unit_en_o      = 1'b0;
     aes_instruction_sel_o       = 2'b0;
-	aes_command_en_o              = 1'b0;
-    //mem_addr_op_c_sel_o         = 1'b0;
+    aes_command_en_o            = 1'b0;
+    //mem_addr_op_c_sel_o       = 1'b0;
 //*******************************************
 
     bmask_a_mux_o               = BMASK_A_ZERO;
