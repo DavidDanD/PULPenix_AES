@@ -69,20 +69,18 @@ module riscv_aes_register_file
    //-- READ : Read all 4 registers
    //-----------------------------------------------------------------------------
   generate
-     begin
         assign rdata_a_o   = mem[0];
         assign rdata_d_o   = mem[3];
         assign rdata_b_o   = mem[1];
         assign rdata_c_o   = mem[2];
-		
+        
         assign rkey_a_o    = key[0];
         assign rkey_b_o    = key[1];
         assign rkey_c_o    = key[2];
         assign rkey_d_o    = key[3];
-		
+
         assign aes_start_o = aes_start;
-		assign wb_addr_o   = wb_addr;
-     end
+        assign wb_addr_o   = wb_addr;
   endgenerate 
   
   //-----------------------------------------------------------------------------
@@ -122,13 +120,22 @@ module riscv_aes_register_file
             mem[i] <= wdata_i;
           end else if(wen_dec[i] == 1'b1 && instruction_sel_i == 2'h1) begin
             key[i] <= wdata_i;
-          end else if(wen_dec[i] == 1'b1 && instruction_sel_i == 2'h3) begin
-			wb_addr <= wdata_i;
-		  end
+	  end
         end
-		aes_start <= aes_start_i;
       end
 
+    end
+    
+    always_ff @(posedge clk, negedge rst_n)
+    begin : wb_address_write
+      if (rst_n==1'b0) begin
+        wb_addr <= 32'b0;
+      end else begin
+        aes_start <= aes_start_i;
+        if(instruction_sel_i == 2'h3) begin
+          wb_addr <= wdata_i;
+        end
+      end
     end
 
   endgenerate

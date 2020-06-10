@@ -127,11 +127,8 @@ module riscv_ex_stage
   input  logic        branch_in_ex_i,
   input  logic [5:0]  regfile_alu_waddr_i,
   input  logic        regfile_alu_we_i,
-//************************* akmp *******************************
-  input  logic        cust_ex_unit_en_i,//from id stage
-  input  logic        custom_instruction_sel_ex_i,
-//**************************************************************
 //************************* dvdd *******************************
+  input  logic [1:0]  custom_instruction_sel_ex_i,
   input  logic        aes_wb_i,
 //**************************************************************
 
@@ -220,11 +217,6 @@ module riscv_ex_stage
         regfile_alu_wdata_fw_o = alu_result;
       if (mult_en_i)
         regfile_alu_wdata_fw_o = mult_result;
-//************************* akmp *******************************
-      if (custom_instruction_sel_ex_i) begin
-        regfile_alu_wdata_fw_o = custom_result;
-      end		
-//**************************************************************	
       if (csr_access_i)
         regfile_alu_wdata_fw_o = csr_rdata_i;
     end
@@ -255,34 +247,6 @@ module riscv_ex_stage
   // branch handling
   assign branch_decision_o = alu_cmp_result;
   assign jump_target_o     = alu_operand_c_i;
-
-     
-
-//************************* akmp *******************************
-
-  /////////////////////////////////////////////////////////////
-  //                 _                                _ _    //
-  //                | |                              (_) |   //
-  //   ___ _   _ ___| |_ ___  _ __ ___    _   _ _ __  _| |_  //
-  //  / __| | | / __| __/ _ \| '_ ` _ \  | | | | '_ \| | __| //
-  // | (__| |_| \__ \ || (_) | | | | | | | |_| | | | | | |_  //
-  //  \___|\__,_|___/\__\___/|_| |_| |_|  \__,_|_| |_|_|\__| //
-  //                                                         // 
-  /////////////////////////////////////////////////////////////
-        riscv_custom riscv_custom_i 
-     (
-      .clk                 ( clk               ),
-      .rst_n               ( rst_n             ),
-      .enable_i            ( cust_ex_unit_en_i ),
-      .operator_i          ( alu_operator_i    ),
-      .operand_a_i         ( alu_operand_a_i   ),
-      .operand_b_i         ( alu_operand_b_i   ),
-      .result_o            ( custom_result     ),
-      .ready_o             ( custom_ready      )
-     );
-
-//**************************************************************
-
 
 
   ////////////////////////////
@@ -520,10 +484,10 @@ module riscv_ex_stage
   // As valid always goes to the right and ready to the left, and we are able
   // to finish branches without going to the WB stage, ex_valid does not
   // depend on ex_ready.
-  assign ex_ready_o =  (~apu_stall & alu_ready & mult_ready & lsu_ready_ex_i & custom_ready //akmp added custom_ready to stall the pipe for multicycle 
-                       & wb_ready_i & ~wb_contention & ~aes_wb_i) | (branch_in_ex_i);	    //dvdd added aes_wb_i to stall the pipe aes wirte back is done
-  assign ex_valid_o = (apu_valid | alu_en_i | mult_en_i | csr_access_i | lsu_en_i |custom_instruction_sel_ex_i) //akmp added custom instruction signals
-                       & (alu_ready & mult_ready & lsu_ready_ex_i & wb_ready_i & custom_ready & ~aes_wb_i) ;//dvdd added aes_wb_i to stall the pipe till aes write back is done
+  assign ex_ready_o =  (~apu_stall & alu_ready & mult_ready & lsu_ready_ex_i
+                       & wb_ready_i & ~wb_contention & ~aes_wb_i) | (branch_in_ex_i);	    //dvdd added aes_wb_i to stall the pipe aes write back is done
+  assign ex_valid_o = (apu_valid | alu_en_i | mult_en_i | csr_access_i | lsu_en_i)
+                       & (alu_ready & mult_ready & lsu_ready_ex_i & wb_ready_i & ~aes_wb_i) ;//dvdd added aes_wb_i to stall the pipe till aes write back is done
 
 endmodule
 

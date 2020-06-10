@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 
-module KeyGeneration(start,rc,key,finished,keyout);
+module keygeneration(start,rc,key,finished,keyout);
     
    input start;
    input [3:0] rc;

@@ -13,7 +13,7 @@ module rounds(clk,startin,rc,data,keyin,next_round,keyout,rndout);
   wire [127:0] sb,sr,mcl;
   wire sb_start,sr_start,mc_start,nr_start;
 
-  KeyGeneration t0(startin,rc,keyin,sb_start,keyout);
+  keygeneration t0(startin,rc,keyin,sb_start,keyout);
   subbytes t1(sb_start,data,sr_start,sb);
   shiftrow t2(sr_start,sb,mc_start,sr);
   mixcolumn t3(mc_start,sr,nr_start,mcl);
