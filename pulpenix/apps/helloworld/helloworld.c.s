@@ -155,8 +155,8 @@ main:
 	.string	"GNU C11 7.2.0 -march=rv32im -mabi=ilp32 -ggdb -fdata-sections -ffunction-sections"
 .LASF1:
 	.string	"./helloworld.c"
+.LASF2:
+	.string	"/users/epdado/Workarea/pulp/pulpenix/apps/helloworld"
 .LASF3:
 	.string	"main"
-.LASF2:
-	.string	"/users/epakmp/Workarea/pulp/pulpenix/apps/helloworld"
 	.ident	"GCC: (GNU MCU Eclipse RISC-V Embedded GCC, 64-bits) 7.2.0"

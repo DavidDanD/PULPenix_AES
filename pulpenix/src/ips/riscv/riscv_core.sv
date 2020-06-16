@@ -1004,6 +1004,7 @@ module riscv_core
     .operand_a_ex_i        ( alu_operand_a_ex   ),
     .operand_b_ex_i        ( alu_operand_b_ex   ),
     //************************* akmp **********************
+    //************************* dado **********************
     //added to add support of mem access to the custom command using opperand c
     .operand_c_ex_i        ( aes_LSU_addrin     ),
     .mem_addr_op_c_sel_i   ( aes_LSU_we         ),

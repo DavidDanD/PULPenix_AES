@@ -29,6 +29,8 @@ module riscv_aes_wb(clk,rst_n,start_aes_wb,address_in,data_in,write_en_out,halt_
             if (rst_n == 1'b0) begin
               NS <= IDLE;
               cnt <= 0;
+	      write_en <= 0;
+	      halt_en <= 0;
             end else begin
               case (CS)
                  IDLE:
@@ -38,6 +40,7 @@ module riscv_aes_wb(clk,rst_n,start_aes_wb,address_in,data_in,write_en_out,halt_
                       cnt <= 0;
                       halt_en <= 1;
                       cur_addr <= address_in;
+		      write_en <= 0;
                     end
                   end    
              
@@ -46,13 +49,13 @@ module riscv_aes_wb(clk,rst_n,start_aes_wb,address_in,data_in,write_en_out,halt_
                     if(cnt == 'd3) begin
                       NS <= WAIT_MOD;
                     end else begin
-				      NS <= WRITE;
-					end
-				    data <= data_in[cnt*32+:32];
-				    cur_addr <= address_in + cnt*4;
-				    halt_en <= 1;
-				    write_en <= 1;
-				    cnt <= cnt + 1;
+		      NS <= WRITE;
+		    end
+		    data <= data_in[cnt*32+:32];
+		    cur_addr <= address_in + cnt*4;
+		    halt_en <= 1;
+		    write_en <= 0;
+		    cnt <= cnt + 1;
                   end
 
                  WAIT_MOD:
@@ -65,6 +68,7 @@ module riscv_aes_wb(clk,rst_n,start_aes_wb,address_in,data_in,write_en_out,halt_
                   begin
                     NS <= IDLE;
                     halt_en <= 0;
+		    write_en <= 0;
                   end
                   
                 default:

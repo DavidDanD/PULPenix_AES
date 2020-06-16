@@ -39,90 +39,38 @@ main:
 # 0 "" 2
 	.loc 1 12 0
 # 12 "./asm_add.c" 1
-	andi t0,t0,0
+	ori x6,x0,3
 # 0 "" 2
 	.loc 1 13 0
 # 13 "./asm_add.c" 1
-	andi t1,t1,0
+	ori x7,x0,7
 # 0 "" 2
 	.loc 1 14 0
 # 14 "./asm_add.c" 1
-	andi t2,t2,0
+	add x5,x6,x7
 # 0 "" 2
 	.loc 1 15 0
 # 15 "./asm_add.c" 1
-	andi t3,t3,0
+	nop
 # 0 "" 2
 	.loc 1 16 0
 # 16 "./asm_add.c" 1
-	andi t4,t4,0
+	nop
 # 0 "" 2
 	.loc 1 17 0
 # 17 "./asm_add.c" 1
-	andi t5,t5,0
+	nop
 # 0 "" 2
 	.loc 1 18 0
 # 18 "./asm_add.c" 1
-	addi t1,t1,34
-# 0 "" 2
-	.loc 1 19 0
-# 19 "./asm_add.c" 1
-	addi t2,t2,53
+	nop
 # 0 "" 2
 	.loc 1 20 0
-# 20 "./asm_add.c" 1
-	add t0, t1, t2
-# 0 "" 2
-	.loc 1 21 0
-# 21 "./asm_add.c" 1
-	nop
-# 0 "" 2
-	.loc 1 22 0
-# 22 "./asm_add.c" 1
-	nop
-# 0 "" 2
-	.loc 1 23 0
-# 23 "./asm_add.c" 1
-	nop
-# 0 "" 2
-	.loc 1 24 0
-# 24 "./asm_add.c" 1
-	nop
-# 0 "" 2
-	.loc 1 25 0
-# 25 "./asm_add.c" 1
-	addi t3,t2,0
-# 0 "" 2
-	.loc 1 26 0
-# 26 "./asm_add.c" 1
-	addi t4,t1,0
-# 0 "" 2
-	.loc 1 27 0
-# 27 "./asm_add.c" 1
-	addi t5,t0,0
-# 0 "" 2
-	.loc 1 28 0
-# 28 "./asm_add.c" 1
-	nop
-# 0 "" 2
-	.loc 1 29 0
-# 29 "./asm_add.c" 1
-	nop
-# 0 "" 2
-	.loc 1 30 0
-# 30 "./asm_add.c" 1
-	nop
-# 0 "" 2
-	.loc 1 31 0
-# 31 "./asm_add.c" 1
-	nop
-# 0 "" 2
-	.loc 1 33 0
  #NO_APP
 	call	sim_finish
-	.loc 1 35 0
+	.loc 1 22 0
 	li	a5,0
-	.loc 1 36 0
+	.loc 1 23 0
 	mv	a0,a5
 	lw	ra,12(sp)
 	.cfi_restore 1
@@ -163,7 +111,7 @@ main:
 	.byte	0x3
 	.4byte	.LASF4
 	.byte	0x1
-	.byte	0x21
+	.byte	0x14
 	.4byte	0x4c
 	.byte	0x4
 	.byte	0
@@ -274,10 +222,10 @@ main:
 	.section	.debug_line,"",@progbits
 .Ldebug_line0:
 	.section	.debug_str,"MS",@progbits,1
-.LASF2:
-	.string	"/users/epakmp/Workarea/pulp/pulpenix/apps/asm_add"
 .LASF0:
 	.string	"GNU C11 7.2.0 -march=rv32im -mabi=ilp32 -ggdb -fdata-sections -ffunction-sections"
+.LASF2:
+	.string	"/users/epdado/Workarea/pulp/pulpenix/apps/asm_add"
 .LASF1:
 	.string	"./asm_add.c"
 .LASF4:
