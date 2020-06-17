@@ -4,3 +4,4 @@
 *.mti
 *.qtl
 pulpenix/src/ips/riscv/work/
+toolchain/
