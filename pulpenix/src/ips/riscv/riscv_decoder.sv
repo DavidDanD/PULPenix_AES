@@ -777,8 +777,9 @@ module riscv_decoder
             aes_instruction_sel_o    = 2'h2             ; // AES_RUN - used to run the AES engine
           end
           3'b100: begin
+            aes_we_ex_unit_en_o      = 1'b1             ; 	
             aes_instruction_sel_o    = 2'h3             ; // AES_MEM - used to write the encrypted data in the memory
-            alu_operator_o = ALU_ADD;
+            alu_op_a_mux_sel_o       = OP_A_REGA_OR_FWD ; 
           end
         endcase
         if (instr_rdata_i[25] == 1'b1) begin
