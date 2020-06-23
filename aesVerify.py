@@ -1,6 +1,8 @@
 #My AES implementation
 # By Daniel Miller
 
+import random
+
 def xor(s1, s2):
     return tuple(a^b for a,b in zip(s1, s2))
 
@@ -192,11 +194,38 @@ class AES_128(AES):
         self.nk = 4
 
 if __name__=="__main__":
-    key = "0000000000000000cafeface00000000".decode('hex')
+    
+    key = "{:032x}".format(random.randint(0,2**128))
+    data = "{:032x}".format(random.randint(0,2**128))
+    
+    #key = "0000000000000000cafeface00000000"
+    #data = "deadbeefdeafbabe0000000000000000"
+    
+    keyBin = "{:0128b}".format(int(key,16))
+    dataBin = "{:0128b}".format(int(data,16))
+    
+    with open("asm_aes_template.c", 'r') as fp:
+        lines = fp.readlines()
+	cnt = 0
+        for line in lines:
+	    if( "%%" in line ):
+	    	dataRegNum = int(line.split("%%")[1].split("-")[0][-1])
+		dataOrKey = line.split("%%")[1].split("-")[0][0:-1]
+		dataBinTmp = eval("%sBin[dataRegNum*32:(dataRegNum+1)*32]"%(dataOrKey))
+	        bitRange = line.split("%%")[1].split("-")[1]
+		decVal = int(eval("dataBinTmp[%s]"%(bitRange)),2)  
+		lines[cnt] = line.replace("%%" + line.split("%%")[1] + "%%", str(decVal))
+	    cnt = cnt + 1
+    with open("asm_aes.c", 'w+') as fp:
+        fp.writelines(lines)
+	
+    #DadoCypheredData = run asm_aes
+    
+    #key = "0000000000000000cafeface00000000".decode('hex')
     #key = "000102030405060708090a0b0c0d0e0f".decode('hex')
     check = (
             #("00112233445566778899aabbccddeeff", "69c4e0d86a7b0430d8cdb78070b4c55a"),
-            ("deadbeefdeafbabe0000000000000000", "2da8a1cf3772e5a2a49c22d1fd03b8a8"),
+            (data, DadoCypheredData),
             )
     crypt = AES_128()
     crypt.key = key

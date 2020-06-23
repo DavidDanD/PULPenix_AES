@@ -28,6 +28,7 @@ module riscv_aes_register_file
     // Select port
     input logic [1:0]              instruction_sel_i,           
     input logic                    aes_start_i,
+	input logic                    aes_command_en_i,
 	
     // Write port
     input logic [ADDR_WIDTH-1:0]   waddr_i,
@@ -116,7 +117,7 @@ module riscv_aes_register_file
         end else if (test_en_i==1'b1) begin
           mem[i] <= 32'hffffffff;
         end else begin
-          if(wen_dec[i] == 1'b1 && instruction_sel_i == 2'h0) begin
+          if(aes_command_en_i && wen_dec[i] == 1'b1 && instruction_sel_i == 2'h0) begin
             mem[i] <= wdata_i;
           end else if(wen_dec[i] == 1'b1 && instruction_sel_i == 2'h1) begin
             key[i] <= wdata_i;
@@ -130,7 +131,8 @@ module riscv_aes_register_file
     begin : wb_address_write
       if (rst_n==1'b0) begin
         wb_addr <= 32'b0;
-      end else begin
+		aes_start_i <= 1'b0;
+      end else if (aes_command_en_i) begin
         aes_start <= aes_start_i;
         if(instruction_sel_i == 2'h3) begin
           wb_addr <= wdata_i;

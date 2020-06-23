@@ -283,11 +283,12 @@ module riscv_core
   logic        data_misaligned_ex;
 
   logic [31:0] lsu_rdata;
-  //************ akmp **************  
+  //************ dvdd **************  
   logic [31:0] data_addr_lsu_o;
   logic [31:0] data_wdata_lsu_o;
   logic  cust_ex_unit_en;
   logic  aes_start_i;
+  logic  aes_command_en;
   assign data_addr_o = /*mem_addr_op_c_sel_id  ?  alu_operand_c_ex : */ data_addr_lsu_o;
   assign data_wdata_o = /* mem_addr_op_c_sel_id ?  regfile_alu_wdata_fw : */ data_wdata_lsu_o; 
   //********************************
@@ -644,6 +645,7 @@ module riscv_core
     .aes_regfile_waddr_ex_o       ( aes_regfile_waddr_ex_i     ),
     .aes_we_ex_unit_en_o          ( aes_we_ex_unit_en_i        ),
     .aes_start_ex_unit_o          ( aes_start_ex_unit_i        ),
+	.aes_command_en_id_o          ( aes_command_en             ),
 //********************************************************
                                    
 
@@ -931,7 +933,8 @@ module riscv_core
     .wen_i               ( aes_we_ex_unit_en_i     ),
     .instruction_sel_i   ( aes_instruction_sel_ex  ),
     .aes_start_i         ( aes_start_ex_unit_i     ),
-    .aes_start_o         ( aes_start_unit_o        )
+    .aes_start_o         ( aes_start_unit_o        ),
+	.aes_command_en_i    ( aes_command_en          )
   );
   
   riscv_aes_cipher

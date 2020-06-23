@@ -197,7 +197,8 @@ module riscv_id_stage
     output logic [1:0]  aes_instruction_sel_ex_o,
     output logic [1:0]  aes_regfile_waddr_ex_o,
     output logic        aes_we_ex_unit_en_o,  // enable writing to aes registers
-    output logic        aes_start_ex_unit_o, // starts the encryption process
+    output logic        aes_start_ex_unit_o, // starts the encryption proces
+    output logic        aes_command_en_id_o;
 	//************************************
 
     // Interrupt signals
@@ -342,7 +343,7 @@ module riscv_id_stage
   //logic [1:0]  mem_addr_op_c_sel;
   logic        aes_we_ex_unit_en;
   logic        aes_start_ex_unit_en;
-  logic        aes_command_en;
+  logic        aes_command_en_id;
 //********************************************************
   
 // Multiplier Control
@@ -1091,11 +1092,13 @@ module riscv_id_stage
     //.mem_addr_op_c_sel_o             (mem_addr_op_c_sel          ),
     .aes_we_ex_unit_en_o             ( aes_we_ex_unit_en          ),
     .aes_start_ex_unit_en_o          ( aes_start_ex_unit_en       ),
-    .aes_command_en_o                ( aes_command_en             )
+    .aes_command_en_o                ( aes_command_en_id          )
 //********************************************************
 
   );
-
+//********************** dvdd ****************************
+  assign aes_command_en_id_o = aes_command_en_id;
+//********************************************************
 
   ////////////////////////////////////////////////////////////////////
   //    ____ ___  _   _ _____ ____   ___  _     _     _____ ____    //
@@ -1400,6 +1403,7 @@ module riscv_id_stage
       aes_regfile_waddr_ex_o      <= 2'b0;
       aes_we_ex_unit_en_o         <= 1'b0;
       aes_start_ex_unit_o         <= 1'b0;
+	  aes_command_en_id           <= 1'b0;
      ////////////////////////////////////
     end
     else if (data_misaligned_i) begin
@@ -1480,7 +1484,7 @@ module riscv_id_stage
         end
 //************************* dvdd *************************
 // aes execution unit signals
-        if (aes_command_en)
+        if (aes_command_en_id)
         begin 
           alu_operator_ex_o         <= alu_operator;
           alu_operand_a_ex_o        <= alu_operand_a;
