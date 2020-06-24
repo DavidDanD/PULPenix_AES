@@ -134,7 +134,7 @@ module riscv_aes_register_file
 	aes_start <= 1'b0;
       end else if (aes_command_en_i) begin
         aes_start <= aes_start_i;
-        if(instruction_sel_i == 2'h3) begin
+        if(instruction_sel_i == 2'h2) begin
           wb_addr <= wdata_i;
         end
       end
