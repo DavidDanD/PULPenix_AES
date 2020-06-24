@@ -131,10 +131,10 @@ module riscv_aes_register_file
     begin : wb_address_write
       if (rst_n==1'b0) begin
         wb_addr <= 32'b0;
-		aes_start <= 1'b0;
+	aes_start <= 1'b0;
       end else if (aes_command_en_i) begin
         aes_start <= aes_start_i;
-        if(instruction_sel_i == 2'h2) begin
+        if(instruction_sel_i == 2'h3) begin
           wb_addr <= wdata_i;
         end
       end

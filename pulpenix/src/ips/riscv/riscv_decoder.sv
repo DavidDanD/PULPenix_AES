@@ -749,9 +749,9 @@ module riscv_decoder
       end
 
 //*********************************dvdd**************************************
-/* Added aes opcode to execute our AES application. Here we decode this 
+/* Added custom opcode to execute our AES application. Here we decode this 
    opcode and send the appropriate signals in order to enable our AES 
-   commands to execute                                                       */
+   command to execute                                                       */
       OPCODE_AES: begin
         /*The following 2 signals are  needed for
          correct forwarding. The forwarding mux
@@ -761,7 +761,6 @@ module riscv_decoder
         //rega_used_o              = 1'b1; 
         //regb_used_o              = 1'b1; 
 		aes_command_en_o = 1'b1;
-        regc_mux_o       = REGC_RD;  //choose alu_op_c register to be intsr[11:7]
         unique case (instr_rdata_i[14:12])
           3'b000: begin
             aes_we_ex_unit_en_o      = 1'b1             ; 	
@@ -774,18 +773,19 @@ module riscv_decoder
             alu_op_a_mux_sel_o       = OP_A_REGA_OR_FWD ; 
           end
           3'b010: begin
-            aes_we_ex_unit_en_o      = 1'b1             ; 	
-            aes_instruction_sel_o    = 2'h2             ; // AES_MEM - used to write the encrypted data in the memory
-            alu_op_a_mux_sel_o       = OP_A_REGA_OR_FWD ; 
+            aes_start_ex_unit_en_o   = 1'b1				;
+            aes_instruction_sel_o    = 2'h2             ; // AES_RUN - used to run the AES engine
           end
           3'b100: begin
-            aes_start_ex_unit_en_o   = 1'b1				;
-            aes_instruction_sel_o    = 2'h3             ; // AES_RUN - used to run the AES engine
+            aes_we_ex_unit_en_o      = 1'b1             ; 	
+            aes_instruction_sel_o    = 2'h3             ; // AES_MEM - used to write the encrypted data in the memory
+            alu_op_a_mux_sel_o       = OP_A_REGA_OR_FWD ; 
           end
         endcase
         if (instr_rdata_i[25] == 1'b1) begin
 
-            regc_used_o    = 1'b1;     //added for correct forwarding 31/08
+            regc_used_o          = 1'b1;     //added for correct forwarding 31/08
+            regc_mux_o           = REGC_RD;  //choose alu_op_c resiter to be intsr[11:7]
             //mem_addr_op_c_sel_o  = 1'b1;     //select the alu_op_c as address for writing the
             //the following are copied
             //from the sw opcode to enable

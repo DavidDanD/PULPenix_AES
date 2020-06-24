@@ -1,0 +1,341 @@
+# SimVision Command Script (Wed Jun 24 09:37:02 IDT 2020)
+#
+# Version 19.03.s013
+#
+# You can restore this configuration with:
+#
+#     simvision -input simvision.svcf
+#
+
+
+#
+# Preferences
+#
+preferences set toolbar-Standard-WatchWindow {
+  usual
+  shown 0
+}
+preferences set plugin-enable-svdatabrowser-new 1
+preferences set toolbar-Windows-WatchWindow {
+  usual
+  shown 0
+}
+preferences set toolbar-Standard-Console {
+  usual
+  position -pos 1
+}
+preferences set toolbar-Search-Console {
+  usual
+  position -pos 2
+}
+preferences set toolbar-Standard-WaveWindow {
+  usual
+  position -pos 1
+}
+preferences set plugin-enable-groupscope 0
+preferences set plugin-enable-interleaveandcompare 0
+preferences set plugin-enable-waveformfrequencyplot 0
+preferences set toolbar-SimControl-WatchWindow {
+  usual
+  shown 0
+}
+preferences set toolbar-TimeSearch-WatchWindow {
+  usual
+  shown 0
+}
+
+#
+# Cursors
+#
+set time 15609793.26ns
+if {[catch {cursor new -name  TimeA -time $time}] != ""} {
+    cursor set -using TimeA -time $time
+}
+
+#
+# Mnemonic Maps
+#
+mmap new  -reuse -name {Boolean as Logic} -radix %b -contents {{%c=FALSE -edgepriority 1 -shape low}
+{%c=TRUE -edgepriority 1 -shape high}}
+mmap new  -reuse -name {Example Map} -radix %x -contents {{%b=11???? -bgcolor orange -label REG:%x -linecolor yellow -shape bus}
+{%x=1F -bgcolor red -label ERROR -linecolor white -shape EVENT}
+{%x=2C -bgcolor red -label ERROR -linecolor white -shape EVENT}
+{%x=* -label %x -linecolor gray -shape bus}}
+
+#
+# Waveform windows
+#
+if {[catch {window new WaveWindow -name "Waveform 1" -geometry 1920x1163+1919+-1}] != ""} {
+    window geometry "Waveform 1" 1920x1163+1919+-1
+}
+window target "Waveform 1" on
+waveform using {Waveform 1}
+waveform sidebar select designbrowser
+waveform set \
+    -primarycursor TimeA \
+    -signalnames name \
+    -signalwidth 232 \
+    -units ns \
+    -valuewidth 75
+waveform baseline set -time 0
+
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.clk}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.core_instr_rdata[31:0]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.core_lsu_addr[31:0]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.data_mem_addr[14:0]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.instr_mem_rdata[31:0]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.CORE.RISCV_CORE.id_stage_i.alu_op_a_mux_sel[2:0]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.CORE.RISCV_CORE.id_stage_i.alu_op_b_mux_sel[2:0]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.CORE.RISCV_CORE.id_stage_i.alu_op_c_mux_sel[1:0]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.CORE.RISCV_CORE.id_stage_i.alu_operand_a[31:0]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.CORE.RISCV_CORE.id_stage_i.alu_operand_a_ex_o[31:0]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.CORE.RISCV_CORE.id_stage_i.alu_operand_b[31:0]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.CORE.RISCV_CORE.id_stage_i.alu_operand_b_ex_o[31:0]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.CORE.RISCV_CORE.id_stage_i.alu_operator[6:0]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.CORE.RISCV_CORE.id_stage_i.alu_operator_ex_o[6:0]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.CORE.RISCV_CORE.id_stage_i.branch_decision_i}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.CORE.RISCV_CORE.id_stage_i.branch_in_ex_o}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.CORE.RISCV_CORE.id_stage_i.branch_taken_ex}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.CORE.RISCV_CORE.id_stage_i.clear_instr_valid_o}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.CORE.RISCV_CORE.id_stage_i.clk}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.CORE.RISCV_CORE.id_stage_i.csr_hwlp_data_i[31:0]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.CORE.RISCV_CORE.id_stage_i.hwloop_cnt[31:0]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.CORE.RISCV_CORE.id_stage_i.hwloop_cnt_int[31:0]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.CORE.RISCV_CORE.id_stage_i.hwloop_cnt_mux_sel}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.CORE.RISCV_CORE.id_stage_i.hwloop_end[31:0]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.CORE.RISCV_CORE.id_stage_i.hwloop_regid[0:0]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.CORE.RISCV_CORE.id_stage_i.hwloop_regid_int[0:0]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.CORE.RISCV_CORE.id_stage_i.hwloop_start[31:0]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.CORE.RISCV_CORE.id_stage_i.hwloop_start_int[31:0]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.CORE.RISCV_CORE.id_stage_i.hwloop_start_mux_sel}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.CORE.RISCV_CORE.id_stage_i.hwloop_target[31:0]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.CORE.RISCV_CORE.id_stage_i.imm_b[31:0]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.CORE.RISCV_CORE.id_stage_i.imm_b_mux_sel[3:0]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.CORE.RISCV_CORE.id_stage_i.imm_bi_type[31:0]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.CORE.RISCV_CORE.id_stage_i.imm_clip_type[31:0]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.CORE.RISCV_CORE.id_stage_i.imm_i_type[31:0]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.CORE.RISCV_CORE.id_stage_i.imm_iz_type[31:0]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.CORE.RISCV_CORE.id_stage_i.imm_s2_type[31:0]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.CORE.RISCV_CORE.id_stage_i.imm_s3_type[31:0]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.CORE.RISCV_CORE.id_stage_i.imm_s_type[31:0]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.CORE.RISCV_CORE.id_stage_i.imm_sb_type[31:0]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.CORE.RISCV_CORE.id_stage_i.imm_shuffle_type[31:0]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.CORE.RISCV_CORE.id_stage_i.imm_shuffleb_type[31:0]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.CORE.RISCV_CORE.id_stage_i.imm_shuffleh_type[31:0]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.CORE.RISCV_CORE.id_stage_i.imm_u_type[31:0]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.CORE.RISCV_CORE.id_stage_i.imm_uj_type[31:0]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.CORE.RISCV_CORE.id_stage_i.imm_vec_ext_ex_o[1:0]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.CORE.RISCV_CORE.id_stage_i.imm_vec_ext_id[1:0]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.CORE.RISCV_CORE.id_stage_i.imm_vs_type[31:0]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.CORE.RISCV_CORE.id_stage_i.imm_vu_type[31:0]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.CORE.RISCV_CORE.id_stage_i.imm_z_type[31:0]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.CORE.RISCV_CORE.id_stage_i.instr[31:0]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.CORE.RISCV_CORE.id_stage_i.instr_multicycle}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.CORE.RISCV_CORE.id_stage_i.instr_rdata_i[31:0]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.CORE.RISCV_CORE.id_stage_i.jump_target[31:0]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.CORE.RISCV_CORE.id_stage_i.jump_target_mux_sel[1:0]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.CORE.RISCV_CORE.id_stage_i.jump_target_o[31:0]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.CORE.RISCV_CORE.id_stage_i.operand_a_fw_id[31:0]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.CORE.RISCV_CORE.id_stage_i.operand_a_fw_mux_sel[1:0]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.CORE.RISCV_CORE.id_stage_i.operand_b[31:0]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.CORE.RISCV_CORE.id_stage_i.operand_b_fw_id[31:0]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.CORE.RISCV_CORE.id_stage_i.operand_b_fw_mux_sel[1:0]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.CORE.RISCV_CORE.id_stage_i.operand_b_vec[31:0]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.CORE.RISCV_CORE.id_stage_i.operand_c_fw_id[31:0]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.CORE.RISCV_CORE.id_stage_i.operand_c_fw_mux_sel[1:0]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.CORE.RISCV_CORE.id_stage_i.pc_ex_o[31:0]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.CORE.RISCV_CORE.id_stage_i.pc_id_i[31:0]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.CORE.RISCV_CORE.id_stage_i.pc_if_i[31:0]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.CORE.RISCV_CORE.id_stage_i.reg_d_alu_is_reg_b_id}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.CORE.RISCV_CORE.id_stage_i.rega_used_dec}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.CORE.RISCV_CORE.id_stage_i.regb_used_dec}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.CORE.RISCV_CORE.id_stage_i.regc_mux[1:0]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.CORE.RISCV_CORE.id_stage_i.regc_used_dec}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.CORE.RISCV_CORE.id_stage_i.regfile_addr_ra_id[5:0]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.CORE.RISCV_CORE.id_stage_i.regfile_addr_rb_id[5:0]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.CORE.RISCV_CORE.id_stage_i.regfile_addr_rc_id[5:0]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.CORE.RISCV_CORE.id_stage_i.regfile_alu_waddr_ex_o[5:0]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.CORE.RISCV_CORE.id_stage_i.regfile_alu_waddr_fw_i[5:0]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.CORE.RISCV_CORE.id_stage_i.regfile_alu_waddr_id[5:0]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.CORE.RISCV_CORE.id_stage_i.regfile_alu_waddr_mux_sel}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.CORE.RISCV_CORE.id_stage_i.regfile_alu_wdata_fw_i[31:0]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.CORE.RISCV_CORE.id_stage_i.regfile_data_ra_id[31:0]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.CORE.RISCV_CORE.id_stage_i.regfile_data_rb_id[31:0]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb.top_i.core_region_i.CORE.RISCV_CORE.id_stage_i.regfile_waddr_id[5:0]}]}
+	} ]]
+
+waveform xview limits 15609652.655ns 15609867.411ns
+
+#
+# Waveform Window Links
+#
+
+#
+# Layout selection
+#
+
