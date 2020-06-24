@@ -198,7 +198,7 @@ module riscv_id_stage
     output logic [1:0]  aes_regfile_waddr_ex_o,
     output logic        aes_we_ex_unit_en_o,  // enable writing to aes registers
     output logic        aes_start_ex_unit_o, // starts the encryption proces
-    output logic        aes_command_en_id_o;
+    output logic        aes_command_en_id_o,
 	//************************************
 
     // Interrupt signals
@@ -1403,7 +1403,6 @@ module riscv_id_stage
       aes_regfile_waddr_ex_o      <= 2'b0;
       aes_we_ex_unit_en_o         <= 1'b0;
       aes_start_ex_unit_o         <= 1'b0;
-	  aes_command_en_id           <= 1'b0;
      ////////////////////////////////////
     end
     else if (data_misaligned_i) begin
