@@ -131,7 +131,7 @@ if __name__=="__main__":
 
 	    
 	    cmd_dec = funct7_inst | rs2_inst | rs1_inst | funct3_inst | rd_inst | opcode_inst
-	    lines[cnt] = line.replace(asm_cmd, "0x{:08x}".format(cmd_dec))
+	    lines[cnt] = line.replace(asm_cmd, ".word 0x{:08x}".format(cmd_dec))
 	    	    
 	    print "***************************"
 	    print "0x{:032b}".format(funct7_inst)
