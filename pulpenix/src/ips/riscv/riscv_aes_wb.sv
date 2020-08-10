@@ -51,7 +51,7 @@ module riscv_aes_wb(clk,rst_n,start_aes_wb,address_in,data_in,write_en_out,halt_
                  WRITE:
                   begin
                     if(cnt == 'd3) begin
-                      NS <= WAIT_MOD;
+                      NS <= FINISH;
                     end else begin
 		              NS <= WRITE;
 		            end
@@ -60,12 +60,6 @@ module riscv_aes_wb(clk,rst_n,start_aes_wb,address_in,data_in,write_en_out,halt_
 		            halt_en <= 1;
 		            write_en <= 1;
 		            cnt <= cnt + 1;
-                  end
-
-                 WAIT_MOD:
-                  begin
-                    halt_en <= 1;
-                    NS <= FINISH;
                   end
                   
                  FINISH:

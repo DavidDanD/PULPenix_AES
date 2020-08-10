@@ -63,7 +63,6 @@ module riscv_aes_register_file
   // write enable signals for all registers
   logic [NUM_WORDS-1:0]                 wen_dec;
   
-  logic                  aes_start;
   logic [DATA_WIDTH-1:0] wb_addr;
 
    //-----------------------------------------------------------------------------
@@ -80,7 +79,7 @@ module riscv_aes_register_file
         assign rkey_c_o    = key[2];
         assign rkey_d_o    = key[3];
 
-        assign aes_start_o = aes_start;
+        assign aes_start_o = aes_start_i;
         assign wb_addr_o   = wb_addr;
   endgenerate 
   
@@ -131,13 +130,9 @@ module riscv_aes_register_file
     begin : wb_address_write
       if (rst_n==1'b0) begin
         wb_addr <= 32'b0;
-	aes_start <= 1'b0;
-      end else if (aes_command_en_i) begin
-        aes_start <= aes_start_i;
-        if(instruction_sel_i == 2'h2) begin
-          wb_addr <= wdata_i;
-        end
-      end
+      end else if (instruction_sel_i == 2'h2) begin
+        wb_addr <= wdata_i;
+	  end
     end
 
   endgenerate
