@@ -1097,6 +1097,8 @@ module riscv_id_stage
 
   );
 //********************** dvdd ****************************
+
+  assign aes_start_ex_unit_o = aes_start_ex_unit_en;
   assign aes_command_en_id_o = aes_command_en_id;
 //********************************************************
 
@@ -1402,7 +1404,6 @@ module riscv_id_stage
       aes_instruction_sel_ex_o    <= 2'b0;
       aes_regfile_waddr_ex_o      <= 2'b0;
       aes_we_ex_unit_en_o         <= 1'b0;
-      aes_start_ex_unit_o         <= 1'b0;
      ////////////////////////////////////
     end
     else if (data_misaligned_i) begin
@@ -1433,7 +1434,6 @@ module riscv_id_stage
       if (id_valid_o)
       begin // unstall the whole pipeline
 
-        aes_start_ex_unit_o         <= '0;
         alu_en_ex_o                 <= alu_en;
         if (alu_en)
         begin // only change those registers when we actually need to
@@ -1498,7 +1498,6 @@ module riscv_id_stage
              coincidence instr[14:12] is GCD code, we have
              a problem because the CEU will launch and stall 
              the pipe, even though it is not a GCD command*/
-          aes_start_ex_unit_o         <= aes_start_ex_unit_en;
         end
         aes_we_ex_unit_en_o           <= aes_we_ex_unit_en;
         aes_regfile_waddr_ex_o        <= regfile_addr_rc_id[1:0];

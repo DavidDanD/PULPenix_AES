@@ -71,9 +71,9 @@ module riscv_aes_register_file
    //-----------------------------------------------------------------------------
   generate
         assign rdata_a_o   = mem[0];
-        assign rdata_d_o   = mem[3];
         assign rdata_b_o   = mem[1];
         assign rdata_c_o   = mem[2];
+        assign rdata_d_o   = mem[3];
         
         assign rkey_a_o    = key[0];
         assign rkey_b_o    = key[1];
@@ -117,7 +117,7 @@ module riscv_aes_register_file
         end else if (test_en_i==1'b1) begin
           mem[i] <= 32'hffffffff;
         end else begin
-          if(aes_command_en_i && wen_dec[i] == 1'b1 && instruction_sel_i == 2'h0) begin
+          if(wen_dec[i] == 1'b1 && instruction_sel_i == 2'h0) begin
             mem[i] <= wdata_i;
           end else if(wen_dec[i] == 1'b1 && instruction_sel_i == 2'h1) begin
             key[i] <= wdata_i;
