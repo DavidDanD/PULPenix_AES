@@ -129,6 +129,18 @@ int main() {
     asm("nop");
     asm("nop");
     asm("nop");
+    asm("lw t3, 0(t2)");
+    asm("lw t4, 4(t2)");
+    asm("lw t5, 8(t2)");
+    asm("lw t6, 12(t2)");
+    asm("nop");
+    asm("nop");
+    asm("nop");
+    asm("nop");
+    asm("nop");
+    asm("nop");
+    asm("nop");
+    asm("nop");
   
   sim_finish () ;  // flag to trigger simulation termination
   
