@@ -108,6 +108,11 @@ int main() {
     asm("nop");
     asm("nop");
     
+    asm("addi t2,t0,160");
+    asm("nop");
+    asm("nop");
+    asm("nop");
+    asm("nop");
     asm("aes_mem t2");
     asm("nop");
     asm("nop");
@@ -133,6 +138,18 @@ int main() {
     asm("lw t4, 4(t2)");
     asm("lw t5, 8(t2)");
     asm("lw t6, 12(t2)");
+    asm("nop");
+    asm("nop");
+    asm("nop");
+    asm("nop");
+    asm("nop");
+    asm("nop");
+    asm("nop");
+    asm("nop");
+    asm("addi t3,t0,57");
+    asm("sw t3, 0(t2)");
+    asm("andi t4, t4, 0");//clean
+    asm("lw t4, 0(t2)");
     asm("nop");
     asm("nop");
     asm("nop");

@@ -2,9 +2,11 @@
 
 
 #include <gpio.h>        // simple SOC gpio interface
+#include <bm_printf.h>   // bare-metal printf
 
 int main() {
 
+    bm_printf("\n\n\n **** ADD FINISH **** \n\n\n");
     asm("nop");
     asm("nop");
     asm("nop");
@@ -16,6 +18,7 @@ int main() {
     asm("nop");
     asm("nop");
     asm("nop");
+    bm_printf("\n\n\n **** ADD FINISH **** \n\n\n");
 
   sim_finish () ;  // flag to trigger simulation termination
   

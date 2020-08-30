@@ -15,6 +15,7 @@ module riscv_aes_wb(clk,rst_n,start_aes_wb,address_in,data_in,write_en_out,halt_
     logic halt_en;
     logic write_en;
     logic [1:0] cnt;
+    logic [2:0] wr_cnt;
     logic [1:0] CS;
     logic [1:0] NS;
     logic [31:0] data;
@@ -29,6 +30,7 @@ module riscv_aes_wb(clk,rst_n,start_aes_wb,address_in,data_in,write_en_out,halt_
             if (rst_n == 1'b0) begin
               NS <= IDLE;
               cnt <= 0;
+			  wr_cnt <= 0;
               cur_addr <= 32'b0;
 	          data <= 32'b0;
 	          write_en <= 0;
@@ -44,22 +46,33 @@ module riscv_aes_wb(clk,rst_n,start_aes_wb,address_in,data_in,write_en_out,halt_
                     if(start_aes_wb) begin
                       NS <= WRITE;
                       cnt <= 0;
+			          wr_cnt <= 0;
                       halt_en <= 1;
                     end
                   end    
              
                  WRITE:
                   begin
-                    if(cnt == 'd3) begin
+                    if(cnt == 'd3 && wr_cnt==3'b0) begin
                       NS <= FINISH;
                     end else begin
 		              NS <= WRITE;
 		            end
-		            data <= data_in[cnt*32+:32];
-		            cur_addr <= address_in + cnt*4;
-		            halt_en <= 1;
-		            write_en <= 1;
-		            cnt <= cnt + 1;
+					if (wr_cnt == 3'b0) begin
+		               data <= data_in[cnt*32+:32];
+		               cur_addr <= address_in + cnt*4;
+		               halt_en <= 1;
+		               write_en <= 1;
+		               cnt <= cnt + 1;
+			           wr_cnt <= 1;
+					end else begin
+		               write_en <= 0;
+					   if (wr_cnt==3'b111) begin
+					      wr_cnt <= 3'b0;
+					   end else begin
+					      wr_cnt <= wr_cnt + 1;
+					   end
+					end
                   end
                   
                  FINISH:

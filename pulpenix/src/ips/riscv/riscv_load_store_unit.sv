@@ -52,7 +52,7 @@ module riscv_load_store_unit
     input  logic         data_req_ex_i,        // data request                      -> from ex stage
     input  logic [31:0]  operand_a_ex_i,       // operand a from RF for address     -> from ex stage
     input  logic [31:0]  operand_b_ex_i,       // operand b from RF for address     -> from ex stage
-    // ******************* akmp  ********************
+    // ******************* dvdd  ********************
     /* the following changes have been made to enable the lsu to choose operand c as an address to memory*/
     input  logic [31:0]  operand_c_ex_i,       
     input  logic         mem_addr_op_c_sel_i,
@@ -329,16 +329,16 @@ module riscv_load_store_unit
 
   // output to data interface
   assign data_addr_o   = data_addr_int;
-  // ******************** akmp ************************
+  // ******************** dvdd ************************
   /* changed to enable choosing the data to be writen
     to memory from custom execution unit custom      */
   assign data_wdata_o = mem_addr_op_c_sel_i ? regfile_alu_wdata_fw_i : data_wdata; 
   //assign data_wdata_o  = data_wdata;//old code
   //***************************************************
-  assign data_we_o     = data_we_ex_i;
+  assign data_we_o     = mem_addr_op_c_sel_i ? mem_addr_op_c_sel_i : data_we_ex_i;
   assign data_be_o     = data_be;
 
-  assign misaligned_st = data_misaligned_ex_i;
+  assign misaligned_st = mem_addr_op_c_sel_i ? 1'b0 : data_misaligned_ex_i;
 
   assign load_err_o    = data_gnt_i && data_err_i && ~data_we_o;
   assign store_err_o   = data_gnt_i && data_err_i && data_we_o;
@@ -357,9 +357,9 @@ module riscv_load_store_unit
       // starts from not active and stays in IDLE until request was granted
       IDLE:
       begin
-        data_req_o = data_req_ex_i;
+        data_req_o = data_req_ex_i | mem_addr_op_c_sel_i;
 
-        if(data_req_ex_i) begin
+        if(data_req_ex_i | mem_addr_op_c_sel_i) begin
           lsu_ready_ex_o = 1'b0;
 
           if(data_gnt_i) begin
@@ -376,6 +376,7 @@ module riscv_load_store_unit
       // wait for rvalid in WB stage and send a new request if there is any
       WAIT_RVALID:
       begin
+        data_req_o = mem_addr_op_c_sel_i;
         lsu_ready_wb_o = 1'b0;
 
         if (data_rvalid_i) begin
@@ -383,9 +384,9 @@ module riscv_load_store_unit
           // source for the WB stage
           lsu_ready_wb_o = 1'b1;
 
-          data_req_o = data_req_ex_i;
+          data_req_o = data_req_ex_i | mem_addr_op_c_sel_i;
 
-          if (data_req_ex_i) begin
+          if (data_req_ex_i | mem_addr_op_c_sel_i) begin
             lsu_ready_ex_o = 1'b0;
 
             if (data_gnt_i) begin
@@ -474,7 +475,7 @@ module riscv_load_store_unit
   logic [31:0] data_addr_int_tmp; //akmp added an intermediate signal
   assign data_addr_int_tmp = (addr_useincr_ex_i) ? (operand_a_ex_i + operand_b_ex_i) : operand_a_ex_i;//akmp changed signal from data_addr_int to
   //data_addr_int_tmp
-  //**************** akmp ******************
+  //**************** dvdd ******************
   // added this to enable choosing the alu_operand_c as the memory address
   // for direct write to memory
   assign data_addr_int = mem_addr_op_c_sel_i ? operand_c_ex_i : data_addr_int_tmp;

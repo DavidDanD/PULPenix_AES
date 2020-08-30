@@ -3,6 +3,13 @@
 
 import random
 
+
+def twos_comp(val, bits):
+    """compute the 2's complement of int value val"""
+    if (val & (1 << (bits - 1))) != 0: # if sign bit is set e.g., 8bit: 128-255
+        val = val - (1 << bits)        # compute negative value
+    return val
+
 def xor(s1, s2):
     return tuple(a^b for a,b in zip(s1, s2))
 
@@ -213,7 +220,11 @@ if __name__=="__main__":
 		dataOrKey = line.split("%%")[1].split("-")[0][0:-1]
 		dataBinTmp = eval("%sBin[dataRegNum*32:(dataRegNum+1)*32]"%(dataOrKey))
 	        bitRange = line.split("%%")[1].split("-")[1]
-		decVal = int(eval("dataBinTmp[%s]"%(bitRange)),2)  
+		numBits = int(bitRange.split(':')[1])-int(bitRange.split(':')[0])
+		if 'lui' in line:
+			decVal = int(eval("dataBinTmp[%s]"%(bitRange)),2)
+		else:
+			decVal = twos_comp(int(eval("dataBinTmp[%s]"%(bitRange)),2),numBits)
 		lines[cnt] = line.replace("%%" + line.split("%%")[1] + "%%", str(decVal))
 	    cnt = cnt + 1
     with open("asm_aes.c", 'w+') as fp:
@@ -223,22 +234,22 @@ if __name__=="__main__":
     
     #key = "0000000000000000cafeface00000000".decode('hex')
     #key = "000102030405060708090a0b0c0d0e0f".decode('hex')
-    check = (
-            #("00112233445566778899aabbccddeeff", "69c4e0d86a7b0430d8cdb78070b4c55a"),
-            (data, DadoCypheredData),
-            )
-    crypt = AES_128()
-    crypt.key = key
-    for c in check:
-        p = c[0].decode('hex')
-        v = c[1].decode('hex')
-        t = crypt.cipher(p)
-        if t == v:
-            print "yay!"
-        else:
-            print "{0} != {1}".format(t.encode('hex'), c[1])
-        t = crypt.inv_cipher(v)
-        if t == p:
-            print "yay!"
-        else:
-	    print "{0} != {1}".format(t.encode('hex'), c[1])
+    # check = (
+            # #("00112233445566778899aabbccddeeff", "69c4e0d86a7b0430d8cdb78070b4c55a"),
+            # (data, DadoCypheredData),
+            # )
+    # crypt = AES_128()
+    # crypt.key = key
+    # for c in check:
+        # p = c[0].decode('hex')
+        # v = c[1].decode('hex')
+        # t = crypt.cipher(p)
+        # if t == v:
+            # print "yay!"
+        # else:
+            # print "{0} != {1}".format(t.encode('hex'), c[1])
+        # t = crypt.inv_cipher(v)
+        # if t == p:
+            # print "yay!"
+        # else:
+	    # print "{0} != {1}".format(t.encode('hex'), c[1])
