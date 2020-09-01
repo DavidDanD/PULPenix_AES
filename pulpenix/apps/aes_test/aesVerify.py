@@ -265,7 +265,7 @@ if __name__=="__main__":
 		print('Error while creating "asm_aes_riscv_temp.c".')
 	
 	print('Running AES RISCV test:')
-	system("~/Workarea/pulp/pulpenix/misc/scripts/pulpenix_compile asm_aes_riscv_temp > " + join(aesRiscvAppTempPath, "asm_aes_riscv_temp_output") + " 2> " + join(aesRiscvAppTempPath, "asm_aes_riscv_temp_error_output"))
+	system("$MY_PULP_ENV/misc/scripts/pulpenix_compile asm_aes_riscv_temp > " + join(aesRiscvAppTempPath, "asm_aes_riscv_temp_output") + " 2> " + join(aesRiscvAppTempPath, "asm_aes_riscv_temp_error_output"))
 	print('Finished running AES RISCV test.')
 	
 	lines = []
@@ -302,12 +302,12 @@ if __name__=="__main__":
 		print('Error while creating "asm_aes_c_temp.c".')
 	
 	print('Running AES C test:')
-	system("~/Workarea/pulp/pulpenix/misc/scripts/pulpenix_compile asm_aes_c_temp > " + join(aesCAppTempPath, "asm_aes_c_temp_output") + " 2> " + join(aesCAppTempPath, "asm_aes_c_temp_error_output"))
+	system("$MY_PULP_ENV/misc/scripts/pulpenix_compile asm_aes_c_temp > " + join(aesCAppTempPath, "asm_aes_c_temp_output") + " 2> " + join(aesCAppTempPath, "asm_aes_c_temp_error_output"))
 	print('Finished running AES C test.')
 	
 	
-	riscvResult = subprocess.check_output("cat ../asm_aes_riscv_temp/asm_aes_riscv_temp_output | grep 'Ciphered text' | cut -d: -f2", shell=True)
-	cResult = subprocess.check_output("cat ../asm_aes_c_temp/asm_aes_c_temp_output | grep 'Ciphered text' | cut -d: -f2", shell=True)
+	riscvResult = subprocess.check_output("cat $MY_PULP_APPS/asm_aes_riscv_temp/asm_aes_riscv_temp_output | grep 'Ciphered text' | cut -d: -f2", shell=True)
+	cResult = subprocess.check_output("cat $MY_PULP_APPS/asm_aes_c_temp/asm_aes_c_temp_output | grep 'Ciphered text' | cut -d: -f2", shell=True)
 	
 	crypt = AES_128()
 	crypt.key = key.decode('hex')
