@@ -7,3 +7,7 @@ pulpenix/src/ips/riscv/work/
 toolchain/
 pulpenix/.simvision/
 pulpenix/src/ips/riscv/design_syn/
+*.slm
+pulpenix/sim/irun/waves.shm/
+pulpenix/sim/irun/xcelium.d/
+pulpenix/sim/irun/
