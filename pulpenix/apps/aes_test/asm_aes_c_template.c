@@ -249,7 +249,7 @@ int main(int argc, char *argv[]) {
 	
 	uint8_t roundkeys[AES_ROUND_KEY_SIZE];
 
-	/*bm_printf("\n--------------------------------------------------------\n");
+	bm_printf("\n--------------------------------------------------------\n");
 	bm_printf("Plain text:\n");
 	for (i = 0; i < AES_BLOCK_SIZE; i++) {
 		bm_printf("%2x ", plaintext[i]);
@@ -279,18 +279,18 @@ int main(int argc, char *argv[]) {
 		bm_printf("%2x ", ciphertext[i]); 
 	}
 	
-	bm_printf("\n");*/
+	bm_printf("\n");
 	
 	
-	FILE *fptr;
+	//FILE *fptr;
     
-        fptr = fopen("aes_result_c_temp","w");
+        //fptr = fopen("aes_result_c_temp","w");
 	
-	for (i = 0; i < AES_BLOCK_SIZE; i++) {
-		fprintf("%2x", ciphertext[i]); 
-	}
+	//for (i = 0; i < AES_BLOCK_SIZE; i++) {
+	//	fprintf("%2x", ciphertext[i]); 
+	//}
     
-        fclose(fptr);
+        //fclose(fptr);
 	
 	
 	sim_finish();

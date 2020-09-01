@@ -11,7 +11,8 @@ int main() {
     asm("andi t0,t0,0");
     
     asm("lui t2,%%data0-0:20%%"); //data = [d0, d1, d2, d3]
-    asm("addi t1,t0,%%data0-20:32%%");
+    asm("lui t1,%%data0-20:32%%");
+    asm("srli t1,t1,12");
     asm("add t2,t2,t1");
     asm("nop");
     asm("nop");
@@ -23,7 +24,8 @@ int main() {
     asm("nop");
     asm("nop");
     asm("lui t2,%%data1-0:20%%");
-    asm("addi t1,t0,%%data1-20:32%%");
+    asm("lui t1,%%data1-20:32%%");
+    asm("srli t1,t1,12");
     asm("add t2,t2,t1");
     asm("nop");
     asm("nop");
@@ -35,7 +37,8 @@ int main() {
     asm("nop");
     asm("nop");
     asm("lui t2,%%data2-0:20%%");
-    asm("addi t1,t0,%%data2-20:32%%");
+    asm("lui t1,%%data2-20:32%%");
+    asm("srli t1,t1,12");
     asm("add t2,t2,t1");
     asm("nop");
     asm("nop");
@@ -47,7 +50,8 @@ int main() {
     asm("nop");
     asm("nop");
     asm("lui t2,%%data3-0:20%%"); 
-    asm("addi t1,t0,%%data3-20:32%%");
+    asm("lui t1,%%data3-20:32%%");
+    asm("srli t1,t1,12");
     asm("add t2,t2,t1");
     asm("nop");
     asm("nop");
@@ -60,7 +64,8 @@ int main() {
     asm("nop");
     
     asm("lui t2,%%key0-0:20%%"); //key = [k0, k1, k2, k3]
-    asm("addi t1,t0,%%key0-20:32%%");
+    asm("lui t1,%%key0-20:32%%");
+    asm("srli t1,t1,12");
     asm("add t2,t2,t1");
     asm("nop");
     asm("nop");
@@ -71,8 +76,9 @@ int main() {
     asm("nop");
     asm("nop");
     asm("nop");
-    asm("lui t2,%%key1-0:20%%"); 
-    asm("addi t1,t0,%%key1-20:32%%"); 
+    asm("lui t2,%%key1-0:20%%");  //key = [k0, k1, k2, k3]
+    asm("lui t1,%%key1-20:32%%");
+    asm("srli t1,t1,12");
     asm("add t2,t2,t1"); 
     asm("nop");
     asm("nop");
@@ -83,8 +89,9 @@ int main() {
     asm("nop");
     asm("nop");
     asm("nop");
-    asm("lui t2,%%key2-0:20%%"); 
-    asm("addi t1,t0,%%key2-20:32%%");
+    asm("lui t2,%%key2-0:20%%");  //key = [k0, k1, k2, k3]
+    asm("lui t1,%%key2-20:32%%");
+    asm("srli t1,t1,12");
     asm("add t2,t2,t1");
     asm("nop");
     asm("nop");
@@ -95,8 +102,9 @@ int main() {
     asm("nop");
     asm("nop");
     asm("nop");
-    asm("lui t2,%%key3-0:20%%");
-    asm("addi t1,t0,%%key3-20:32%%");
+    asm("lui t2,%%key3-0:20%%"); //key = [k0, k1, k2, k3]
+    asm("lui t1,%%key3-20:32%%");
+    asm("srli t1,t1,12");
     asm("add t2,t2,t1");
     asm("nop");
     asm("nop");
@@ -158,10 +166,10 @@ int main() {
     asm("nop");
     asm("nop");
     asm("nop");
-    asm("lw t3, 0(t2)");
-    asm("lw t4, 4(t2)");
-    asm("lw t5, 8(t2)");
-    asm("lw t6, 12(t2)");
+    asm("lw t6, 0(t2)");
+    asm("lw t5, 4(t2)");
+    asm("lw t4, 8(t2)");
+    asm("lw t3, 12(t2)");
     asm("nop");
     asm("nop");
     asm("nop");
@@ -187,18 +195,25 @@ int main() {
     register int *dataOut2 asm("t5");
     register int *dataOut3 asm("t6");
     
-    FILE *fptr;
+    bm_printf ("\n\n\n=============================================\n\n\n");
+    bm_printf ("%08X", dataOut0);
+    bm_printf ("%08X", dataOut1);
+    bm_printf ("%08X", dataOut2);
+    bm_printf ("%08X", dataOut3);
+    bm_printf ("\n\n\n=============================================\n\n\n");
     
-    fptr = fopen("aes_result_riscv_temp","w");
+    //FILE *fptr;
     
-    fprintf(fptr, "%08x", dataOut0);
-    fprintf(fptr, "%08x", dataOut1);
-    fprintf(fptr, "%08x", dataOut2);
-    fprintf(fptr, "%08x", dataOut3);
+    //fptr = fopen("aes_result_riscv_temp","w");
     
-    fclose(fptr);
+    //fprintf(fptr, "%08x", dataOut0);
+    //fprintf(fptr, "%08x", dataOut1);
+    //fprintf(fptr, "%08x", dataOut2);
+    //fprintf(fptr, "%08x", dataOut3);
+    
+    //fclose(fptr);
   
-  sim_finish () ;  // flag to trigger simulation termination
+    sim_finish () ;  // flag to trigger simulation termination
   
-  return 0;
+    return 0;
 }

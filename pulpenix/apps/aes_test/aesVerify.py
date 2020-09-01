@@ -211,6 +211,9 @@ if __name__=="__main__":
 	#key = "0000000000000000cafeface00000000"
 	#data = "deadbeefdeafbabe0000000000000000"
 	
+	print("Key:\n" + key)
+	print("Data:\n" + data)
+	
 	keyBin = "{:0128b}".format(int(key,16))
 	dataBin = "{:0128b}".format(int(data,16))
 	
@@ -269,7 +272,7 @@ if __name__=="__main__":
 				keyTemp = ""
 			
 				for i in range(int(len(key)/2)):
-					keyTemp += "0x" + key[i:i+2] + ","
+					keyTemp += "0x" + key[2*i:2*i+2] + ","
 				
 				lines[cnt] = line.replace("%%key%%", str(keyTemp))
 			
@@ -277,7 +280,7 @@ if __name__=="__main__":
 				plainTextTemp = ""
 			
 				for i in range(int(len(key)/2)):
-					plainTextTemp += "0x" + data[i:i+2] + ","
+					plainTextTemp += "0x" + data[2*i:2*i+2] + ","
 			
 				lines[cnt] = line.replace("%%plainText%%", str(plainTextTemp))
 			
