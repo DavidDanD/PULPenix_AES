@@ -5,7 +5,7 @@ set dateNtime = "`date +"%d%m%H%M"`"
 set dc_shellCommandsFile = $RISCV_PULP_SW_UTILS/dc_shellCommandsFile.txt
 set dc_shellCommandsFileTemplate = $RISCV_PULP_SW_UTILS/dc_shellCommandsFile_template.txt
 
-python parseUser.py -sf $dc_shellCommandsFileTemplate -df $dc_shellCommandsFile
+python $RISCV_PULP_SW_UTILS/parseUser.py -sf $dc_shellCommandsFileTemplate -df $dc_shellCommandsFile
 cd $designSynPath
 dc_shell-t -f $dc_shellCommandsFile
 mv synthTemp.ddc synth$dateNtime.ddc

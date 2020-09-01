@@ -1,4 +1,5 @@
 #!/bin/csh
+our_pulp_aes_compile -a $1
 cd $MY_PULP_APPS/$1
 pulp_comp_app_noopt $1
 

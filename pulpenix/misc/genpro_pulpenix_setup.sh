@@ -44,5 +44,10 @@ alias pulp_get_app             "$RISCV_PULP_SW_UTILS/pulp_get_app.sh"
 alias our_pulp_run 	       "~/Workarea/pulp/pulpenix/misc/scripts/pulpenix_compile"
 alias our_wave_trace	       "~/Workarea/pulp/pulpenix/misc/scripts/pulpenix_wave_trace_sorter"
 alias our_pulp_compile    "~/Workarea/pulp/pulpenix/misc/scripts/pulpenix_compile_only"
-   
 
+alias our_pulp_synthesis    $RISCV_PULP_SW_UTILS/full_synthesis_script
+alias our_pulp_aes_compile  python $RISCV_PULP_SW_UTILS/compiler.py
+alias our_pulp_aes_verification python $MY_PULP_APPS/aes_test/aesVerify.py
+
+chmod 775 $RISCV_PULP_SW_UTILS/*
+chmod 775 $MY_PULP_ENV/misc/scripts/*
