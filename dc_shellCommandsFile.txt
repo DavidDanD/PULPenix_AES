@@ -5,6 +5,5 @@ elaborate riscv_core -architecture verilog -library WORK
 create_clock -name "clock_name" -period 40 -waveform { 0 20  }  { clk_i  }
 set_dont_touch_network  [ find clock clock_name ]
 compile -exact_map
-write -hierarchy -format ddc -output /users/epdado/Workarea/pulp/pulpenix/src/ips/riscv/design_syn/synth05081138.ddc
-read_file -format ddc {/users/epdado/Workarea/pulp/pulpenix/src/ips/riscv/design_syn/synth05081138.ddc}
-Current design is 'riscv_core'.
+write -hierarchy -format ddc -output /users/epdado/Workarea/pulp/pulpenix/src/ips/riscv/design_syn/synthTemp.ddc
+quit

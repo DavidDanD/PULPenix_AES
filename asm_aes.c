@@ -17,7 +17,7 @@ int main() {
     asm("nop");
     asm("nop");
     asm("nop");
-    asm("aes_reg d0,t2");
+    asm(".word 0x0003803b");
     asm("nop");
     asm("nop");
     asm("nop");
@@ -29,7 +29,7 @@ int main() {
     asm("nop");
     asm("nop");
     asm("nop");
-    asm("aes_reg d1,t2");
+    asm(".word 0x000380bb");
     asm("nop");
     asm("nop");
     asm("nop");
@@ -41,7 +41,7 @@ int main() {
     asm("nop");
     asm("nop");
     asm("nop");
-    asm("aes_reg d2,t2");
+    asm(".word 0x0003813b");
     asm("nop");
     asm("nop");
     asm("nop");
@@ -53,7 +53,7 @@ int main() {
     asm("nop");
     asm("nop");
     asm("nop");
-    asm("aes_reg d3,t2"); 
+    asm(".word 0x000381bb"); 
     asm("nop");
     asm("nop");
     asm("nop");
@@ -66,7 +66,7 @@ int main() {
     asm("nop");
     asm("nop");
     asm("nop");
-    asm("aes_key k0,t2");
+    asm(".word 0x0003903b");
     asm("nop");
     asm("nop");
     asm("nop");
@@ -78,7 +78,7 @@ int main() {
     asm("nop");
     asm("nop");
     asm("nop");
-    asm("aes_key k1,t2");
+    asm(".word 0x000390bb");
     asm("nop");
     asm("nop");
     asm("nop");
@@ -90,7 +90,7 @@ int main() {
     asm("nop");
     asm("nop");
     asm("nop");
-    asm("aes_key k2,t2");
+    asm(".word 0x0003913b");
     asm("nop");
     asm("nop");
     asm("nop");
@@ -102,7 +102,7 @@ int main() {
     asm("nop");
     asm("nop");
     asm("nop");
-    asm("aes_key k3,t2");
+    asm(".word 0x000391bb");
     asm("nop");
     asm("nop");
     asm("nop");
@@ -113,7 +113,7 @@ int main() {
     asm("nop");
     asm("nop");
     asm("nop");
-    asm("aes_mem t2");
+    asm(".word 0x0003a1bb");
     asm("nop");
     asm("nop");
     asm("nop");
@@ -121,7 +121,29 @@ int main() {
     asm("nop");
     asm("nop");
     
-    asm("aes_run");
+    asm(".word 0x0003c1bb");
+    asm("nop");
+    asm("nop");
+    asm("nop");
+    asm("nop");
+    asm("nop");
+    asm("nop");
+    asm("nop");
+    asm("nop");
+    asm("nop");
+    asm("nop");
+    asm("nop");
+    asm("nop");
+    asm("nop");
+    asm("nop");
+    asm("nop");
+    asm("nop");
+    asm("nop");
+    asm("nop");
+    asm("nop");
+    asm("nop");
+    asm("nop");
+    asm("nop");
     asm("nop");
     asm("nop");
     asm("nop");
@@ -146,18 +168,16 @@ int main() {
     asm("nop");
     asm("nop");
     asm("nop");
-    asm("addi t3,t0,57");
-    asm("sw t3, 0(t2)");
-    asm("andi t4, t4, 0");//clean
-    asm("lw t4, 0(t2)");
-    asm("nop");
-    asm("nop");
-    asm("nop");
-    asm("nop");
-    asm("nop");
-    asm("nop");
-    asm("nop");
-    asm("nop");
+    register int *dataOut0 asm("t3");
+    register int *dataOut1 asm("t4");
+    register int *dataOut2 asm("t5");
+    register int *dataOut3 asm("t6");
+    bm_printf ("\n\n\n=============================================\n\n\n");
+    bm_printf ("%08X\n", dataOut0);
+    bm_printf ("%08X\n", dataOut1);
+    bm_printf ("%08X\n", dataOut2);
+    bm_printf ("%08X\n", dataOut3);
+    bm_printf ("\n\n\n=============================================\n\n\n");
   
   sim_finish () ;  // flag to trigger simulation termination
   
