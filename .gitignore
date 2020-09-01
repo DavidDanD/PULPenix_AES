@@ -5,3 +5,5 @@
 *.qtl
 pulpenix/src/ips/riscv/work/
 toolchain/
+pulpenix/.simvision/
+pulpenix/src/ips/riscv/design_syn/
