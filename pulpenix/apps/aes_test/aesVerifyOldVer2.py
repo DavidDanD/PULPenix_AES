@@ -3,6 +3,7 @@
 
 import random
 import getpass
+import subprocess
 from os.path import join
 from os import environ, makedirs, system, path
 
@@ -207,8 +208,6 @@ if __name__=="__main__":
 	
 	key = "{:032x}".format(random.randint(0,2**128))
 	data = "{:032x}".format(random.randint(0,2**128))
-	print(key)
-	print(data)
 	
 	#key = "0000000000000000cafeface00000000"
 	#data = "deadbeefdeafbabe0000000000000000"
@@ -216,14 +215,22 @@ if __name__=="__main__":
 	keyBin = "{:0128b}".format(int(key,16))
 	dataBin = "{:0128b}".format(int(data,16))
 	
+	aesTestPath = join(environ['MY_PULP_APPS'], "aes_test")
+	with open (join(aesTestPath,'test_key_data.txt'),'w+') as test_data:
+		test_data.write("Key:\n")
+		test_data.write(key+'\n')
+		test_data.write("Data:\n")
+		test_data.write(data+'\n')
+		
+	
 	username = getpass.getuser()
 	
-	aesTestPath = join(environ['MY_PULP_APPS'], "aes_test")
 	aesRiscvAppTempPath = join(environ['MY_PULP_APPS'], "asm_aes_riscv_temp")
 	aesCAppTempPath = join(environ['MY_PULP_APPS'], "asm_aes_c_temp")
 	
 	lines = []
 	with open(aesTestPath + "/asm_aes_riscv_template.c", 'r') as fp:
+		print('Creating new AES RISCV test:')
 		lines = fp.readlines()
 		cnt = 0
 		for line in lines:
@@ -244,73 +251,73 @@ if __name__=="__main__":
 		makedirs(aesRiscvAppTempPath)
 	
 	if len(lines)>0:
+		print('New AES RISCV test created.')
 		with open(join(aesRiscvAppTempPath, "asm_aes_riscv_temp.c"), 'w+') as fp:
-			print (join(aesRiscvAppTempPath, "asm_aes_riscv_temp.c"))
 			fp.writelines(lines)
 	else:
 		print('Error while creating "asm_aes_riscv_temp.c".')
 	
-	system("our_pulp_run asm_aes_riscv_temp")
+	print('Running AES RISCV test:')
+	system("~/Workarea/pulp/pulpenix/misc/scripts/pulpenix_compile asm_aes_riscv_temp &> " + join(aesRiscvAppTempPath, "asm_aes_riscv_temp_Output"))
+	print('Finished running AES RISCV test.')
 	
 	lines = []
 	with open(join(aesTestPath ,"asm_aes_c_template.c"), 'r') as fp:
+		print('Creating new AES C test:')
 		lines = fp.readlines()
 		cnt = 0
 		for line in lines:
 			if( "%%key%%" in line ):
 				keyTemp = ""
-		
-				for i in range(int(len(key)/2)):
-					keyTemp += "0x" + key[i:i+2] + ","
 			
+				for i in range(int(len(key)/2)):
+					keyTemp += "0x" + key[2*i:2*i+2] + ","
+				
 				lines[cnt] = line.replace("%%key%%", str(keyTemp))
-		
+			
 			if( "%%plainText%%" in line ):
 				plainTextTemp = ""
-		
+			
 				for i in range(int(len(key)/2)):
-					plainTextTemp += "0x" + data[i:i+2] + ","
-		
+					plainTextTemp += "0x" + data[2*i:2*i+2] + ","
+			
 				lines[cnt] = line.replace("%%plainText%%", str(plainTextTemp))
-		
+			
 			cnt = cnt + 1
 		
 	if ( not path.isdir(aesCAppTempPath) ):		
 		makedirs(aesCAppTempPath)
 	
 	if len(lines)>0:
+		print('New AES C test created.')
 		with open(join(aesCAppTempPath, "asm_aes_c_temp.c"), 'w+') as fp:
 			fp.writelines(lines)
 	else:
 		print('Error while creating "asm_aes_c_temp.c".')
 	
-	system("our_pulp_run asm_aes_c_temp")
+	print('Running AES C test:')
+	system("~/Workarea/pulp/pulpenix/misc/scripts/pulpenix_compile asm_aes_c_temp &> " + join(aesCAppTempPath, "asm_aes_c_temp_Output"))
+	print('Finished running AES C test.')
 	
 	
+	riscvResult = subprocess.check_output("cat ../asm_aes_riscv_temp/asm_aes_riscv_temp_Output | grep 'Ciphered text' | cut -d: -f2", shell=True)
+	cResult = subprocess.check_output("cat ../asm_aes_c_temp/asm_aes_c_temp_Output | grep 'Ciphered text' | cut -d: -f2", shell=True)
+	
+	print key
+	print data
+	crypt = AES_128()
+	crypt.key = key.decode('hex')
+	pythonResult = crypt.cipher(data.decode('hex'))
+	pythonResult = pythonResult.encode('hex').upper()
 	
 	
+	if (riscvResult == cResult == pythonResult):
+		print ("***RISCV ciphered text is identical to C ciphered text.***")
+	else:
+		print ("Ciphered text is not identical:")
+		print ("RISCV ciphered text is: " + riscvResult)
+		print ("C ciphered text is: " + cResult)
+		print ("Python ciphered text is: " + pythonResult)
 	
 	
-	#DadoCypheredData = run asm_aes
-	
-	#key = "0000000000000000cafeface00000000".decode('hex')
-	#key = "000102030405060708090a0b0c0d0e0f".decode('hex')
-	# check = (
-			# #("00112233445566778899aabbccddeeff", "69c4e0d86a7b0430d8cdb78070b4c55a"),
-			# (data, DadoCypheredData),
-			# )
-	# crypt = AES_128()
-	# crypt.key = key
-	# for c in check:
-		# p = c[0].decode('hex')
-		# v = c[1].decode('hex')
-		# t = crypt.cipher(p)
-		# if t == v:
-			# print "yay!"
-		# else:
-			# print "{0} != {1}".format(t.encode('hex'), c[1])
-		# t = crypt.inv_cipher(v)
-		# if t == p:
-			# print "yay!"
-		# else:
-		# print "{0} != {1}".format(t.encode('hex'), c[1])
+

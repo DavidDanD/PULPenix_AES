@@ -195,12 +195,11 @@ int main() {
     register int *dataOut2 asm("t5");
     register int *dataOut3 asm("t6");
     
-    bm_printf ("\n\n\n=============================================\n\n\n");
+    bm_printf ("\nCiphered text:");
     bm_printf ("%08X", dataOut0);
     bm_printf ("%08X", dataOut1);
     bm_printf ("%08X", dataOut2);
-    bm_printf ("%08X", dataOut3);
-    bm_printf ("\n\n\n=============================================\n\n\n");
+    bm_printf ("%08X\n", dataOut3);
     
     //FILE *fptr;
     

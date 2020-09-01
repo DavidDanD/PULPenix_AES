@@ -249,34 +249,34 @@ int main(int argc, char *argv[]) {
 	
 	uint8_t roundkeys[AES_ROUND_KEY_SIZE];
 
-	bm_printf("\n--------------------------------------------------------\n");
+	/*bm_printf("\n--------------------------------------------------------\n");
 	bm_printf("Plain text:\n");
 	for (i = 0; i < AES_BLOCK_SIZE; i++) {
-		bm_printf("%2x ", plaintext[i]);
+		bm_printf("%02X ", plaintext[i]);
 	}
-	bm_printf("\n\n");	
+	bm_printf("\n\n");*/	
 
 	// key schedule
 	aes_key_schedule_128(key, roundkeys);
-	bm_printf("Round Keys:\n");
-	/*for ( r = 0; r <= AES_ROUNDS; r++ ) {
+	/*bm_printf("Round Keys:\n");
+	for ( r = 0; r <= AES_ROUNDS; r++ ) {
 		for (i = 0; i < AES_BLOCK_SIZE; i++) {
-			bm_printf("%2x ", roundkeys[r*AES_BLOCK_SIZE+i]);
+			bm_printf("%02X ", roundkeys[r*AES_BLOCK_SIZE+i]);
 		}
 		bm_printf("\n");
 	}
-	bm_printf("\n");*/
+	bm_printf("\n");
 	
 	for (i = 0; i < AES_BLOCK_SIZE; i++) {
-		bm_printf("%2x ", roundkeys[i]);
+		bm_printf("%02X ", roundkeys[i]);
 	}
-	bm_printf("\n");
+	bm_printf("\n");*/
 
 	// encryption
 	aes_encrypt_128(roundkeys, plaintext, ciphertext);
-	bm_printf("Cipher text:\n");
+	bm_printf("\nCiphered text:");
 	for (i = 0; i < AES_BLOCK_SIZE; i++) {
-		bm_printf("%2x ", ciphertext[i]); 
+		bm_printf("%02X", ciphertext[i]); 
 	}
 	
 	bm_printf("\n");
@@ -287,7 +287,7 @@ int main(int argc, char *argv[]) {
         //fptr = fopen("aes_result_c_temp","w");
 	
 	//for (i = 0; i < AES_BLOCK_SIZE; i++) {
-	//	fprintf("%2x", ciphertext[i]); 
+	//	fprintf("%02X", ciphertext[i]); 
 	//}
     
         //fclose(fptr);

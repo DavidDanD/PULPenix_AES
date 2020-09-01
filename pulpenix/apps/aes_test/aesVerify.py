@@ -3,6 +3,8 @@
 
 import random
 import getpass
+import subprocess
+import shutil
 from os.path import join
 from os import environ, makedirs, system, path
 
@@ -211,9 +213,6 @@ if __name__=="__main__":
 	#key = "0000000000000000cafeface00000000"
 	#data = "deadbeefdeafbabe0000000000000000"
 	
-	print("Key:\n" + key)
-	print("Data:\n" + data)
-	
 	keyBin = "{:0128b}".format(int(key,16))
 	dataBin = "{:0128b}".format(int(data,16))
 	
@@ -230,8 +229,15 @@ if __name__=="__main__":
 	aesRiscvAppTempPath = join(environ['MY_PULP_APPS'], "asm_aes_riscv_temp")
 	aesCAppTempPath = join(environ['MY_PULP_APPS'], "asm_aes_c_temp")
 	
+	if ( path.isdir(aesRiscvAppTempPath) ):
+		shutil.rmtree(aesRiscvAppTempPath)
+
+	if ( path.isdir(aesCAppTempPath) ):
+		shutil.rmtree(aesCAppTempPath)
+	
+	
 	lines = []
-	with open(join(aesTestPath + "asm_aes_riscv_template.c"), 'r') as fp:
+	with open(aesTestPath + "/asm_aes_riscv_template.c", 'r') as fp:
 		print('Creating new AES RISCV test:')
 		lines = fp.readlines()
 		cnt = 0
@@ -249,8 +255,7 @@ if __name__=="__main__":
 				lines[cnt] = line.replace("%%" + line.split("%%")[1] + "%%", str(decVal))
 			cnt = cnt + 1
 	
-	if ( not path.isdir(aesRiscvAppTempPath) ):
-		makedirs(aesRiscvAppTempPath)
+	makedirs(aesRiscvAppTempPath)
 	
 	if len(lines)>0:
 		print('New AES RISCV test created.')
@@ -260,7 +265,8 @@ if __name__=="__main__":
 		print('Error while creating "asm_aes_riscv_temp.c".')
 	
 	print('Running AES RISCV test:')
-	system("our_pulp_run asm_aes_riscv_temp")
+	system("~/Workarea/pulp/pulpenix/misc/scripts/pulpenix_compile asm_aes_riscv_temp > " + join(aesRiscvAppTempPath, "asm_aes_riscv_temp_output") + " 2> " + join(aesRiscvAppTempPath, "asm_aes_riscv_temp_error_output"))
+	print('Finished running AES RISCV test.')
 	
 	lines = []
 	with open(join(aesTestPath ,"asm_aes_c_template.c"), 'r') as fp:
@@ -285,9 +291,8 @@ if __name__=="__main__":
 				lines[cnt] = line.replace("%%plainText%%", str(plainTextTemp))
 			
 			cnt = cnt + 1
-		
-	if ( not path.isdir(aesCAppTempPath) ):		
-		makedirs(aesCAppTempPath)
+				
+	makedirs(aesCAppTempPath)
 	
 	if len(lines)>0:
 		print('New AES C test created.')
@@ -297,33 +302,29 @@ if __name__=="__main__":
 		print('Error while creating "asm_aes_c_temp.c".')
 	
 	print('Running AES C test:')
-	system("our_pulp_run asm_aes_c_temp")
+	system("~/Workarea/pulp/pulpenix/misc/scripts/pulpenix_compile asm_aes_c_temp > " + join(aesCAppTempPath, "asm_aes_c_temp_output") + " 2> " + join(aesCAppTempPath, "asm_aes_c_temp_error_output"))
+	print('Finished running AES C test.')
 	
 	
+	riscvResult = subprocess.check_output("cat ../asm_aes_riscv_temp/asm_aes_riscv_temp_output | grep 'Ciphered text' | cut -d: -f2", shell=True)
+	cResult = subprocess.check_output("cat ../asm_aes_c_temp/asm_aes_c_temp_output | grep 'Ciphered text' | cut -d: -f2", shell=True)
+	
+	crypt = AES_128()
+	crypt.key = key.decode('hex')
+	pythonResult = crypt.cipher(data.decode('hex'))
+	pythonResult = pythonResult.encode('hex').upper()
 	
 	
+	if (riscvResult.strip() == cResult.strip() and cResult.strip() == pythonResult.strip()):
+		print ("***RISCV ciphered text is identical to C ciphered text.***")
+		shutil.rmtree(aesRiscvAppTempPath)
+		shutil.rmtree(aesCAppTempPath)
+		
+	else:
+		print ("Ciphered text is not identical:")
+		print ("RISCV ciphered text is: " + riscvResult)
+		print ("C ciphered text is: " + cResult)
+		print ("Python ciphered text is: " + pythonResult)
 	
 	
-	#DadoCypheredData = run asm_aes
-	
-	#key = "0000000000000000cafeface00000000".decode('hex')
-	#key = "000102030405060708090a0b0c0d0e0f".decode('hex')
-	# check = (
-			# #("00112233445566778899aabbccddeeff", "69c4e0d86a7b0430d8cdb78070b4c55a"),
-			# (data, DadoCypheredData),
-			# )
-	# crypt = AES_128()
-	# crypt.key = key
-	# for c in check:
-		# p = c[0].decode('hex')
-		# v = c[1].decode('hex')
-		# t = crypt.cipher(p)
-		# if t == v:
-			# print "yay!"
-		# else:
-			# print "{0} != {1}".format(t.encode('hex'), c[1])
-		# t = crypt.inv_cipher(v)
-		# if t == p:
-			# print "yay!"
-		# else:
-		# print "{0} != {1}".format(t.encode('hex'), c[1])
+
