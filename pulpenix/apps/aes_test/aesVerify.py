@@ -268,6 +268,10 @@ if __name__=="__main__":
 	system("$MY_PULP_ENV/misc/scripts/pulpenix_compile asm_aes_riscv_temp > " + join(aesRiscvAppTempPath, "asm_aes_riscv_temp_output") + " 2> " + join(aesRiscvAppTempPath, "asm_aes_riscv_temp_error_output"))
 	print('Finished running AES RISCV test.')
 	
+	#riscvFirstClock = subprocess.check_output("cat $MY_PULP_IRUN/trace_core_00_0.log | head -2 | tail -1 | cut -d' ' -f20", shell=True)
+	#riscvLastClock = subprocess.check_output("cat $MY_PULP_IRUN/trace_core_00_0.log | tail -1 | cut -d' ' -f20", shell=True)
+	#riscvClocks = int(riscvLastClock) - int(riscvFirstClock)
+	
 	lines = []
 	with open(join(aesTestPath ,"asm_aes_c_template.c"), 'r') as fp:
 		print('Creating new AES C test:')
@@ -305,6 +309,9 @@ if __name__=="__main__":
 	system("$MY_PULP_ENV/misc/scripts/pulpenix_compile asm_aes_c_temp > " + join(aesCAppTempPath, "asm_aes_c_temp_output") + " 2> " + join(aesCAppTempPath, "asm_aes_c_temp_error_output"))
 	print('Finished running AES C test.')
 	
+	#cFirstClock = subprocess.check_output("cat $MY_PULP_IRUN/trace_core_00_0.log | cut -d' ' -f20 | head -2 | tail -1", shell=True)
+	#cLastClock = subprocess.check_output("cat $MY_PULP_IRUN/trace_core_00_0.log | cut -d' ' -f20 | tail -1", shell=True)
+	#cClocks = int(cLastClock) - int(cFirstClock)
 	
 	riscvResult = subprocess.check_output("cat $MY_PULP_APPS/asm_aes_riscv_temp/asm_aes_riscv_temp_output | grep 'Ciphered text' | cut -d: -f2", shell=True)
 	cResult = subprocess.check_output("cat $MY_PULP_APPS/asm_aes_c_temp/asm_aes_c_temp_output | grep 'Ciphered text' | cut -d: -f2", shell=True)
@@ -316,7 +323,7 @@ if __name__=="__main__":
 	
 	
 	if (riscvResult.strip() == cResult.strip() and cResult.strip() == pythonResult.strip()):
-		print ("***RISCV ciphered text is identical to C ciphered text.***")
+		print ("***RISCV ciphered text is identical to C ciphered text, and to Python ciphered text.***")
 		shutil.rmtree(aesRiscvAppTempPath)
 		shutil.rmtree(aesCAppTempPath)
 		
@@ -325,6 +332,9 @@ if __name__=="__main__":
 		print ("RISCV ciphered text is: " + riscvResult)
 		print ("C ciphered text is: " + cResult)
 		print ("Python ciphered text is: " + pythonResult)
+		
+	#print riscvClocks
+	#print cLastClock
 	
 	
 

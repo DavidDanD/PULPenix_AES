@@ -272,7 +272,7 @@ int main(int argc, char *argv[]) {
 	bm_printf("Round Keys:\n");
 	/*for ( r = 0; r <= AES_ROUNDS; r++ ) {
 		for (i = 0; i < AES_BLOCK_SIZE; i++) {
-			bm_printf("%2x ", roundkeys[r*AES_BLOCK_SIZE+i]);
+			bm_printf(".word 0x0000003b", roundkeys[r*aes_block_size+i]);
 		}
 		bm_printf("\n");
 	}
