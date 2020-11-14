@@ -28,6 +28,7 @@ setenv RISCV_PULP_SW_UTILS     $MY_PULP_APPS/sw_utils
 setenv RISCV_PULP_SW_APPS_REF  $MY_PULP_APPS/ref
 setenv RISCV_PULP_GDB_UTIL     $MY_PULP_APPS/gdb
 setenv MY_PULP_IRUN            $MY_PULP_ENV/sim/irun
+setenv RISCV_DESIGN_SYN        $MY_PULP_ENV/src/ips/riscv/design_syn
 
 setenv MY_PULP_SIM  $MY_PULP_ENV/sim
 

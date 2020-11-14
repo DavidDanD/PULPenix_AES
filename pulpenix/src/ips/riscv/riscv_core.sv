@@ -873,7 +873,6 @@ module riscv_core
     .regfile_alu_we_i           ( regfile_alu_we_ex            ),
 
 //************************* dvdd *******************************
-    .custom_instruction_sel_ex_i  (aes_instruction_sel_ex      ),
     .aes_wb_i                     (aes_wb_busy                 ),
 //**************************************************************
 

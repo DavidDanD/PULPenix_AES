@@ -14,6 +14,7 @@ module aes_flow_tb;
 
     logic [1:0]  instruction_sel;
     logic        aes_start_i;
+    logic        aes_command_en_i;
     logic        aes_start_o;
 	logic        aes_start_wb;
 	logic [31:0] aes_cipher_addrin;
@@ -50,6 +51,7 @@ module aes_flow_tb;
 
 	   .instruction_sel_i(instruction_sel),
        .aes_start_i(aes_start_i),
+	   .aes_command_en_i(aes_command_en_i),
 
        .waddr_i(address),
        .wdata_i(data),
@@ -109,6 +111,7 @@ module aes_flow_tb;
          wr_enb           <= 1'b0;
 		 instruction_sel  <= 2'h0;
 		 aes_start_i      <= 1'b0; #10
+		 aes_command_en_i <= 1'b1;
 		 
 		 // Writing deadbeef to data register 0
          address          <= 2'h0;
@@ -116,6 +119,7 @@ module aes_flow_tb;
          wr_enb           <= 1'b1;
 		 instruction_sel  <= 2'h0;
 		 aes_start_i      <= 1'b0; #10
+		 aes_command_en_i <= 1'b1;
 		 
 		 // Writing deafbabe to data register 1
          address          <= 2'h1;
@@ -123,6 +127,7 @@ module aes_flow_tb;
          wr_enb           <= 1'b1;
 		 instruction_sel  <= 2'h0;
 		 aes_start_i      <= 1'b0; #10
+		 aes_command_en_i <= 1'b1;
 		 
 		 // Writing 01234567 to addr register
          address          <= 2'h1;
@@ -130,6 +135,7 @@ module aes_flow_tb;
          wr_enb           <= 1'b1;
 		 instruction_sel  <= 2'h3;
 		 aes_start_i      <= 1'b0; #10
+		 aes_command_en_i <= 1'b1;
 		 
 		 // Writing cafecafe to key register 2
          address          <= 2'h2;
@@ -137,6 +143,7 @@ module aes_flow_tb;
          wr_enb           <= 1'b1;
          instruction_sel  <= 2'h1;
 		 aes_start_i      <= 1'b1; #10
+		 aes_command_en_i <= 1'b1;
 		 
 		 aes_start_i      <= 1'b0;
       end

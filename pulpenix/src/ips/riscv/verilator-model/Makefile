@@ -42,9 +42,9 @@ VSRC = cluster_clock_gating.sv            \
        dp_ram.sv                          \
        ram.sv                             \
        top.sv                             \
-       ../include/apu_core_package.sv     \
-       ../include/riscv_defines.sv        \
-       ../include/riscv_tracer_defines.sv \
+       ../apu_core_package.sv             \
+       ../riscv_defines.sv                \
+       ../riscv_tracer_defines.sv         \
        ../riscv_alu.sv                    \
        ../riscv_alu_basic.sv              \
        ../riscv_alu_div.sv                \
@@ -58,16 +58,16 @@ VSRC = cluster_clock_gating.sv            \
        ../riscv_hwloop_controller.sv      \
        ../riscv_hwloop_regs.sv            \
        ../riscv_load_store_unit.sv        \
-       ../riscv/aes/sbox.sv               \#dado aes
+       ../aes/sbox.sv                     \#dado aes
        ../aes/keygeneration.sv            \#dado aes
-       ../riscv/aes/subbytes.sv           \#dado aes
-       ../riscv/aes/shiftrow.sv           \#dado aes
-       ../riscv/aes/mixcolumn.sv          \#dado aes
-       ../riscv/aes/rounds.sv             \#dado aes
-       ../riscv/aes/rounndlast.sv         \#dado aes
-       ../riscv/aes/riscv_aes_cipher.sv   \#dado aes
-       ../riscv/riscv_aes_wb.sv           \#dado aes
-       ../riscv/riscv_aes_registers.sv    \#dado aes
+       ../aes/subbytes.sv                 \#dado aes
+       ../aes/shiftrow.sv                 \#dado aes
+       ../aes/mixcolumn.sv                \#dado aes
+       ../aes/rounds.sv                   \#dado aes
+       ../aes/rounndlast.sv               \#dado aes
+       ../aes/riscv_aes_cipher.sv         \#dado aes
+       ../riscv_aes_wb.sv                 \#dado aes
+       ../riscv_aes_registers.sv          \#dado aes
        ../riscv_id_stage.sv               \
        ../riscv_if_stage.sv               \
        ../riscv_mult.sv                   \

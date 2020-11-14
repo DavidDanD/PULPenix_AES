@@ -128,7 +128,6 @@ module riscv_ex_stage
   input  logic [5:0]  regfile_alu_waddr_i,
   input  logic        regfile_alu_we_i,
 //************************* dvdd *******************************
-  input  logic [1:0]  custom_instruction_sel_ex_i,
   input  logic        aes_wb_i,
 //**************************************************************
 

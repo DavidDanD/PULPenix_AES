@@ -60,7 +60,6 @@ parameter OPCODE_LOAD_FP   = 7'h07;
 
 //************************* dvdd *******************************
 parameter OPCODE_AES     = 7'h3b; //RISCV ISA does not let you use bits 1 and 0
-//parameter OPCODE_CUST1     = 7'h6b; //RISCV ISA does not let you use bits 1 and 0
 //**************************************************************
 
 // PULP custom

@@ -21,9 +21,8 @@ module riscv_aes_wb(clk,rst_n,start_aes_wb,address_in,data_in,write_en_out,halt_
     logic [31:0] data;
     logic [31:0] cur_addr;
     localparam IDLE = 2'b00;
-    localparam WAIT_MOD = 2'b01;
-    localparam WRITE = 2'b10;
-    localparam FINISH = 2'b11;
+    localparam WRITE = 2'b01;
+    localparam FINISH = 2'b10;
 
     always_ff @(posedge clk, negedge rst_n)
         begin

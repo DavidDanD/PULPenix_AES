@@ -3,6 +3,7 @@
 
 echo "Compiling Application $1"
 
+our_pulp_aes_compile -a $1
 
 $RISCV_GCC_BIN/riscv-none-embed-gcc -ggdb -march=rv32im -mabi=ilp32  \
 -S    -Wextra -Wall  \
