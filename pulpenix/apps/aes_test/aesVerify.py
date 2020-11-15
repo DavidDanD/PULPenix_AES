@@ -7,6 +7,7 @@ import subprocess
 import shutil
 from os.path import join
 from os import environ, makedirs, system, path
+from TraceCounter import traceCounter
 
 
 def twos_comp(val, bits):
@@ -207,11 +208,11 @@ class AES_128(AES):
 
 if __name__=="__main__":
 	
-	key = "{:032x}".format(random.randint(0,2**128))
-	data = "{:032x}".format(random.randint(0,2**128))
+	#key = "{:032x}".format(random.randint(0,2**128))
+	#data = "{:032x}".format(random.randint(0,2**128))
 	
-	#key = "0000000000000000cafeface00000000"
-	#data = "deadbeefdeafbabe0000000000000000"
+	key = "0000000000000000cafeface00000000"
+	data = "deadbeefdeafbabe0000000000000000"
 	
 	keyBin = "{:0128b}".format(int(key,16))
 	dataBin = "{:0128b}".format(int(data,16))
@@ -228,6 +229,7 @@ if __name__=="__main__":
 	
 	aesRiscvAppTempPath = join(environ['MY_PULP_APPS'], "asm_aes_riscv_temp")
 	aesCAppTempPath = join(environ['MY_PULP_APPS'], "asm_aes_c_temp")
+	traceFile = join(environ['MY_PULP_IRUN'],"trace_core_00_0.log")
 	
 	if ( path.isdir(aesRiscvAppTempPath) ):
 		shutil.rmtree(aesRiscvAppTempPath)
@@ -271,6 +273,7 @@ if __name__=="__main__":
 	#riscvFirstClock = subprocess.check_output("cat $MY_PULP_IRUN/trace_core_00_0.log | head -2 | tail -1 | cut -d' ' -f20", shell=True)
 	#riscvLastClock = subprocess.check_output("cat $MY_PULP_IRUN/trace_core_00_0.log | tail -1 | cut -d' ' -f20", shell=True)
 	#riscvClocks = int(riscvLastClock) - int(riscvFirstClock)
+	shutil.copyfile(traceFile,join(aesRiscvAppTempPath,"trace_core_00_0.log"))
 	
 	lines = []
 	with open(join(aesTestPath ,"asm_aes_c_template.c"), 'r') as fp:
@@ -312,6 +315,9 @@ if __name__=="__main__":
 	#cFirstClock = subprocess.check_output("cat $MY_PULP_IRUN/trace_core_00_0.log | cut -d' ' -f20 | head -2 | tail -1", shell=True)
 	#cLastClock = subprocess.check_output("cat $MY_PULP_IRUN/trace_core_00_0.log | cut -d' ' -f20 | tail -1", shell=True)
 	#cClocks = int(cLastClock) - int(cFirstClock)
+	shutil.copyfile(traceFile,join(aesCAppTempPath,"trace_core_00_0.log"))
+  
+	[numOfCycles, numOfDiffCycles] = traceCounter(join(aesRiscvAppTempPath,"trace_core_00_0.log"), join(aesCAppTempPath,"trace_core_00_0.log"))
 	
 	riscvResult = subprocess.check_output("cat $MY_PULP_APPS/asm_aes_riscv_temp/asm_aes_riscv_temp_output | grep 'Ciphered text' | cut -d: -f2", shell=True)
 	cResult = subprocess.check_output("cat $MY_PULP_APPS/asm_aes_c_temp/asm_aes_c_temp_output | grep 'Ciphered text' | cut -d: -f2", shell=True)
@@ -320,12 +326,14 @@ if __name__=="__main__":
 	crypt.key = key.decode('hex')
 	pythonResult = crypt.cipher(data.decode('hex'))
 	pythonResult = pythonResult.encode('hex').upper()
-	
-	
 	if (riscvResult.strip() == cResult.strip() and cResult.strip() == pythonResult.strip()):
 		print ("***RISCV ciphered text is identical to C ciphered text, and to Python ciphered text.***")
-		shutil.rmtree(aesRiscvAppTempPath)
-		shutil.rmtree(aesCAppTempPath)
+		print('RISCV: number of cycles: ' + str(numOfCycles[0]))
+		print('C: number of cycles: ' + str(numOfCycles[1]))
+		print('RISCV: number of different cycles: ' + str(numOfDiffCycles[0]))
+		print('C: number of different cycles: ' + str(numOfDiffCycles[1]))
+		#shutil.rmtree(aesRiscvAppTempPath)
+		#shutil.rmtree(aesCAppTempPath)
 		
 	else:
 		print ("Ciphered text is not identical:")

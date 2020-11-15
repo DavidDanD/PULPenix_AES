@@ -35,6 +35,7 @@ setenv MY_PULP_SIM  $MY_PULP_ENV/sim
 alias pulp_irun                "irun -sv -v93 -I$MY_PULP_ENV/src/tb/mem_dpi/ -access rw +TB=tb +MEMLOAD="PRELOAD" -f pulpino_tb.f -delay_trigger"
 alias pulp_irun_probe          "pulp_irun -input probe_all.tcl"
 alias pulp_irun_trace          "pulp_irun +define+DO_TRACE=1 -input run.tcl"
+alias pulp_irun_probe_trace    "pulp_irun +define+DO_TRACE=1 -input probe_all.tcl"
 alias pulp_irun_gdb            "pulp_irun -defparam tb.TEST=MEM_DPI -input run_gdb.tcl"
 alias pulp_irun_gdb_with_probe "pulp_irun -defparam tb.TEST=MEM_DPI -input run_gdb_with_probe.tcl"
 alias pulp_terminal_gdb        "$RISCV_GCC_BIN/riscv-none-embed-gdb"

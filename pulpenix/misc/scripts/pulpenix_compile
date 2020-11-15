@@ -4,5 +4,5 @@ cd $MY_PULP_APPS/$1
 pulp_comp_app_noopt $1
 cd $MY_PULP_IRUN
 pulp_get_app $1
-our_wave_trace $1
+pulp_irun_probe_trace
 
