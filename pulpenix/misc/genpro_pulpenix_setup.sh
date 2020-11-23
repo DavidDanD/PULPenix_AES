@@ -22,7 +22,8 @@ setenv ECLIPSE_ROOT $RISCV_PULP_TOOLCHAIN_ROOT/eclipse
   
 setenv RISCV_GCC_BIN $RISCV_PULP_TOOLCHAIN_ROOT/gnu-mcu-eclipse/7.2.0-2-20180111-2230/bin/
   
-setenv MY_PULP_APPS            $MY_PULP_ENV/apps  
+setenv MY_PULP_APPS            $MY_PULP_ENV/apps
+setenv MY_PULP_MISC            $MY_PULP_ENV/misc
 setenv RISCV_PULP_LIBS         $MY_PULP_APPS/libs
 setenv RISCV_PULP_SW_UTILS     $MY_PULP_APPS/sw_utils
 setenv RISCV_PULP_SW_APPS_REF  $MY_PULP_APPS/ref
@@ -48,8 +49,13 @@ alias our_wave_trace	       "~/Workarea/pulp/pulpenix/misc/scripts/pulpenix_wave
 alias our_pulp_compile    "~/Workarea/pulp/pulpenix/misc/scripts/pulpenix_compile_only"
 
 alias our_pulp_synthesis    $RISCV_PULP_SW_UTILS/full_synthesis_script
-alias our_pulp_aes_compile  python $RISCV_PULP_SW_UTILS/compiler.py
-alias our_pulp_aes_verification python $MY_PULP_APPS/aes_test/aesVerify.py
 
 chmod 775 $RISCV_PULP_SW_UTILS/*
-chmod 775 $MY_PULP_ENV/misc/scripts/*
+chmod 775 $MY_PULP_MISC/*
+chmod 775 $MY_PULP_MISC/scripts/*
+
+#python $MY_PULP_MISC/PythonAlias.py
+alias our_pulp_aes_compile  python $RISCV_PULP_SW_UTILS/compiler.py
+alias our_pulp_aes_verification python $MY_PULP_APPS/aes_test/aesVerify.py
+alias our_pulp_aes_compile3 python3 $RISCV_PULP_SW_UTILS/compiler.py
+alias our_pulp_aes_verification3 python3 $MY_PULP_APPS/aes_test/aesVerify.py

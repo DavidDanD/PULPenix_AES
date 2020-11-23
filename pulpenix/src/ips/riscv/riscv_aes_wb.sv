@@ -23,7 +23,6 @@ module riscv_aes_wb(clk,rst_n,start_aes_wb,address_in,data_in,write_en_out,halt_
     localparam IDLE = 2'b00;
     localparam WRITE = 2'b01;
     localparam WAIT = 2'b10;
-    localparam FINISH = 2'b11;
 
     always_ff @(posedge clk, negedge rst_n)
         begin
@@ -68,17 +67,13 @@ module riscv_aes_wb(clk,rst_n,start_aes_wb,address_in,data_in,write_en_out,halt_
 					    NS <= WRITE;
 					 end
 					 if (wr_cnt==3'b101 && cnt==2'b0) begin
-						NS <= FINISH;
+						NS <= IDLE;
+						halt_en <= 0;
+						write_en <= 0;
 					 end
 					 wr_cnt <= wr_cnt + 1;
                   end
                   
-                 FINISH:
-                  begin
-                    NS <= IDLE;
-                    halt_en <= 0;
-		            write_en <= 0;
-                  end
                   
                 default:
                   begin

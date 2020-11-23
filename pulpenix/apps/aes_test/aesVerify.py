@@ -211,9 +211,12 @@ if __name__=="__main__":
 	#key = "{:032x}".format(random.randint(0,2**128))
 	#data = "{:032x}".format(random.randint(0,2**128))
 	
-	key = "0000000000000000cafeface00000000"
-	data = "deadbeefdeafbabe0000000000000000"
+	#key = "0000000000000000cafeface00000000"
+	#data = "deadbeefdeafbabe0000000000000000"
 	
+	data = "thanks take care".encode('hex')
+	key = "{:032x}".format(random.randint(0,2**128))
+
 	keyBin = "{:0128b}".format(int(key,16))
 	dataBin = "{:0128b}".format(int(data,16))
 	
@@ -241,6 +244,8 @@ if __name__=="__main__":
 	lines = []
 	with open(aesTestPath + "/asm_aes_riscv_template.c", 'r') as fp:
 		print('Creating new AES RISCV test:')
+		print('Generated key: ' + key.decode('hex'))
+		print('Generated data: ' + data.decode('hex'))
 		lines = fp.readlines()
 		cnt = 0
 		for line in lines:
@@ -327,7 +332,8 @@ if __name__=="__main__":
 	pythonResult = crypt.cipher(data.decode('hex'))
 	pythonResult = pythonResult.encode('hex').upper()
 	if (riscvResult.strip() == cResult.strip() and cResult.strip() == pythonResult.strip()):
-		print ("***RISCV ciphered text is identical to C ciphered text, and to Python ciphered text.***")
+		print("***RISCV ciphered text is identical to C ciphered text, and to Python ciphered text.***")
+		print('Ciphered data: ' + riscvResult.strip().decode('hex'))
 		print('RISCV: number of cycles: ' + str(numOfCycles[0]))
 		print('C: number of cycles: ' + str(numOfCycles[1]))
 		print('RISCV: number of different cycles: ' + str(numOfDiffCycles[0]))

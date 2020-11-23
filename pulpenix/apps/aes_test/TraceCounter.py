@@ -24,26 +24,28 @@ def traceCounter(file1Path, file2Path):
     headerLine = ['', '']
     
     i = 0
-    line1 = ''
-    line2 = ''
-    while(line1[3:] == line2[3:] and i < len(lines[0]) and i < len(lines[1])):
-        line1 = lines[0][i].split()
-        line2 = lines[1][i].split()
-        i += 1
-    i -= 1
+    line1 = lines[0][i].split()
+    line2 = lines[1][i].split()
+    try:
+      while(line1[3:] == line2[3:] and i < len(lines[0]) and i < len(lines[1])):
+          i += 1
+          line1 = lines[0][i].split()
+          line2 = lines[1][i].split()
+    except:
+      print(lines[0][i-1])
+      print(lines[1][i-1])
+        
     firstDiffLine = i
     
     i = len(lines[0]) - 1
     j = len(lines[1]) - 1
     line1 = lines[0][i].split()
     line2 = lines[1][j].split()
-    while(line1[3:] == line2[3:] and j >= 0 and i >= 0):
+    while(line1[3:] == line2[3:]):
         i -= 1
         j -= 1
         line1 = lines[0][i].split()
         line2 = lines[1][j].split()
-    if line1 == line2:
-        i = j = len(lines[0]) - 2
     
     firstDiffCycle = []
     lastDiffCycle = []

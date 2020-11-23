@@ -143,4 +143,4 @@ if __name__=="__main__":
 	with open(join(environ["MY_PULP_APPS"],appName,appName+'.c'), 'w+') as fp:
 		fp.writelines(lines)
 		
-	print(appName + ' compiled successfully!')
+	print(appName + ' compiled AES commands successfully!')
