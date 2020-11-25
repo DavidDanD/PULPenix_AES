@@ -18,7 +18,8 @@ module riscv_aes_wb(clk,rst_n,start_aes_wb,address_in,data_in,write_en_out,halt_
     logic [2:0] wr_cnt;
     logic [1:0] CS;
     logic [1:0] NS;
-    logic [31:0] data;
+	logic [127:0] data;
+    logic [31:0] data_o;
     logic [31:0] cur_addr;
     localparam IDLE = 2'b00;
     localparam WRITE = 2'b01;
@@ -31,7 +32,8 @@ module riscv_aes_wb(clk,rst_n,start_aes_wb,address_in,data_in,write_en_out,halt_
               cnt <= 0;
 			  wr_cnt <= 0;
               cur_addr <= 32'b0;
-	          data <= 32'b0;
+			  data <= 128'b0;
+	          data_o <= 32'b0;
 	          write_en <= 0;
 	          halt_en <= 0;
             end else begin
@@ -39,10 +41,10 @@ module riscv_aes_wb(clk,rst_n,start_aes_wb,address_in,data_in,write_en_out,halt_
                  IDLE:
                   begin
                     cur_addr <= address_in;
-	                data <= data_in[cnt*32+:32];
 		            write_en <= 0;
-                    cur_addr <= address_in;
                     if(start_aes_wb) begin
+					  data <= data_in;
+ 		 			  data_o <= data_in[cnt*32+:32];
                       NS <= WRITE;
                       cnt <= 0;
 			          wr_cnt <= 0;
@@ -53,7 +55,7 @@ module riscv_aes_wb(clk,rst_n,start_aes_wb,address_in,data_in,write_en_out,halt_
                  WRITE:
                   begin
                     NS <= WAIT;
-				    data <= data_in[cnt*32+:32];
+				    data_o <= data[cnt*32+:32];
 				    cur_addr <= address_in + cnt*4;
 				    halt_en <= 1;
 				    write_en <= 1;
@@ -88,7 +90,7 @@ module riscv_aes_wb(clk,rst_n,start_aes_wb,address_in,data_in,write_en_out,halt_
 
      assign write_en_out = write_en;
      assign halt_en_out = halt_en;
-     assign data_out = data;
+     assign data_out = data_o;
      assign address_out = cur_addr;
     
 endmodule

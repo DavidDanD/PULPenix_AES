@@ -291,6 +291,7 @@ module riscv_core
   logic  aes_command_en;
   assign data_addr_o = /*mem_addr_op_c_sel_id  ?  alu_operand_c_ex : */ data_addr_lsu_o;
   assign data_wdata_o = /* mem_addr_op_c_sel_id ?  regfile_alu_wdata_fw : */ data_wdata_lsu_o; 
+  logic [9:0] completed_round;
   //********************************
   // stall control
   logic        halt_if;
@@ -917,7 +918,7 @@ module riscv_core
   aes_registers_i
   (
     .clk          ( clk                ),
-    .rst_n        ( rst_n              ),
+    .rst_n        ( rst_ni              ),
 
     .test_en_i    ( test_en_i          ),
 
@@ -952,18 +953,20 @@ module riscv_core
   //  /_/   \_\\_____|\____/    \____|___||_|   |_| |_|\_____||_| \_|  //
   //                                                                   //
   ///////////////////////////////////////////////////////////////////////
-  riscv_aes_cipher             
+  AES_top             
   aescipher_i
   (
     .clk                 ( clk                ),
-    .start_aes_in        ( aes_start_unit_o   ),
-    .datain              ( {regfile_data_ra_id, regfile_data_rb_id, regfile_data_rc_id, regfile_data_rd_id} ),
-    .key                 ( {aes_rkey_a, aes_rkey_b, aes_rkey_c, aes_rkey_d} ),
-    .addrin              ( aes_cipher_addrin ),
+    .start               ( aes_start_unit_o   ),
+	.rstn				 ( rst_ni ),
+    .plain_text          ( {regfile_data_ra_id, regfile_data_rb_id, regfile_data_rc_id, regfile_data_rd_id} ),
+    .cipher_key          ( {aes_rkey_a, aes_rkey_b, aes_rkey_c, aes_rkey_d} ),
+    .wb_address          ( aes_cipher_addrin ),
 
-    .start_aes_out       ( aes_start_wb_o ),
-    .dataout             ( aes_ciphered_data ),
-    .addrout             ( aes_wb_addrin )
+    .done       		 ( aes_start_wb_o ),
+	.completed_round	 ( completed_round ),
+    .cipher_text     	 ( aes_ciphered_data ),
+    .wb_address_o		 ( aes_wb_addrin )
   );
 
 ////////////////////////////////////////////////////
@@ -978,7 +981,7 @@ module riscv_core
   aes_wb_i
   (
     .clk                 ( clk               ),
-    .rst_n               ( rst_n             ),
+    .rst_n               ( rst_ni            ),
 
     .start_aes_wb        ( aes_start_wb_o    ),
 
