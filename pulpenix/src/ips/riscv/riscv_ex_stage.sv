@@ -164,10 +164,6 @@ module riscv_ex_stage
   logic [31:0]    alu_result;
   logic [31:0]    mult_result;
   logic           alu_cmp_result;
-//************************* akmp *******************************
-  logic [31:0]    custom_result;
-  logic           custom_ready;
-//**************************************************************
 
   logic           regfile_we_lsu;
   logic [5:0]     regfile_waddr_lsu;
@@ -484,7 +480,7 @@ module riscv_ex_stage
   // to finish branches without going to the WB stage, ex_valid does not
   // depend on ex_ready.
   assign ex_ready_o =  (~apu_stall & alu_ready & mult_ready & lsu_ready_ex_i
-                       & wb_ready_i & ~wb_contention /*& ~aes_wb_i*/) | (branch_in_ex_i);	    //dvdd added aes_wb_i to stall the pipe aes write back is done
+                       & wb_ready_i & ~wb_contention & (~aes_wb_i)) | (branch_in_ex_i);	    //dvdd added aes_wb_i to stall the pipe aes write back is done
   assign ex_valid_o = (apu_valid | alu_en_i | mult_en_i | csr_access_i | lsu_en_i)
                        & (alu_ready & mult_ready & lsu_ready_ex_i & wb_ready_i /*& ~aes_wb_i*/) ;//dvdd added aes_wb_i to stall the pipe till aes write back is done
 
