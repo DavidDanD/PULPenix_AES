@@ -26,9 +26,7 @@ module riscv_aes_register_file
     input  logic                   test_en_i,
 	
     // Select port
-    input logic [1:0]              instruction_sel_i,           
-    input logic                    aes_start_i,
-	input logic                    aes_command_en_i,
+    input logic [1:0]              instruction_sel_i,
 	
     // Write port
     input logic [ADDR_WIDTH-1:0]   waddr_i,
@@ -48,9 +46,7 @@ module riscv_aes_register_file
     output logic [DATA_WIDTH-1:0]  rkey_d_o,
 	
 	//
-    output logic [DATA_WIDTH-1:0]  wb_addr_o,
-
-    output logic                   aes_start_o
+    output logic [DATA_WIDTH-1:0]  wb_addr_o
 );
 
   // number of integer registers
@@ -79,7 +75,6 @@ module riscv_aes_register_file
         assign rkey_c_o    = key[2];
         assign rkey_d_o    = key[3];
 
-        assign aes_start_o = aes_start_i;
         assign wb_addr_o   = wb_addr;
   endgenerate 
   

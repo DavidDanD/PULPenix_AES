@@ -151,7 +151,6 @@ module riscv_core
   logic [1:0]        aes_regfile_waddr_ex_i;
   logic              aes_we_ex_unit_en_i;
   logic              aes_start_ex_unit_i;
-  logic              aes_start_unit_o;
   logic              aes_start_wb_o;
   logic              aes_wb_busy;
   logic [31:0]       regfile_data_ra_id;
@@ -166,7 +165,7 @@ module riscv_core
   logic [31:0]	     aes_wb_addrin;
   logic [31:0]	     aes_LSU_addrin;
   logic [31:0]	     aes_LSU_datain;
-  logic 	     aes_LSU_we;
+  logic 	     	 aes_LSU_we;
   logic [127:0]      aes_ciphered_data;
   //**********************************
 
@@ -646,7 +645,6 @@ module riscv_core
     .aes_regfile_waddr_ex_o       ( aes_regfile_waddr_ex_i     ),
     .aes_we_ex_unit_en_o          ( aes_we_ex_unit_en_i        ),
     .aes_start_ex_unit_o          ( aes_start_ex_unit_i        ),
-	.aes_command_en_id_o          ( aes_command_en             ),
 //********************************************************
                                    
 
@@ -939,10 +937,7 @@ module riscv_core
     .waddr_i             ( aes_regfile_waddr_ex_i  ),
     .wdata_i             ( alu_operand_a_ex        ),
     .wen_i               ( aes_we_ex_unit_en_i     ),
-    .instruction_sel_i   ( aes_instruction_sel_ex  ),
-    .aes_start_i         ( aes_start_ex_unit_i     ),
-    .aes_start_o         ( aes_start_unit_o        ),
-	.aes_command_en_i    ( aes_command_en          )
+    .instruction_sel_i   ( aes_instruction_sel_ex  )
   );
   
   /////////////////////////////////////////////////////////////////////// 
@@ -957,7 +952,7 @@ module riscv_core
   aescipher_i
   (
     .clk                 ( clk                ),
-    .start               ( aes_start_unit_o   ),
+    .start               ( aes_start_ex_unit_i ),
 	.rstn				 ( rst_ni ),
     .plain_text          ( {regfile_data_ra_id, regfile_data_rb_id, regfile_data_rc_id, regfile_data_rd_id} ),
     .cipher_key          ( {aes_rkey_a, aes_rkey_b, aes_rkey_c, aes_rkey_d} ),
