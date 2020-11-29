@@ -9,9 +9,6 @@ Additionally, Pulpenix also support a HW/SW (Hardware/Software) co-design enviro
 which is developed and maintained by Enics, this currently include support of an Eclips based  SW debug environment 
 currently running with the platform HW simulation. 
 
-Our intent is to further evolve Pulpenix, to be enhanced by processing and SOC architectural and implementation innovation.
-
-
 Getting Started: 
 
 1. Open a terminal the same file system you are capable running cadence irun command :
@@ -52,18 +49,15 @@ Getting Started:
   
 9. setup your environment:
 
-   edit just once this file: misc/genpro_pulpenix_setup.sh
- 
-   correct ONLY these lines to your specfic  path (Your own aliases you can add later as you get familiar with the system)
+   Execute following command, consider adding it to your ~/.bashrc:
    
-   setenv MY_PULP_ENV  <MY_WORK_SPACE_PATH>/pulp/pulpenix
-   setenv RISCV_PULP_TOOLCHAIN_ROOT <MY_WORK_SPACE_PATH>/pulp/toolchain
-
-   Now execute following command, consider adding it to your ~/.bashrc
-   
-   source misc/genpro_pulpenix_setup.sh  
+   source misc/genpro_pulpenix_setup.sh
    
 10. Lets compile "Hello World"
+   
+   our_pulp_compile helloworld     # takes you to helloworld app's folder, compiling the AES commands, and right after the other commands.
+   
+   When you're compiling apps that not contain AES commands, you can also compile as follows:
 
    cd  $MY_PULP_APPS/helloworld    # go to the hellowotld application folder
 
@@ -88,7 +82,7 @@ Getting Started:
 being run is in a folder with the same name.
 Similarly, you can perform step 10 by using the script aliased to our_pulp_compile
 
-13. Any changes we made we wrote a comment with akmp wrapped around it (or inline)
+13. Any changes we made we wrote a comment with dado wrapped around it (or inline)
 
 * Additional documentation
  

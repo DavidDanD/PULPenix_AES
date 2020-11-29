@@ -2,7 +2,7 @@
 '''
 Created on Sep 23, 2020
 
-@author: davidd
+@author: dolevv and davidd
 '''
 import argparse
 from traceback import print_exc

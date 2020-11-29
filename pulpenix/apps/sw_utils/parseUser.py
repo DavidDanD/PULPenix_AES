@@ -1,3 +1,8 @@
+'''
+Created on August 20, 2020
+
+@author: dolevv and davidd
+'''
 import argparse
 from getpass import getuser
 

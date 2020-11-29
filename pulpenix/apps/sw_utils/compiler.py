@@ -1,4 +1,8 @@
+'''
+Created on June 6, 2020
 
+@author: dolevv and davidd
+'''
 import argparse
 import random
 from os import environ

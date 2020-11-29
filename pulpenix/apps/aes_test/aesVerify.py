@@ -1,6 +1,9 @@
-#My AES implementation
-# By Daniel Miller
+'''
+Created on June 16, 2020
 
+@author: dolevv and davidd
+'''
+# AES implementation by Daniel Miller
 import random
 import getpass
 import subprocess
@@ -208,14 +211,14 @@ class AES_128(AES):
 
 if __name__=="__main__":
 	
-	#key = "{:032x}".format(random.randint(0,2**128))
-	#data = "{:032x}".format(random.randint(0,2**128))
+	key = "{:032x}".format(random.randint(0,2**128))
+	data = "{:032x}".format(random.randint(0,2**128))
 	
 	#key = "0000000000000000cafeface00000000"
 	#data = "deadbeefdeafbabe0000000000000000"
 	
-	data = "thanks take care".encode('hex')
-	key = "{:032x}".format(random.randint(0,2**128))
+	#data = "thanks take care".encode('hex')
+	#key = "{:032x}".format(random.randint(0,2**128))
 
 	keyBin = "{:0128b}".format(int(key,16))
 	dataBin = "{:0128b}".format(int(data,16))
