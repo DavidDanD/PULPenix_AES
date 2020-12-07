@@ -39,7 +39,6 @@ This repository contains the PULPenix AES on RISC-V design RTL.
 	Then you will have the PULPenix commands and scripts available, you can see those at: \
 		<path_to_pulp>/pulp/pulpenix/misc/scripts\ \
 		<path_to_pulp>/pulp/pulpenix/apps/sw_utils \
- \
 ### Synthesis
 To run the synthesis and create a “fresh” copy of PULPenix, you can use the “shortcut” script (synthesis via dc_shell): \
 	>our_pulp_synthesis \
@@ -83,7 +82,6 @@ Synthesis with dc_shell: \
 	To open: \
 		File -> Read <name> \
 	In the logical hierarchy pane, right-click on the top-level module and select Schematic View. Then, you’ll be able to watch the synthesized file at the gate level. \
- \
 ### Compilation and Simulation
 Running a simulation: \
 	1.	Create a folder under pulp/pulpenix/apps with your program (source code, .c files) \
@@ -112,7 +110,6 @@ Running a simulation: \
 				$MY_PULP_APPS/waves/<name>.shm \
 			The trace file will be saved as: \
 				$MY_PULP_IRUN/trace_core_00_0.log \
-				 \
 ### AES test
 You can run the AES verification test: \
 	>our_pulp_aes_verification \
