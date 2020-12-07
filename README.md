@@ -46,39 +46,39 @@ To run the synthesis and create a “fresh” copy of PULPenix, you can use the 
 The technology we used is Tower 0.18 [μm], with 10 [nSec] clock (100 [mHz]) and a 50% duty cycle. \
 If an error message occurs, you’ll need to do a full manual synthesis. \
  \
-Synthesis with dc_shell: \
+Synthesis with dc_shell: 
 	1.	Go to RISCV folder by typing: \
- + + + >cd $RISCV_DIR \
+			>cd $RISCV_DIR 
 	2.	Copy the library files using the command: \
 			>cp -r /users/iit/synopsys/tsl018_20178_syn design_syn \
 	3.	Type in your terminal the following commands: \
 			>cd $RISCV_DESIGN_SYN \
 			>dc_shell \
-			>start_gui \
+			>start_gui 
 	4.	In the GUI that opened, go to the upper left corner and click: \
 			File -> Analyze -> Add \
 		and add: \
 			riscv_defines \
 			riscv_config \
 			apu_macros \
-			apu_core_package \
+			apu_core_package 
 	If the last step gives you errors, it’s probably because of the files themselves including each other, so try adding them one by one in that order. \
 	5.	Click: \
 			File -> Analyse -> Add \
-		And add everything under the “riscv” folder, except the files mentioned above, the “riscv_tracer” files, and “riscv_register_file_latch”. \
+		And add everything under the “riscv” folder, except the files mentioned above, the “riscv_tracer” files, and “riscv_register_file_latch”. 
 	6.	Click: \
 			File -> Analyse -> Add \
-		and add everything under the “aes” folder. \
+		and add everything under the “aes” folder. 
 	7.	Click: \
-			File - > Elaborate \
-	8.	Choose the library to be WORK and the top-level module to be “riscv_core” \
+			File - > Elaborate 
+	8.	Choose the library to be WORK and the top-level module to be “riscv_core” 
 	9.	Specify a clock: \
 			In the hierarchy pane, click on the hierarchy drop-down menu and filter by “pins/ports”, and click on your clock-signal (clk_i). \
 			In the upper bar of the GUI, click: \
 				attributes->specify clock. \
-			We specified the clock to be – 10 [ns] (frequency of 100 [MHz]), and symmetrical. \
+			We specified the clock to be – 10 [ns] (frequency of 100 [MHz]), and symmetrical. 
 	10.	In the upper bar click: \
-			Design -> Compile Design \
+			Design -> Compile Design 
 	11.	After compilation click: \
 			File->Save As <name>,  then click: Open \
 		To open: \
