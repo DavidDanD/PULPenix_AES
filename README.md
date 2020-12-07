@@ -47,7 +47,7 @@ The technology we used is Tower 0.18 [μm], with 10 [nSec] clock (100 [mHz]) and
 If an error message occurs, you’ll need to do a full manual synthesis. \
  \
 Synthesis with dc_shell: 
-	1.	Go to RISCV folder by typing: \
+ + 	1.	Go to RISCV folder by typing: \
 			>cd $RISCV_DIR 
 	2.	Copy the library files using the command: \
 			>cp -r /users/iit/synopsys/tsl018_20178_syn design_syn \
