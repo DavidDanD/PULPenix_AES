@@ -48,7 +48,7 @@ If an error message occurs, you’ll need to do a full manual synthesis. \
  \
 Synthesis with dc_shell: \
 	1.	Go to RISCV folder by typing: \
-			>cd $RISCV_DIR \
+ + + + >cd $RISCV_DIR \
 	2.	Copy the library files using the command: \
 			>cp -r /users/iit/synopsys/tsl018_20178_syn design_syn \
 	3.	Type in your terminal the following commands: \
