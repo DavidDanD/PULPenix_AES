@@ -22,7 +22,7 @@ This repository contains the PULPenix AES on RISC-V design RTL.
     >rm -r pulp/PULPenix_AES-master
 3.	Add GCC for RISCV to “pulp” directory:
 	1.	Run:
-        >mkdir toolchain
+        >mkdir toolchain\
         >cd toolchain
 	2.	Download and un-tar GCC for RISCV into the “toolchain” directory.
 	3.	Run from inside “toolchain” directory:
